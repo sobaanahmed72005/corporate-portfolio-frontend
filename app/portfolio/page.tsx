@@ -1,0 +1,67 @@
+import type { Metadata } from "next";
+import { Container } from "@/components/ui/Container";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { CtaBanner } from "@/components/home/CtaBanner";
+import { company } from "@/lib/data/company";
+import { portfolioCategories } from "@/lib/data/portfolio";
+
+export const metadata: Metadata = {
+  title: "Portfolio",
+  description: `A look at recent CCTV, solar, networking, and bulk supply projects completed by ${company.name}.`,
+};
+
+export default function PortfolioPage() {
+  return (
+    <>
+      <section className="border-b border-slate-200 bg-slate-50 py-14">
+        <Container>
+          <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">Our Portfolio</h1>
+          <p className="mt-2 max-w-2xl text-slate-600">
+            A look at the CCTV, solar, networking, and bulk supply projects
+            we&apos;ve delivered for homes, offices, and corporate clients.
+          </p>
+        </Container>
+      </section>
+
+      {portfolioCategories.map((category, index) => (
+        <section
+          key={category.slug}
+          id={category.slug}
+          className={index % 2 === 1 ? "bg-slate-50 py-16 sm:py-20" : "py-16 sm:py-20"}
+        >
+          <Container>
+            <div className="flex items-center gap-4">
+              <GradientIconBadge icon={category.icon} gradient={category.gradient} size="lg" />
+              <SectionHeading title={category.name} description={category.description} />
+            </div>
+
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {category.projects.map((project) => (
+                <div
+                  key={project.slug}
+                  className="flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-lg"
+                >
+                  <GradientIconBadge icon={project.icon} gradient={category.gradient} size="sm" />
+                  <h3 className="mt-4 text-base font-semibold text-ink-950">
+                    {project.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm text-slate-600">{project.summary}</p>
+                  <span className="mt-4 inline-block w-fit rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-500">
+                    {project.highlight}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+      ))}
+
+      <CtaBanner
+        title="Like What You See?"
+        description="Tell us about your site or project and we'll help you plan the right setup."
+        primaryLabel="Start Your Project"
+      />
+    </>
+  );
+}
