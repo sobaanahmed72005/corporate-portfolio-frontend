@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { company } from "@/lib/data/company";
+import { SITE_CONFIG } from "@/lib/env";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -16,10 +17,8 @@ const rubik = Rubik({
   variable: "--font-rubik",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_CONFIG.URL),
   title: {
     default: `${company.name} | ${company.tagline}`,
     template: `%s | ${company.shortName}`,
@@ -28,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: company.name,
     description: company.description,
-    url: siteUrl,
+    url: SITE_CONFIG.URL,
     siteName: company.name,
     locale: "en_PK",
     type: "website",
@@ -58,7 +57,7 @@ export default function RootLayout({
       addressLocality: company.address.city,
       addressCountry: company.address.country,
     },
-    url: siteUrl,
+    url: SITE_CONFIG.URL,
     sameAs: Object.values(company.social),
   };
 

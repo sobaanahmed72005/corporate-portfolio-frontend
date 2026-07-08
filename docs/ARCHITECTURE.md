@@ -50,6 +50,9 @@ components/
 lib/
   data/                 Content: company.ts, products.ts, services.ts
   validations/          Zod schemas (contact.ts) + its test
+  env.ts                Single source of truth for env vars (SITE_CONFIG, API_CONFIG)
+  endpoints.ts          Single source of truth for backend API route paths (ENDPOINTS)
+  api-client.ts         Shared fetch client (apiClient) — base URL, headers, error handling in one place
   cn.ts                 Tiny classnames helper
 docs/
   ARCHITECTURE.md        This file
@@ -109,11 +112,27 @@ npm run build                # production build
 ```
 
 **Environment variables** (`.env.example` documents both):
-- `NEXT_PUBLIC_SITE_URL` — used for SEO metadata, sitemap, robots.txt. Defaults
-  to `http://localhost:3000`; set to the real domain once it's connected.
+- `NEXT_PUBLIC_SITE_URL` — used for SEO metadata, sitemap, robots.txt.
 - `NEXT_PUBLIC_API_URL` — base URL of the corporate-portfolio-api backend.
-  Defaults to `http://localhost:4000` for local dev; set to the backend's
-  deployed URL in production.
+
+Both are read in exactly one place, `lib/env.ts`, which groups them into
+`SITE_CONFIG` (`SITE_CONFIG.URL`) and `API_CONFIG` (`API_CONFIG.URL`) — the
+rest of the app imports these config objects instead of touching
+`process.env` directly. Related env vars go in the same config object (e.g.
+an SMTP config would be `SMTP_CONFIG = { HOST, PORT }`, not separate
+`SMTP_HOST`/`SMTP_PORT` exports), so adding or renaming a var only means
+editing that one file.
+
+**Required in production, defaulted in dev:** `lib/env.ts` checks
+`NODE_ENV`. In development (`npm run dev`), a missing var falls back to a
+hardcoded `localhost` default so the app runs without a `.env.local`. When
+`NODE_ENV=production` (`npm run build` / `npm start`, and on Vercel), a
+missing var throws immediately instead of silently falling back — a
+misconfigured deploy fails loudly rather than quietly pointing at
+`localhost`, which would be a real security/correctness risk (SEO metadata,
+CORS, and the contact form all derive from these URLs). Still copy
+`.env.example` to `.env.local` for local dev so you're testing against the
+real values, not the defaults.
 
 **Deployment:** push to a GitHub repo and import it into
 [Vercel](https://vercel.com/new) — it detects Next.js automatically. Set
@@ -130,8 +149,10 @@ so the frontend and backend can be built, deployed, and scaled independently.
 `components/contact/ContactForm.tsx` is a client component using
 `react-hook-form` with `contactFormSchema` (from `lib/validations/contact.ts`,
 a duplicate of the backend's copy — see below) for instant client-side
-feedback. On submit, it POSTs JSON to
-`${NEXT_PUBLIC_API_URL}/api/contact` on the backend, which:
+feedback. On submit, it calls `apiClient.post(ENDPOINTS.CONTACT, values)` —
+`lib/api-client.ts` is the one place that owns the base URL, headers, and
+error handling for every backend call, so components never call `fetch`
+directly. This POSTs to the backend, which:
 
 1. Re-validates the payload server-side with its own copy of the Zod schema
    (never trust client-side validation alone).
@@ -149,6 +170,19 @@ one small schema. If you add a field to the form, update it in both places.
 **CORS:** since the frontend and backend are different origins, the backend
 sets CORS headers on every response (see its `lib/cors.ts`) and its
 `ALLOWED_ORIGIN` env var must match this frontend's deployed origin.
+
+**Adding a new backend route:** add its path to the `ENDPOINTS` object in
+`lib/endpoints.ts`, and call it via `apiClient` (`lib/api-client.ts`) —
+don't hardcode API paths or call `fetch` directly in components.
+
+**No database, no third-party SDK client in this repo:** this frontend
+doesn't hold any credentials or open any external connections itself (see
+§9). The one external connection — Resend, for sending contact-form
+emails — lives entirely in corporate-portfolio-api's `lib/resend.ts`, which
+already builds a single shared client instance instead of constructing one
+per file. If this frontend ever needs its own external service client
+(analytics SDK, etc.), follow the same pattern: one module that constructs
+the client once and exports the instance, imported wherever it's needed.
 
 ## 8. Future extension points
 

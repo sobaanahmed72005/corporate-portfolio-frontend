@@ -7,6 +7,8 @@ import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { contactFormSchema, type ContactFormValues } from "@/lib/validations/contact";
 import { services } from "@/lib/data/services";
+import { ENDPOINTS } from "@/lib/endpoints";
+import { apiClient } from "@/lib/api-client";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -24,15 +26,7 @@ export function ContactForm() {
   async function onSubmit(values: ContactFormValues) {
     setStatus("submitting");
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (!apiUrl) throw new Error("NEXT_PUBLIC_API_URL is not set");
-
-      const res = await fetch(`${apiUrl}/api/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      if (!res.ok) throw new Error("Request failed");
+      await apiClient.post(ENDPOINTS.CONTACT, values);
       setStatus("success");
       reset();
     } catch {

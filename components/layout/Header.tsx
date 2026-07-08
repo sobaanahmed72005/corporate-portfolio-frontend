@@ -106,6 +106,7 @@ export function Header() {
             </Link>
             <NavMegaMenu
               label="Products"
+              href="/products"
               active={pathname.startsWith("/products")}
               items={productMenuItems}
               cta={{
@@ -117,6 +118,7 @@ export function Header() {
             />
             <NavMegaMenu
               label="Services"
+              href="/services"
               active={pathname.startsWith("/services")}
               items={serviceMenuItems}
               cta={{
@@ -128,6 +130,7 @@ export function Header() {
             />
             <NavMegaMenu
               label="Portfolio"
+              href="/portfolio"
               active={pathname.startsWith("/portfolio")}
               items={portfolioMenuItems}
               cta={{

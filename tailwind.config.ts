@@ -68,8 +68,10 @@ const config: Config = {
         },
       },
       animation: {
-        marquee: "marquee 28s linear infinite",
-        "marquee-reverse": "marquee-reverse 32s linear infinite",
+        // Duration scales with TrustTicker's 4x content block so the
+        // on-screen pixel speed matches what it was before that change.
+        marquee: "marquee 112s linear infinite",
+        "marquee-reverse": "marquee-reverse 128s linear infinite",
       },
     },
   },

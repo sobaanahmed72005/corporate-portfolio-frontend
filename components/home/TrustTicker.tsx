@@ -34,7 +34,12 @@ function Pill({ label, dark }: { label: string; dark: boolean }) {
 }
 
 function Row({ items, animation }: { items: string[]; animation: string }) {
-  const doubled = [...items, ...items];
+  // One "block" repeats the set enough times to be wider than any
+  // realistic viewport; duplicating that block (not just `items`) is what
+  // keeps the loop seamless — two copies of the bare 6-pill set run out
+  // partway across a wide screen, leaving a blank gap before it wraps.
+  const block = [...items, ...items, ...items, ...items];
+  const doubled = [...block, ...block];
   return (
     <div className="w-full overflow-hidden">
       <div className={cn("flex w-max shrink-0 gap-4", animation)}>

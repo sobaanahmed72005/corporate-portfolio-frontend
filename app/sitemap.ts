@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/lib/data/blog";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+import { SITE_CONFIG } from "@/lib/env";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
@@ -18,14 +17,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const staticEntries: MetadataRoute.Sitemap = routes.map((route) => ({
-    url: `${siteUrl}${route}`,
+    url: `${SITE_CONFIG.URL}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: route === "" ? 1 : 0.8,
   }));
 
   const blogEntries: MetadataRoute.Sitemap = blogPosts.map((post) => ({
-    url: `${siteUrl}/blog/${post.slug}`,
+    url: `${SITE_CONFIG.URL}/blog/${post.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly",
     priority: 0.6,
