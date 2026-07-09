@@ -6,6 +6,9 @@ export type Product = {
   name: string;
   description: string;
   icon: IconName;
+  /** Optional real product photo path (e.g. "/products/gan-charger.jpg").
+   * Falls back to the icon badge when unset — see ImageSlot. */
+  image?: string;
 };
 
 export type ProductCategory = {

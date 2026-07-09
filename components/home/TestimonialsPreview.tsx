@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Star, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
 import { cn } from "@/lib/cn";
 import { testimonials } from "@/lib/data/testimonials";
@@ -29,14 +30,23 @@ function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[n
         &ldquo;{testimonial.quote}&rdquo;
       </p>
       <div className="mt-5 flex items-center gap-3">
-        <span
-          className={cn(
-            "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white",
-            GRADIENTS[testimonial.gradient].badge,
-          )}
-        >
-          {testimonial.name.charAt(0)}
-        </span>
+        {testimonial.photo ? (
+          <ImageSlot
+            src={testimonial.photo}
+            alt={testimonial.name}
+            aspect="square"
+            className="h-10 w-10 shrink-0 rounded-full"
+          />
+        ) : (
+          <span
+            className={cn(
+              "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white",
+              GRADIENTS[testimonial.gradient].badge,
+            )}
+          >
+            {testimonial.name.charAt(0)}
+          </span>
+        )}
         <div>
           <p className="text-sm font-semibold text-white">{testimonial.name}</p>
           <p className="text-xs text-slate-400">{testimonial.role}</p>

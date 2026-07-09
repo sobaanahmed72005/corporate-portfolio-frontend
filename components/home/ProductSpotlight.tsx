@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 import { productCategories } from "@/lib/data/products";
 
 /** One spotlighted product per category — a quick-glance strip above the full showcase. */
@@ -18,7 +19,11 @@ export function ProductSpotlight() {
               key={product.slug}
               className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/10"
             >
-              <GradientIconBadge icon={product.icon} gradient={category.gradient} size="lg" />
+              {product.image ? (
+                <ImageSlot src={product.image} alt={product.name} aspect="square" className="w-full rounded-xl" />
+              ) : (
+                <GradientIconBadge icon={product.icon} gradient={category.gradient} size="lg" />
+              )}
               <p className="font-display text-sm font-semibold text-white">{product.name}</p>
             </div>
           ))}

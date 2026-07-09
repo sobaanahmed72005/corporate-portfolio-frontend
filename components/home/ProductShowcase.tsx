@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { GRADIENT_PILL_BASE, GRADIENTS } from "@/components/ui/gradients";
 import { Icon } from "@/components/ui/Icon";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 import { company } from "@/lib/data/company";
 import { cn } from "@/lib/cn";
 import { productCategories } from "@/lib/data/products";
@@ -58,9 +59,18 @@ export function ProductShowcase() {
                 GRADIENTS[active.gradient].badge,
               )}
             >
-              <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white backdrop-blur-sm">
-                <Icon name={featured.icon} className="h-10 w-10" aria-hidden />
-              </span>
+              {featured.image ? (
+                <ImageSlot
+                  src={featured.image}
+                  alt={featured.name}
+                  aspect="square"
+                  className="w-full shrink-0 rounded-2xl sm:w-32"
+                />
+              ) : (
+                <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white backdrop-blur-sm">
+                  <Icon name={featured.icon} className="h-10 w-10" aria-hidden />
+                </span>
+              )}
               <div>
                 <p className="font-display text-xs font-semibold uppercase tracking-wide text-white/70">
                   Featured in {active.shortName}

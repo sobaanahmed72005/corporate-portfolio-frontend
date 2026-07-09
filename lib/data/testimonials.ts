@@ -6,6 +6,10 @@ export type Testimonial = {
   quote: string;
   rating: 1 | 2 | 3 | 4 | 5;
   gradient: GradientName;
+  /** Optional real headshot path (e.g. "/testimonials/ali.jpg"). Falls back
+   * to a gradient initial avatar when unset — never use a stock/someone
+   * else's photo here without that person's consent. */
+  photo?: string;
 };
 
 /**

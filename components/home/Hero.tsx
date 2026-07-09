@@ -2,17 +2,18 @@ import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 import { company } from "@/lib/data/company";
 import { productCategories } from "@/lib/data/products";
-import { cn } from "@/lib/cn";
 
 /**
- * `videoSrc` is optional and unset by default — this site doesn't have a
- * hero video asset yet. Drop an .mp4 in /public and pass its path here to
- * get the autoplaying-background-video look; without it, the section falls
- * back cleanly to the gradient background below.
+ * Both optional and unset by default — this site doesn't have a hero video
+ * or flagship product photo yet. Drop the file in /public and point these
+ * at it to get the real look; without them, the section falls back cleanly
+ * to the gradient background / empty image slot below.
  */
 const videoSrc: string | undefined = undefined;
+const heroImageSrc: string | undefined = undefined;
 
 export function Hero() {
   return (
@@ -62,26 +63,30 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Decorative visual column — a stacked, offset badge grid standing
-            in for reference-site product photography this site doesn't have. */}
-        <div className="relative mx-auto grid w-full max-w-md grid-cols-2 gap-4">
-          {productCategories.map((cat, i) => (
-            <div
-              key={cat.slug}
-              className={cn(
-                "flex flex-col items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/5 p-6 text-center backdrop-blur-sm",
-                i % 2 === 1 && "translate-y-6",
-              )}
-            >
-              <GradientIconBadge icon={cat.icon} gradient={cat.gradient} size="lg" className="rounded-full" />
-              <span className="text-sm font-semibold text-white">{cat.shortName}</span>
-            </div>
-          ))}
+        <div className="relative mx-auto w-full max-w-md">
           <div
             className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-30 blur-3xl"
             style={{ background: "radial-gradient(circle, #0324ff 0%, transparent 70%)" }}
             aria-hidden
           />
+          <ImageSlot
+            src={heroImageSrc}
+            alt="Flagship product"
+            aspect="square"
+            onDark
+            className="rounded-3xl border-white/15"
+          />
+          <div className="mt-4 grid grid-cols-4 gap-3">
+            {productCategories.map((cat) => (
+              <div
+                key={cat.slug}
+                className="flex flex-col items-center gap-1.5 rounded-xl border border-white/15 bg-white/5 p-3 text-center backdrop-blur-sm"
+              >
+                <GradientIconBadge icon={cat.icon} gradient={cat.gradient} size="sm" className="rounded-full" />
+                <span className="text-[11px] font-medium text-white">{cat.shortName}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
     </section>
