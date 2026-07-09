@@ -2,6 +2,7 @@ import { Hero } from "@/components/home/Hero";
 import { ProductSpotlight } from "@/components/home/ProductSpotlight";
 import { TrustTicker } from "@/components/home/TrustTicker";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
+import { ProductDeepDive } from "@/components/home/ProductDeepDive";
 import { ServicesOverview } from "@/components/home/ServicesOverview";
 import { PortfolioPreview } from "@/components/home/PortfolioPreview";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
@@ -17,6 +18,7 @@ export default function Home() {
       <ProductSpotlight />
       <TrustTicker />
       <ProductShowcase />
+      <ProductDeepDive />
       <ServicesOverview />
       <PortfolioPreview />
       <WhyChooseUs />

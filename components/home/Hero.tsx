@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { company } from "@/lib/data/company";
 import { productCategories } from "@/lib/data/products";
+import { cn } from "@/lib/cn";
 
 /**
  * `videoSrc` is optional and unset by default — this site doesn't have a
@@ -37,8 +38,8 @@ export function Hero() {
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-ink-950/60 via-ink-950/70 to-ink-950" aria-hidden />
 
-      <Container className="relative py-20 sm:py-28">
-        <div className="max-w-3xl">
+      <Container className="relative grid grid-cols-1 items-center gap-12 py-20 lg:grid-cols-[1.1fr_0.9fr] sm:py-28">
+        <div>
           <p className="mb-4 font-display text-sm font-semibold uppercase tracking-wide text-accent-400">
             IT Accessories &middot; Security &middot; Solar &middot; Networking
           </p>
@@ -48,7 +49,7 @@ export function Hero() {
           <h2 className="mt-4 font-display text-xl font-semibold leading-snug text-white/80 sm:text-2xl">
             {company.tagline}
           </h2>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-300">
             {company.description}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -61,18 +62,26 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {productCategories.map((cat) => (
+        {/* Decorative visual column — a stacked, offset badge grid standing
+            in for reference-site product photography this site doesn't have. */}
+        <div className="relative mx-auto grid w-full max-w-md grid-cols-2 gap-4">
+          {productCategories.map((cat, i) => (
             <div
               key={cat.slug}
-              className="flex flex-col items-center gap-2 rounded-xl border border-white/15 bg-white/5 p-4 text-center backdrop-blur-sm"
+              className={cn(
+                "flex flex-col items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/5 p-6 text-center backdrop-blur-sm",
+                i % 2 === 1 && "translate-y-6",
+              )}
             >
-              <GradientIconBadge icon={cat.icon} gradient={cat.gradient} size="sm" className="rounded-full" />
-              <span className="text-xs font-medium text-white sm:text-sm">
-                {cat.shortName}
-              </span>
+              <GradientIconBadge icon={cat.icon} gradient={cat.gradient} size="lg" className="rounded-full" />
+              <span className="text-sm font-semibold text-white">{cat.shortName}</span>
             </div>
           ))}
+          <div
+            className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-30 blur-3xl"
+            style={{ background: "radial-gradient(circle, #0324ff 0%, transparent 70%)" }}
+            aria-hidden
+          />
         </div>
       </Container>
     </section>
