@@ -14,12 +14,13 @@ const featured = portfolioCategories.map((category) => ({
 
 export function PortfolioPreview() {
   return (
-    <section className="py-16 sm:py-24">
+    <section className="bg-black py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Our Work"
           title="Recent Projects"
           description="A sample of the CCTV, solar, networking, and supply projects we've delivered for clients."
+          onDark
         />
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -27,12 +28,12 @@ export function PortfolioPreview() {
             <Link
               key={project.slug}
               href={`/portfolio#${category.slug}`}
-              className="flex flex-col rounded-2xl border border-slate-200 p-6 shadow-sm transition-shadow hover:shadow-lg"
+              className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/10"
             >
               <GradientIconBadge icon={project.icon} gradient={category.gradient} />
-              <h3 className="mt-4 text-base font-semibold text-ink-950">{project.title}</h3>
-              <p className="mt-2 flex-1 text-sm text-slate-600">{project.summary}</p>
-              <span className="mt-4 inline-block w-fit rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-500">
+              <h3 className="mt-4 text-base font-semibold text-white">{project.title}</h3>
+              <p className="mt-2 flex-1 text-sm text-slate-400">{project.summary}</p>
+              <span className="mt-4 inline-block w-fit rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-300">
                 {project.highlight}
               </span>
             </Link>

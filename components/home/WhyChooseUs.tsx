@@ -43,20 +43,21 @@ const reasons: {
 
 export function WhyChooseUs() {
   return (
-    <section className="py-16 sm:py-24">
+    <section className="bg-slate-900 py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Why Choose Us"
           title="Built on Reliability and Support"
           align="center"
           className="mx-auto"
+          onDark
         />
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {reasons.map((reason) => (
             <div
               key={reason.title}
-              className="rounded-2xl border border-slate-200 p-6 text-center shadow-sm transition-shadow hover:shadow-lg"
+              className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/10"
             >
               <span
                 className={cn(
@@ -66,11 +67,11 @@ export function WhyChooseUs() {
               >
                 <reason.icon className="h-7 w-7" aria-hidden />
               </span>
-              <h3 className="mt-4 text-base font-semibold text-ink-950">
+              <h3 className="mt-4 text-base font-semibold text-white">
                 {reason.title}
               </h3>
-              <p className="mt-2 text-sm text-slate-600">{reason.description}</p>
-              <span className="mt-3 inline-block rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-500">
+              <p className="mt-2 text-sm text-slate-400">{reason.description}</p>
+              <span className="mt-3 inline-block rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-300">
                 {reason.tag}
               </span>
             </div>

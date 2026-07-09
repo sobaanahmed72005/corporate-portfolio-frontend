@@ -5,12 +5,15 @@ export function SectionHeading({
   title,
   description,
   align = "left",
+  onDark = false,
   className,
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
   align?: "left" | "center";
+  /** Use light text — for sections with a dark background. */
+  onDark?: boolean;
   className?: string;
 }) {
   return (
@@ -22,15 +25,27 @@ export function SectionHeading({
       )}
     >
       {eyebrow && (
-        <p className="mb-2 font-display text-sm font-semibold uppercase tracking-wide text-brand-600">
+        <p
+          className={cn(
+            "mb-2 font-display text-sm font-semibold uppercase tracking-wide",
+            onDark ? "text-brand-300" : "text-brand-600",
+          )}
+        >
           {eyebrow}
         </p>
       )}
-      <h2 className="font-display text-2xl font-extrabold tracking-tight text-ink-950 sm:text-3xl">
+      <h2
+        className={cn(
+          "font-display text-2xl font-extrabold tracking-tight sm:text-3xl",
+          onDark ? "text-white" : "text-ink-950",
+        )}
+      >
         {title}
       </h2>
       {description && (
-        <p className="mt-3 text-base text-slate-600">{description}</p>
+        <p className={cn("mt-3 text-base", onDark ? "text-slate-400" : "text-slate-600")}>
+          {description}
+        </p>
       )}
     </div>
   );

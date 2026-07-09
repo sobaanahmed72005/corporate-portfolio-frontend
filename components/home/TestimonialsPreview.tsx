@@ -12,20 +12,20 @@ const track = [...testimonials, ...testimonials];
 
 function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[number] }) {
   return (
-    <div className="flex w-[320px] shrink-0 flex-col rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <div className="flex w-[320px] shrink-0 flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
       <div className="flex items-center gap-0.5">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
             key={i}
             className={cn(
               "h-4 w-4",
-              i < testimonial.rating ? "fill-accent-500 text-accent-500" : "fill-slate-200 text-slate-200",
+              i < testimonial.rating ? "fill-accent-500 text-accent-500" : "fill-white/10 text-white/10",
             )}
             aria-hidden
           />
         ))}
       </div>
-      <p className="mt-4 flex-1 text-sm leading-relaxed text-slate-700">
+      <p className="mt-4 flex-1 text-sm leading-relaxed text-slate-300">
         &ldquo;{testimonial.quote}&rdquo;
       </p>
       <div className="mt-5 flex items-center gap-3">
@@ -38,8 +38,8 @@ function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[n
           {testimonial.name.charAt(0)}
         </span>
         <div>
-          <p className="text-sm font-semibold text-ink-950">{testimonial.name}</p>
-          <p className="text-xs text-slate-500">{testimonial.role}</p>
+          <p className="text-sm font-semibold text-white">{testimonial.name}</p>
+          <p className="text-xs text-slate-400">{testimonial.role}</p>
         </div>
       </div>
     </div>
@@ -48,13 +48,14 @@ function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[n
 
 export function TestimonialsPreview() {
   return (
-    <section className="overflow-hidden bg-slate-50 py-16 sm:py-24">
+    <section className="overflow-hidden bg-slate-900 py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Feedback That Matters"
           title="Trusted by Homes and Businesses"
           align="center"
           className="mx-auto"
+          onDark
         />
       </Container>
 

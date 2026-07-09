@@ -85,9 +85,9 @@ export function Header() {
         </Container>
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur">
         <Container className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-display font-bold text-ink-950">
+          <Link href="/" className="flex items-center gap-2 font-display font-bold text-white">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-sm text-white">
               IT
             </span>
@@ -98,8 +98,8 @@ export function Header() {
             <Link
               href="/"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-600",
-                pathname === "/" && "bg-slate-50 text-brand-600",
+                "rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white",
+                pathname === "/" && "bg-white/10 text-white",
               )}
             >
               Home
@@ -143,8 +143,8 @@ export function Header() {
             <Link
               href="/blog"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-600",
-                pathname.startsWith("/blog") && "bg-slate-50 text-brand-600",
+                "rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white",
+                pathname.startsWith("/blog") && "bg-white/10 text-white",
               )}
             >
               Blog
@@ -152,8 +152,8 @@ export function Header() {
             <Link
               href="/about"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-600",
-                pathname.startsWith("/about") && "bg-slate-50 text-brand-600",
+                "rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white",
+                pathname.startsWith("/about") && "bg-white/10 text-white",
               )}
             >
               About
@@ -161,8 +161,8 @@ export function Header() {
             <Link
               href="/contact"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-600",
-                pathname.startsWith("/contact") && "bg-slate-50 text-brand-600",
+                "rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white",
+                pathname.startsWith("/contact") && "bg-white/10 text-white",
               )}
             >
               Contact
@@ -183,7 +183,7 @@ export function Header() {
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-slate-700 md:hidden"
+            className="inline-flex items-center justify-center rounded-md p-2 text-slate-300 md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -193,14 +193,14 @@ export function Header() {
         </Container>
 
         {open && (
-          <div className="border-t border-slate-200 bg-white md:hidden">
+          <div className="border-t border-white/10 bg-black md:hidden">
             <Container className="flex flex-col gap-1 py-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-600"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white"
                 >
                   {link.label}
                 </Link>

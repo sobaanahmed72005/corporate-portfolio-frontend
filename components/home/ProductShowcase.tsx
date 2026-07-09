@@ -13,12 +13,13 @@ export function ProductShowcase() {
   const active = productCategories.find((c) => c.slug === activeSlug) ?? productCategories[0];
 
   return (
-    <section className="bg-slate-50 py-16 sm:py-24">
+    <section className="bg-black py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Products"
           title="Browse by Category"
           description="Everything we supply, grouped so you can find what you need in one place."
+          onDark
         />
 
         <div className="mt-8 flex flex-wrap gap-2" role="tablist" aria-label="Product categories">
@@ -32,8 +33,8 @@ export function ProductShowcase() {
               className={cn(
                 "inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
                 category.slug === active.slug
-                  ? "border-ink-950 bg-ink-950 text-white"
-                  : "border-slate-300 bg-white text-slate-700 hover:border-ink-950",
+                  ? "border-brand-600 bg-brand-600 text-white"
+                  : "border-white/15 bg-white/5 text-slate-300 hover:border-white/30 hover:text-white",
               )}
             >
               <GradientIconBadge icon={category.icon} gradient={category.gradient} size="sm" className="h-6 w-6 rounded-full" />
