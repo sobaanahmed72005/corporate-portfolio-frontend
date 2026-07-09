@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
+import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { company } from "@/lib/data/company";
 import { productCategories } from "@/lib/data/products";
 
@@ -10,7 +11,7 @@ export function Footer() {
 
   return (
     <footer className="bg-ink-950 text-slate-300">
-      <Container className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+      <Container className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <p className="font-display text-lg font-bold text-white">{company.name}</p>
           <p className="mt-3 text-sm leading-relaxed text-slate-400">
@@ -97,6 +98,10 @@ export function Footer() {
               </span>
             </li>
           </ul>
+        </div>
+
+        <div>
+          <NewsletterForm />
         </div>
       </Container>
 

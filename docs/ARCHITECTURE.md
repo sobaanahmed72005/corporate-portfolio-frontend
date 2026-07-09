@@ -43,13 +43,16 @@ app/
 components/
   ui/                  Generic building blocks: Button, Container, SectionHeading, Icon
   layout/               Header, Footer
-  home/                 Homepage sections: Hero, CategoryHighlights, ServicesOverview, WhyChooseUs, CtaBanner
+  home/                 Homepage sections: Hero, ProductSpotlight, TrustTicker, ProductShowcase,
+                        ServicesOverview, WhyChooseUs, LatestUpdates, TestimonialsPreview,
+                        OfficesSection, CtaBanner
   products/             ProductCard, CategorySection
   services/             ServiceCard
   contact/              ContactForm (client component)
+  layout/               (cont.) NewsletterForm (client component, used in Footer)
 lib/
-  data/                 Content: company.ts, products.ts, services.ts
-  validations/          Zod schemas (contact.ts) + its test
+  data/                 Content: company.ts, products.ts, services.ts, blog.ts, testimonials.ts, offices.ts
+  validations/          Zod schemas (contact.ts, newsletter.ts) + tests
   env.ts                Single source of truth for env vars (SITE_CONFIG, API_CONFIG)
   endpoints.ts          Single source of truth for backend API route paths (ENDPOINTS)
   api-client.ts         Shared fetch client (apiClient) — base URL, headers, error handling in one place

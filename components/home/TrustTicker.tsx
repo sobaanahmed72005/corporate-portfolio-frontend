@@ -1,4 +1,5 @@
 import { Sparkles } from "lucide-react";
+import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
 
 const rowOne = [
@@ -53,9 +54,16 @@ function Row({ items, animation }: { items: string[]; animation: string }) {
 
 export function TrustTicker() {
   return (
-    <div className="space-y-4 overflow-hidden bg-white py-10">
-      <Row items={rowOne} animation="animate-marquee" />
-      <Row items={rowTwo} animation="animate-marquee-reverse" />
+    <div className="overflow-hidden bg-white py-10">
+      <Container>
+        <p className="mb-6 text-center font-display text-sm font-semibold uppercase tracking-wide text-slate-400">
+          Trusted by Homes and Businesses Across Pakistan
+        </p>
+      </Container>
+      <div className="space-y-4">
+        <Row items={rowOne} animation="animate-marquee" />
+        <Row items={rowTwo} animation="animate-marquee-reverse" />
+      </div>
     </div>
   );
 }

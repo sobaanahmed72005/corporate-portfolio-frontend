@@ -6,4 +6,5 @@
 
 export const ENDPOINTS = {
   CONTACT: "/api/contact",
+  NEWSLETTER: "/api/newsletter",
 } as const;
