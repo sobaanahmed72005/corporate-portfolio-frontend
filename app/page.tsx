@@ -1,4 +1,5 @@
 import { Hero } from "@/components/home/Hero";
+import { StatsCounter } from "@/components/home/StatsCounter";
 import { ProductSpotlight } from "@/components/home/ProductSpotlight";
 import { TrustTicker } from "@/components/home/TrustTicker";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
@@ -18,6 +19,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <StatsCounter />
       <ProductSpotlight />
       <TrustTicker />
       <ProductShowcase />
