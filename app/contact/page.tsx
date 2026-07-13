@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { company } from "@/lib/data/company";
+import { getServices } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -39,7 +40,9 @@ const reachChannels = [
   },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const services = await getServices();
+
   return (
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">
@@ -97,7 +100,7 @@ export default function ContactPage() {
             Fill out the form below and our team will get back to you shortly.
           </p>
           <div className="mt-6">
-            <ContactForm />
+            <ContactForm services={services} />
           </div>
         </div>
 

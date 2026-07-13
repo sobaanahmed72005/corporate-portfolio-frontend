@@ -1,9 +1,11 @@
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
-import { offices } from "@/lib/data/offices";
+import { getOffices } from "@/lib/cms";
 
-export function OfficesSection() {
+export async function OfficesSection() {
+  const offices = await getOffices();
+
   return (
     <section className="bg-ink-950 py-16 text-white sm:py-24">
       <Container>

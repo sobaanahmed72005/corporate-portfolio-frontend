@@ -11,12 +11,14 @@ import { Icon } from "@/components/ui/Icon";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { company } from "@/lib/data/company";
 import { cn } from "@/lib/cn";
-import { productCategories } from "@/lib/data/products";
+import type { ProductCategory } from "@/lib/cms";
 
-export function ProductShowcase() {
-  const [activeSlug, setActiveSlug] = useState(productCategories[0].slug);
+export function ProductShowcase({ productCategories }: { productCategories: ProductCategory[] }) {
+  const [activeSlug, setActiveSlug] = useState(productCategories[0]?.slug);
   const active = productCategories.find((c) => c.slug === activeSlug) ?? productCategories[0];
-  const [featured, ...rest] = active.products;
+  const [featured, ...rest] = active?.products ?? [];
+
+  if (!active || !featured) return null;
 
   return (
     <section className="bg-black py-16 sm:py-24">

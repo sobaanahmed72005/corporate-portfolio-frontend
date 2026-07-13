@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { LinkButton } from "@/components/ui/Button";
 import { CategorySection } from "@/components/products/CategorySection";
-import { productCategories } from "@/lib/data/products";
+import { getProductCategories } from "@/lib/cms";
 import { company } from "@/lib/data/company";
 
 export const metadata: Metadata = {
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
     "Browse our range of chargers, CCTV cameras, solar panels, and networking devices. Visit our online store to purchase.",
 };
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const productCategories = await getProductCategories();
+
   return (
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">

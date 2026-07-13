@@ -6,13 +6,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { contactFormSchema, type ContactFormValues } from "@/lib/validations/contact";
-import { services } from "@/lib/data/services";
+import type { Service } from "@/lib/cms";
 import { ENDPOINTS } from "@/lib/endpoints";
 import { apiClient } from "@/lib/api-client";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-export function ContactForm() {
+export function ContactForm({ services }: { services: Service[] }) {
   const [status, setStatus] = useState<Status>("idle");
   const {
     register,

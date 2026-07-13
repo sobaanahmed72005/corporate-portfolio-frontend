@@ -1,15 +1,18 @@
 import { Container } from "@/components/ui/Container";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { ImageSlot } from "@/components/ui/ImageSlot";
-import { productCategories } from "@/lib/data/products";
+import { getProductCategories } from "@/lib/cms";
 
-/** One spotlighted product per category — a quick-glance strip above the full showcase. */
-const spotlight = productCategories.map((category) => ({
-  category,
-  product: category.products[0],
-}));
+export async function ProductSpotlight() {
+  const productCategories = await getProductCategories();
+  /** One spotlighted product per category — a quick-glance strip above the full showcase. */
+  const spotlight = productCategories
+    .filter((category) => category.products.length > 0)
+    .map((category) => ({
+      category,
+      product: category.products[0],
+    }));
 
-export function ProductSpotlight() {
   return (
     <section className="bg-black py-10 sm:py-14">
       <Container>

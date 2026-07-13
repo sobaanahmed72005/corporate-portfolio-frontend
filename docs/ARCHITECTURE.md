@@ -15,7 +15,7 @@ into store visitors or contact form leads.
 
 This repo is **frontend only**. The contact form's server-side logic lives in
 a separate repo, [corporate-portfolio-api](../corporate-portfolio-api), so the
-two can be built, deployed, and scaled independently — see §7.
+two can be built, deployed, and scaled independently — see §8.
 
 ## 2. Stack and rationale
 
@@ -23,7 +23,7 @@ two can be built, deployed, and scaled independently — see §7.
 |---|---|
 | **Next.js 14 (App Router) + TypeScript** | Pages are server-rendered (SSR/SSG), so search engines get full HTML immediately — important for local searches like "CCTV installation Pakistan." TypeScript catches mistakes (wrong prop, typo'd field) at compile time instead of in production. |
 | **Tailwind CSS** | Keeps spacing, color, and typography consistent across every page without hand-rolled CSS files drifting out of sync. |
-| **Typed content files** (`lib/data/*.ts`) instead of a database | The catalog and services list are just content to display, not transactional data. Plain TypeScript objects are simpler to read, edit, and type-check than standing up a database for content that changes rarely. If the catalog grows large enough that non-developers need a UI to edit it, migrate these files to a headless CMS (see §7) — the page components wouldn't need to change, only the data-fetching layer. |
+| **Strapi CMS** for editorial content, **typed files** (`lib/data/*.ts`) for low-churn site config | Products/services/blog/testimonials/offices change often enough that a non-developer needs a UI — those live in Strapi (see §7). Company info, portfolio, stats, training, and client logos still change rarely enough that a plain TypeScript file is simpler than another content type. |
 | **react-hook-form + Zod** | The one real interactive feature is the contact form. Zod defines the validation rules once client-side for instant feedback; corporate-portfolio-api re-validates with its own copy of the same schema server-side (never trust the client). |
 | **Vitest** | Fast unit tests for the one piece of logic worth testing (form validation rules). |
 | **Vercel** (recommended host) | Zero-config deploys for Next.js, free tier, automatic HTTPS, easy custom domain hookup later. |
@@ -51,9 +51,10 @@ components/
   contact/              ContactForm (client component)
   layout/               (cont.) NewsletterForm (client component, used in Footer)
 lib/
-  data/                 Content: company.ts, products.ts, services.ts, blog.ts, testimonials.ts, offices.ts
+  cms.ts                 Strapi client + types (Product, ProductCategory, Service, BlogPost, Testimonial, Office)
+  data/                 Site config: company.ts, portfolio.ts, stats.ts, training.ts, clientLogos.ts
   validations/          Zod schemas (contact.ts, newsletter.ts) + tests
-  env.ts                Single source of truth for env vars (SITE_CONFIG, API_CONFIG)
+  env.ts                Single source of truth for env vars (SITE_CONFIG, API_CONFIG, CMS_CONFIG)
   endpoints.ts          Single source of truth for backend API route paths (ENDPOINTS)
   api-client.ts         Shared fetch client (apiClient) — base URL, headers, error handling in one place
   cn.ts                 Tiny classnames helper
@@ -63,41 +64,44 @@ docs/
 
 ## 4. Content model
 
-Everything a non-developer would want to change lives in `lib/data/`:
+Most editorial content now lives in **corporate-portfolio-cms** (a separate
+Strapi 5 repo/deployment — see §7), not in this repo:
+
+- **Products & product categories, services, blog posts, testimonials,
+  offices** — fetched at request/build time via `lib/cms.ts`'s typed helpers
+  (`getProductCategories`, `getServices`, `getBlogPosts`, `getBlogPost`,
+  `getTestimonials`, `getOffices`). Edit these from the Strapi admin panel;
+  no code change or redeploy needed. `lib/cms.ts` also defines the TS types
+  (`Product`, `ProductCategory`, `Service`, `BlogPost`, `Testimonial`,
+  `Office`) consumed across the app.
+
+A few things still live in `lib/data/` — low-churn "site config" rather than
+day-to-day editorial content:
 
 - **`company.ts`** — name, tagline, phone, email, address, WhatsApp number,
   store URL, social links. Every page reads from here, so updating contact
   info means editing one file.
-- **`products.ts`** — an array of categories, each with a list of products.
-  Each product/category has a `name`, `description`, and an `icon` (a key
-  into `components/ui/Icon.tsx`'s icon map — see below).
-- **`services.ts`** — an array of services, each with a `name`, `description`,
-  a bullet list of `features`, and an `icon`.
+- **`portfolio.ts`, `stats.ts`, `training.ts`, `clientLogos.ts`** — same
+  static-file pattern as before. Candidates to move into Strapi later using
+  the same pattern as the content types above, if they start changing often
+  enough to be worth it.
 
 ### Why icons instead of photos
 
-There are no product photos yet. Rather than link to broken/placeholder image
-files (which look unfinished to a visitor), every product and category uses a
-Lucide icon in a colored badge. This is intentional and looks deliberate
-rather than "under construction."
-
-**To switch to real photos later:** add an `image: string` field to the
-`Product`/`ProductCategory` types in `lib/data/products.ts`, drop images in
-`public/images/`, and swap the `<Icon>` usage in `ProductCard.tsx` and
-`CategorySection.tsx` for a Next.js `<Image>`.
+Product/service/testimonial/office photos are optional (`image`/`photo`
+fields in Strapi, `undefined` until set). Rather than link to broken/
+placeholder image files (which look unfinished to a visitor), everything
+falls back to a Lucide icon in a colored badge, or `components/ui/ImageSlot.tsx`'s
+dashed-border empty state, until a real photo is uploaded in the Strapi media
+library. This is intentional and looks deliberate rather than "under
+construction."
 
 ## 5. How to add content
 
-**Add a product:** open `lib/data/products.ts`, find the right category's
-`products` array, and add an object with `slug`, `name`, `description`, and
-`icon` (pick any key from `components/ui/Icon.tsx`, or add a new one there
-first if none fits — Lucide has hundreds of icons available).
-
-**Add a whole category:** add a new object to the `productCategories` array
-in the same file, following the shape of the existing ones. It automatically
-appears on the homepage, the Products page, and the footer's category list.
-
-**Add a service:** same idea, in `lib/data/services.ts`.
+**Add/edit a product, service, blog post, testimonial, or office:** use the
+Strapi admin panel (corporate-portfolio-cms, §7) — Content Manager → pick
+the type → create or edit an entry. Changes appear on the site within the
+`fetch` revalidation window (60s) used by `lib/cms.ts`.
 
 **Update contact info, store link, or socials:** edit `lib/data/company.ts`.
 Every page (header, footer, contact page) pulls from this one file.
@@ -114,12 +118,15 @@ npm run test                 # Vitest
 npm run build                # production build
 ```
 
-**Environment variables** (`.env.example` documents both):
+**Environment variables** (`.env.example` documents all of them):
 - `NEXT_PUBLIC_SITE_URL` — used for SEO metadata, sitemap, robots.txt.
 - `NEXT_PUBLIC_API_URL` — base URL of the corporate-portfolio-api backend.
+- `STRAPI_URL` — base URL of the corporate-portfolio-cms Strapi instance.
+- `STRAPI_API_TOKEN` — read-only Strapi API token (§7).
 
-Both are read in exactly one place, `lib/env.ts`, which groups them into
-`SITE_CONFIG` (`SITE_CONFIG.URL`) and `API_CONFIG` (`API_CONFIG.URL`) — the
+These are read in exactly one place, `lib/env.ts`, which groups them into
+`SITE_CONFIG` (`SITE_CONFIG.URL`), `API_CONFIG` (`API_CONFIG.URL`), and
+`CMS_CONFIG` (`CMS_CONFIG.URL`, `CMS_CONFIG.API_TOKEN`) — the
 rest of the app imports these config objects instead of touching
 `process.env` directly. Related env vars go in the same config object (e.g.
 an SMTP config would be `SMTP_CONFIG = { HOST, PORT }`, not separate
@@ -143,7 +150,37 @@ real values, not the defaults.
 settings. Domain hookup (pointing the registered domain at Vercel) is a DNS
 step done after the first deploy, from the Vercel project's "Domains" tab.
 
-## 7. How the contact form works
+## 7. How the CMS works
+
+Product/service/blog/testimonial/office content is fetched from
+**corporate-portfolio-cms**, a separate Strapi 5 repo/deployment with its
+own database (SQLite locally, Postgres/MySQL in production) — same
+separate-repo-per-service pattern as the contact-form backend (§8).
+
+- **`lib/cms.ts`** is the single client: typed helpers per content type
+  (`getProductCategories`, `getServices`, `getBlogPosts`, `getBlogPost`,
+  `getTestimonials`, `getOffices`), each wrapping a `fetch` to Strapi's REST
+  API with the `STRAPI_API_TOKEN` bearer token and `next: { revalidate: 60 }`
+  (ISR — content edited in Strapi appears within 60s, no redeploy). Components
+  never call `fetch` against Strapi directly, same rule as `lib/api-client.ts`
+  for the backend.
+- **Server vs. client components:** most consumers are Server Components and
+  call `await getX()` directly. A few are client components (`Header.tsx`,
+  `ProductShowcase.tsx`, `ContactForm.tsx`) — those receive the fetched data
+  as props from their nearest Server Component ancestor (`app/layout.tsx` for
+  Header, `app/page.tsx` for ProductShowcase, `app/contact/page.tsx` for
+  ContactForm) instead of fetching themselves, since Strapi calls must happen
+  server-side.
+- **Media:** `image`/`photo` fields are optional Strapi media relations.
+  `lib/cms.ts`'s `mediaUrl()` helper turns Strapi's relative upload path into
+  an absolute URL; when unset, components fall back to an icon badge or
+  `components/ui/ImageSlot.tsx`'s empty state (see §4).
+- **`STRAPI_URL`/`STRAPI_API_TOKEN`** — read via `CMS_CONFIG` in `lib/env.ts`,
+  same required-in-production/dev-default pattern as every other env var
+  here. The token is a **read-only** Strapi API token (Settings → API Tokens
+  in the Strapi admin) — never use an admin or full-access token here.
+
+## 8. How the contact form works
 
 The contact form's server-side logic is **not in this repo** — it's a
 separate deployment, [corporate-portfolio-api](../corporate-portfolio-api),
@@ -178,22 +215,25 @@ sets CORS headers on every response (see its `lib/cors.ts`) and its
 `lib/endpoints.ts`, and call it via `apiClient` (`lib/api-client.ts`) —
 don't hardcode API paths or call `fetch` directly in components.
 
-**No database, no third-party SDK client in this repo:** this frontend
-doesn't hold any credentials or open any external connections itself (see
-§9). The one external connection — Resend, for sending contact-form
-emails — lives entirely in corporate-portfolio-api's `lib/resend.ts`, which
-already builds a single shared client instance instead of constructing one
-per file. If this frontend ever needs its own external service client
-(analytics SDK, etc.), follow the same pattern: one module that constructs
-the client once and exports the instance, imported wherever it's needed.
+**Credentials in this repo:** the frontend holds one secret, `STRAPI_API_TOKEN`
+(read-only, §7). The one external write-side connection — Resend, for sending
+contact-form emails — lives entirely in corporate-portfolio-api's
+`lib/resend.ts`, which already builds a single shared client instance instead
+of constructing one per file. If this frontend ever needs its own external
+service client (analytics SDK, etc.), follow the same pattern: one module
+that constructs the client once and exports the instance, imported wherever
+it's needed.
 
-## 8. Future extension points
+## 9. Future extension points
 
-- **Real product photos** — see §4.
-- **CMS for content** — if editing `lib/data/*.ts` files directly becomes
-  inconvenient for non-developers, migrate to a headless CMS (e.g. Sanity,
-  Contentful) that exposes the same shape of data; only the fetching layer in
-  each page needs to change, not the components.
+- **Real product/testimonial/office photos** — see §4 and §7. Upload in the
+  Strapi media library; no code change needed.
+- **More content types in the CMS** — `portfolio.ts`, `stats.ts`,
+  `training.ts`, `clientLogos.ts` (§4) are the remaining candidates, using the
+  same content-type + `lib/cms.ts` helper pattern as §7.
+- **On-demand revalidation** — currently ISR (60s) per §7. A Strapi webhook
+  calling a Next.js Route Handler that runs `revalidatePath`/`revalidateTag`
+  would make edits appear instantly instead of within 60s.
 - **Domain** — connect via Vercel's Domains tab once the site is live (see §6).
 - **Linking the real online store** — update `storeUrl` in
   `lib/data/company.ts`; every "Visit Our Store" / "Shop on our Store" link
@@ -202,13 +242,15 @@ the client once and exports the instance, imported wherever it's needed.
   `app/layout.tsx` once the domain is live, to see which product categories
   and services get the most interest.
 
-## 9. Decision log
+## 10. Decision log
 
-- **No database.** The site is informational, not transactional — a database
-  would add operational overhead (hosting, backups, migrations) for content
-  that changes rarely and doesn't need to be queried dynamically.
-- **SQLite/Postgres were considered and rejected** for the same reason — there
-  is no transactional data to store.
+- **No database in this repo.** Content that needs a database now lives in
+  corporate-portfolio-cms (Strapi, its own DB) instead — see §7. This repo
+  itself still holds no DB connection or transactional data.
+- **Strapi over Sanity/Contentful/Directus** — self-hostable (no per-seat or
+  usage-based SaaS pricing), code-first content-type modeling fits a project
+  with no pre-existing database, and it's Node/TypeScript like the rest of
+  this stack.
 - **Icons over placeholder photos** — see §4. A deliberate design choice, not
   a shortcut.
 - **Resend over a full email service/CMS** — the contact form is the only
@@ -220,4 +262,4 @@ the client once and exports the instance, imported wherever it's needed.
   Deliberate: keeps this repo's deploy (static-leaning marketing site) decoupled
   from backend infrastructure changes, and gives the backend its own
   versioning/deployment lifecycle. The trade-off is the duplicated Zod schema
-  (see §7) and a CORS hop that a same-repo API route wouldn't need.
+  (see §8) and a CORS hop that a same-repo API route wouldn't need.

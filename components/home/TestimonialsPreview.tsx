@@ -5,13 +5,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
 import { cn } from "@/lib/cn";
-import { testimonials } from "@/lib/data/testimonials";
+import { getTestimonials, type Testimonial } from "@/lib/cms";
 
-// Two full copies of the set keep the marquee loop seamless — a single copy
-// runs out partway across a wide screen, leaving a blank gap before it wraps.
-const track = [...testimonials, ...testimonials];
-
-function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[number] }) {
+function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <div className="flex w-[320px] shrink-0 flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm">
       <div className="flex items-center gap-0.5">
@@ -56,7 +52,12 @@ function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[n
   );
 }
 
-export function TestimonialsPreview() {
+export async function TestimonialsPreview() {
+  const testimonials = await getTestimonials();
+  // Two full copies of the set keep the marquee loop seamless — a single copy
+  // runs out partway across a wide screen, leaving a blank gap before it wraps.
+  const track = [...testimonials, ...testimonials];
+
   return (
     <section className="overflow-hidden bg-slate-900 py-16 sm:py-24">
       <Container>

@@ -2,14 +2,17 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { LinkButton } from "@/components/ui/Button";
-import { productCategories } from "@/lib/data/products";
+import { getProductCategories } from "@/lib/cms";
 
-// The single category given the full-bleed "deep dive" treatment on the
-// home page — change this slug to feature a different flagship category.
-const flagship = productCategories.find((c) => c.slug === "networking") ?? productCategories[0];
-const flagshipProduct = flagship.products[0];
+export async function ProductDeepDive() {
+  const productCategories = await getProductCategories();
+  // The single category given the full-bleed "deep dive" treatment on the
+  // home page — change this slug to feature a different flagship category.
+  const flagship = productCategories.find((c) => c.slug === "networking") ?? productCategories[0];
+  const flagshipProduct = flagship?.products[0];
 
-export function ProductDeepDive() {
+  if (!flagship || !flagshipProduct) return null;
+
   return (
     <section className="relative overflow-hidden bg-slate-900 py-20 sm:py-28">
       <div

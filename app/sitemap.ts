@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { blogPosts } from "@/lib/data/blog";
+import { getBlogPosts } from "@/lib/cms";
 import { SITE_CONFIG } from "@/lib/env";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const blogPosts = await getBlogPosts();
   const routes = [
     "",
     "/products",

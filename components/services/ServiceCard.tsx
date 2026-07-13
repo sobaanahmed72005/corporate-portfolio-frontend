@@ -3,7 +3,7 @@ import { Check, ArrowRight } from "lucide-react";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
 import { cn } from "@/lib/cn";
-import type { Service } from "@/lib/data/services";
+import type { Service } from "@/lib/cms";
 
 export function ServiceCard({ service }: { service: Service }) {
   return (

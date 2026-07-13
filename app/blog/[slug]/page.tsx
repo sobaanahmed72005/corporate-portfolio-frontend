@@ -4,18 +4,19 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarDays, User } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { CtaBanner } from "@/components/home/CtaBanner";
-import { blogPosts } from "@/lib/data/blog";
+import { getBlogPost, getBlogPosts } from "@/lib/cms";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const blogPosts = await getBlogPosts();
   return blogPosts.map((post) => ({ slug: post.slug }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
-}): Metadata {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+}): Promise<Metadata> {
+  const post = await getBlogPost(params.slug);
   if (!post) return {};
   return {
     title: post.title,
@@ -23,8 +24,8 @@ export function generateMetadata({
   };
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = await getBlogPost(params.slug);
   if (!post) notFound();
 
   return (
@@ -59,7 +60,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
       <Container className="max-w-3xl py-16">
         <div className="space-y-5 text-base leading-relaxed text-slate-700">
-          {post.body.map((paragraph, i) => (
+          {post.body.split(/\n{2,}/).map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
           ))}
         </div>

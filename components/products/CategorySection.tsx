@@ -1,6 +1,6 @@
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { ProductCard } from "@/components/products/ProductCard";
-import type { ProductCategory } from "@/lib/data/products";
+import type { ProductCategory } from "@/lib/cms";
 
 export function CategorySection({ category }: { category: ProductCategory }) {
   return (

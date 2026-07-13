@@ -3,14 +3,16 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays, User } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { company } from "@/lib/data/company";
-import { blogPosts } from "@/lib/data/blog";
+import { getBlogPosts } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Blog",
   description: `Practical guides on CCTV, solar, networking, and IT accessories from ${company.name}.`,
 };
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const blogPosts = await getBlogPosts();
+
   return (
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">

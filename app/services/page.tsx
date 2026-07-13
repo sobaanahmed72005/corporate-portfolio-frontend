@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { LinkButton } from "@/components/ui/Button";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { CtaBanner } from "@/components/home/CtaBanner";
-import { services } from "@/lib/data/services";
+import { getServices } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -11,7 +11,9 @@ export const metadata: Metadata = {
     "CCTV installation, solar panel setup, networking, bulk supply, and maintenance services from IT Solutions Trade & Service.",
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices();
+
   return (
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">

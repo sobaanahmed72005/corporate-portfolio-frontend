@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { company } from "@/lib/data/company";
-import { productCategories } from "@/lib/data/products";
+import { getProductCategories } from "@/lib/cms";
 
 /**
  * Both optional and unset by default — this site doesn't have a hero video
@@ -15,7 +15,9 @@ import { productCategories } from "@/lib/data/products";
 const videoSrc: string | undefined = undefined;
 const heroImageSrc: string | undefined = undefined;
 
-export function Hero() {
+export async function Hero() {
+  const productCategories = await getProductCategories();
+
   return (
     <section className="relative overflow-hidden bg-ink-950">
       {videoSrc ? (

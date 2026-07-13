@@ -5,14 +5,16 @@ import { CtaBanner } from "@/components/home/CtaBanner";
 import { GRADIENTS } from "@/components/ui/gradients";
 import { cn } from "@/lib/cn";
 import { company } from "@/lib/data/company";
-import { testimonials } from "@/lib/data/testimonials";
+import { getTestimonials } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Testimonials & Reviews",
   description: `What clients say about working with ${company.name} on CCTV, solar, networking, and supply projects.`,
 };
 
-export default function TestimonialsPage() {
+export default async function TestimonialsPage() {
+  const testimonials = await getTestimonials();
+
   return (
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">

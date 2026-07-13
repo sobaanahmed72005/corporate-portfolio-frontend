@@ -24,3 +24,8 @@ export const SITE_CONFIG = {
 export const API_CONFIG = {
   URL: requireEnv("NEXT_PUBLIC_API_URL", process.env.NEXT_PUBLIC_API_URL, "http://localhost:4000"),
 } as const;
+
+export const CMS_CONFIG = {
+  URL: requireEnv("STRAPI_URL", process.env.STRAPI_URL, "http://localhost:1337"),
+  API_TOKEN: requireEnv("STRAPI_API_TOKEN", process.env.STRAPI_API_TOKEN, ""),
+} as const;

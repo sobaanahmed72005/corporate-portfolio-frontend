@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { company } from "@/lib/data/company";
 import { SITE_CONFIG } from "@/lib/env";
+import { getProductCategories, getServices } from "@/lib/cms";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -39,11 +40,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [productCategories, services] = await Promise.all([getProductCategories(), getServices()]);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -71,9 +74,9 @@ export default function RootLayout({
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Header />
+        <Header productCategories={productCategories} services={services} />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer productCategories={productCategories} />
       </body>
     </html>
   );

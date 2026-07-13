@@ -8,9 +8,8 @@ import { Container } from "@/components/ui/Container";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu";
 import { company } from "@/lib/data/company";
-import { productCategories } from "@/lib/data/products";
-import { services } from "@/lib/data/services";
 import { portfolioCategories } from "@/lib/data/portfolio";
+import type { ProductCategory, Service } from "@/lib/cms";
 import { cn } from "@/lib/cn";
 
 const navLinks = [
@@ -23,22 +22,6 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const productMenuItems: MegaMenuItem[] = productCategories.map((cat) => ({
-  href: `/products#${cat.slug}`,
-  title: cat.name,
-  description: cat.description,
-  icon: cat.icon,
-  gradient: cat.gradient,
-}));
-
-const serviceMenuItems: MegaMenuItem[] = services.map((service) => ({
-  href: `/services#${service.slug}`,
-  title: service.name,
-  description: service.description,
-  icon: service.icon,
-  gradient: service.gradient,
-}));
-
 const portfolioMenuItems: MegaMenuItem[] = portfolioCategories.map((cat) => ({
   href: `/portfolio#${cat.slug}`,
   title: cat.name,
@@ -47,9 +30,31 @@ const portfolioMenuItems: MegaMenuItem[] = portfolioCategories.map((cat) => ({
   gradient: cat.gradient,
 }));
 
-export function Header() {
+export function Header({
+  productCategories,
+  services,
+}: {
+  productCategories: ProductCategory[];
+  services: Service[];
+}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+
+  const productMenuItems: MegaMenuItem[] = productCategories.map((cat) => ({
+    href: `/products#${cat.slug}`,
+    title: cat.name,
+    description: cat.description,
+    icon: cat.icon,
+    gradient: cat.gradient,
+  }));
+
+  const serviceMenuItems: MegaMenuItem[] = services.map((service) => ({
+    href: `/services#${service.slug}`,
+    title: service.name,
+    description: service.description,
+    icon: service.icon,
+    gradient: service.gradient,
+  }));
 
   return (
     <>

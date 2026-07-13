@@ -4,11 +4,14 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
 import { cn } from "@/lib/cn";
-import { blogPosts } from "@/lib/data/blog";
+import { getBlogPosts } from "@/lib/cms";
 
-const [featured, ...rest] = blogPosts.slice(0, 4);
+export async function LatestUpdates() {
+  const blogPosts = await getBlogPosts();
+  const [featured, ...rest] = blogPosts.slice(0, 4);
 
-export function LatestUpdates() {
+  if (!featured) return null;
+
   return (
     <section className="bg-black py-16 sm:py-24">
       <Container>

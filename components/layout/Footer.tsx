@@ -4,9 +4,9 @@ import { Container } from "@/components/ui/Container";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { company } from "@/lib/data/company";
-import { productCategories } from "@/lib/data/products";
+import type { ProductCategory } from "@/lib/cms";
 
-export function Footer() {
+export function Footer({ productCategories }: { productCategories: ProductCategory[] }) {
   const year = new Date().getFullYear();
 
   return (

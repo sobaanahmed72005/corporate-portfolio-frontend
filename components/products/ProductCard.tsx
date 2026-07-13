@@ -1,7 +1,7 @@
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { GradientPillLink } from "@/components/ui/GradientPillLink";
 import type { GradientName } from "@/components/ui/gradients";
-import type { Product } from "@/lib/data/products";
+import type { Product } from "@/lib/cms";
 import { company } from "@/lib/data/company";
 
 export function ProductCard({

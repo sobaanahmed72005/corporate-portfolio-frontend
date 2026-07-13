@@ -3,9 +3,11 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
-import { services } from "@/lib/data/services";
+import { getServices } from "@/lib/cms";
 
-export function ServicesOverview() {
+export async function ServicesOverview() {
+  const services = await getServices();
+
   return (
     <section className="bg-slate-900 py-16 sm:py-24">
       <Container>
