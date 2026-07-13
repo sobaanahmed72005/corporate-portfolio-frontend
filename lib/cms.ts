@@ -89,6 +89,25 @@ export type PortfolioCategory = {
   projects: PortfolioProject[];
 };
 
+export type Stat = {
+  label: string;
+  value: number;
+  suffix: string;
+};
+
+export type Course = {
+  slug: string;
+  name: string;
+  description: string;
+  icon: IconName;
+  gradient: GradientName;
+};
+
+export type ClientLogo = {
+  alt: string;
+  src?: string;
+};
+
 type StrapiMedia = { url: string } | null;
 type StrapiListResponse<T> = { data: T[] };
 
@@ -238,5 +257,27 @@ export async function getPortfolioCategories(): Promise<PortfolioCategory[]> {
       image: mediaUrl(project.image),
       video: mediaUrl(project.video),
     })),
+  }));
+}
+
+export async function getStats(): Promise<Stat[]> {
+  const { data } = await cmsFetch<StrapiListResponse<Stat>>("/stats?sort=id:asc&pagination[pageSize]=100");
+  return data;
+}
+
+export async function getCourses(): Promise<Course[]> {
+  const { data } = await cmsFetch<StrapiListResponse<Course>>("/courses?sort=id:asc&pagination[pageSize]=100");
+  return data;
+}
+
+type RawClientLogo = { alt: string; logo: StrapiMedia };
+
+export async function getClientLogos(): Promise<ClientLogo[]> {
+  const { data } = await cmsFetch<StrapiListResponse<RawClientLogo>>(
+    "/client-logos?populate=logo&sort=id:asc&pagination[pageSize]=100",
+  );
+  return data.map((entry) => ({
+    alt: entry.alt,
+    src: mediaUrl(entry.logo),
   }));
 }

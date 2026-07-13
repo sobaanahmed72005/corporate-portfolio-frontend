@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Container } from "@/components/ui/Container";
-import { stats } from "@/lib/data/stats";
+import type { Stat } from "@/lib/cms";
 
 const DURATION_MS = 1000;
 
@@ -27,7 +27,7 @@ function useCountUp(target: number, active: boolean) {
   return value;
 }
 
-function Counter({ stat }: { stat: (typeof stats)[number] }) {
+function Counter({ stat }: { stat: Stat }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(false);
 
@@ -60,7 +60,7 @@ function Counter({ stat }: { stat: (typeof stats)[number] }) {
   );
 }
 
-export function StatsCounter() {
+export function StatsCounter({ stats }: { stats: Stat[] }) {
   return (
     <section className="bg-ink-950 py-14 sm:py-16">
       <Container>

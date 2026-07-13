@@ -1,12 +1,13 @@
 import { Container } from "@/components/ui/Container";
 import { ImageSlot } from "@/components/ui/ImageSlot";
-import { clientLogos } from "@/lib/data/clientLogos";
+import { getClientLogos } from "@/lib/cms";
 
-// Two full copies keep the marquee loop seamless (see TrustTicker's Row
-// component for the same technique).
-const track = [...clientLogos, ...clientLogos];
+export async function LogoWall() {
+  const clientLogos = await getClientLogos();
+  // Two full copies keep the marquee loop seamless (see TrustTicker's Row
+  // component for the same technique).
+  const track = [...clientLogos, ...clientLogos];
 
-export function LogoWall() {
   return (
     <section className="overflow-hidden bg-black py-14 sm:py-20">
       <Container>
@@ -18,7 +19,7 @@ export function LogoWall() {
         <div className="flex w-max shrink-0 gap-6 animate-marquee">
           {track.map((logo, i) => (
             <ImageSlot
-              key={`${logo.id}-${i}`}
+              key={`${logo.alt}-${i}`}
               src={logo.src}
               alt={logo.alt}
               aspect="wide"

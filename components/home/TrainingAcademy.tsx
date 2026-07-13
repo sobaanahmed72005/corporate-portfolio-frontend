@@ -2,9 +2,11 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { LinkButton } from "@/components/ui/Button";
-import { courses } from "@/lib/data/training";
+import { getCourses } from "@/lib/cms";
 
-export function TrainingAcademy() {
+export async function TrainingAcademy() {
+  const courses = await getCourses();
+
   return (
     <section className="bg-slate-900 py-16 sm:py-24">
       <Container>

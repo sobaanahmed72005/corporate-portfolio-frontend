@@ -14,15 +14,15 @@ import { TrainingAcademy } from "@/components/home/TrainingAcademy";
 import { TestimonialsPreview } from "@/components/home/TestimonialsPreview";
 import { OfficesSection } from "@/components/home/OfficesSection";
 import { CtaBanner } from "@/components/home/CtaBanner";
-import { getProductCategories } from "@/lib/cms";
+import { getProductCategories, getStats } from "@/lib/cms";
 
 export default async function Home() {
-  const productCategories = await getProductCategories();
+  const [productCategories, stats] = await Promise.all([getProductCategories(), getStats()]);
 
   return (
     <>
       <Hero />
-      <StatsCounter />
+      <StatsCounter stats={stats} />
       <ProductSpotlight />
       <TrustTicker />
       <ProductShowcase productCategories={productCategories} />
