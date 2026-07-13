@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -6,14 +7,25 @@ import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { company } from "@/lib/data/company";
 import type { ProductCategory } from "@/lib/cms";
 
-export function Footer({ productCategories }: { productCategories: ProductCategory[] }) {
+export function Footer({
+  productCategories,
+  logo,
+}: {
+  productCategories: ProductCategory[];
+  logo?: string;
+}) {
   const year = new Date().getFullYear();
 
   return (
     <footer className="bg-ink-950 text-slate-300">
       <Container className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div>
-          <p className="font-display text-lg font-bold text-white">{company.name}</p>
+          <div className="flex items-center gap-2">
+            {logo && (
+              <Image src={logo} alt={company.name} width={28} height={28} className="h-7 w-7 object-contain" />
+            )}
+            <p className="font-display text-lg font-bold text-white">{company.name}</p>
+          </div>
           <p className="mt-3 text-sm leading-relaxed text-slate-400">
             {company.description}
           </p>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ShoppingBag, Phone, Mail } from "lucide-react";
@@ -25,10 +26,12 @@ export function Header({
   productCategories,
   services,
   portfolioCategories,
+  logo,
 }: {
   productCategories: ProductCategory[];
   services: Service[];
   portfolioCategories: PortfolioCategory[];
+  logo?: string;
 }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -94,9 +97,19 @@ export function Header({
       <header className="sticky top-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur">
         <Container className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2 font-display font-bold text-white">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-sm text-white">
-              IT
-            </span>
+            {logo ? (
+              <Image
+                src={logo}
+                alt={company.name}
+                width={36}
+                height={36}
+                className="h-9 w-9 rounded-full object-contain"
+              />
+            ) : (
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-sm text-white">
+                IT
+              </span>
+            )}
             <span className="hidden text-base sm:inline">{company.shortName}</span>
           </Link>
 

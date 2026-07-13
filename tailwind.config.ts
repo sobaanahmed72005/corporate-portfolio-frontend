@@ -57,8 +57,24 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-rubik)", "system-ui", "sans-serif"],
-        display: ["var(--font-outfit)", "system-ui", "sans-serif"],
+        // Aliased in app/layout.tsx to whichever font pairing (lib/theme.ts's
+        // FONT_PAIRINGS) the theme-setting fontPairing field selected.
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        display: ["var(--font-heading)", "system-ui", "sans-serif"],
+      },
+      borderRadius: {
+        // Every existing rounded-lg/xl/2xl/3xl class site-wide becomes
+        // theme-controlled via radiusStyle — rounded-full is deliberately
+        // untouched (pills/avatars are structural, not a "roundness" choice).
+        lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
+        "2xl": "var(--radius-2xl)",
+        "3xl": "var(--radius-3xl)",
+      },
+      boxShadow: {
+        md: "var(--shadow-md)",
+        lg: "var(--shadow-lg)",
+        xl: "var(--shadow-xl)",
       },
       keyframes: {
         marquee: {

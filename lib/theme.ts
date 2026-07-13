@@ -117,3 +117,72 @@ export function buildThemeCssVars(colors: ThemeColors): string {
 
   return declarations.join("");
 }
+
+/**
+ * next/font/google requires a static import per font — Strapi can't pick an
+ * arbitrary family at runtime. Instead every pairing's fonts are statically
+ * imported in app/layout.tsx, and this map just aliases --font-heading and
+ * --font-body to whichever pairing's already-loaded CSS variables the enum
+ * value in Strapi selected.
+ */
+export const FONT_PAIRINGS = {
+  "Modern Sans (Outfit + Rubik)": { heading: "--font-outfit", body: "--font-rubik" },
+  "Editorial Serif (Playfair Display + Source Sans 3)": {
+    heading: "--font-playfair",
+    body: "--font-source-sans",
+  },
+  "Technical Grotesk (Space Grotesk + Inter)": { heading: "--font-space-grotesk", body: "--font-inter" },
+  "Classic Corporate (Merriweather + Inter)": { heading: "--font-merriweather", body: "--font-inter" },
+} as const;
+
+export type FontPairingName = keyof typeof FONT_PAIRINGS;
+
+export function buildFontCssVars(pairing: FontPairingName): string {
+  const p = FONT_PAIRINGS[pairing] ?? FONT_PAIRINGS["Modern Sans (Outfit + Rubik)"];
+  return `--font-heading:var(${p.heading});--font-body:var(${p.body});`;
+}
+
+/**
+ * Rather than migrating every rounded-xl/shadow-lg call site across the app,
+ * tailwind.config.ts retargets its own borderRadius/boxShadow scale keys to
+ * these CSS vars, so every existing utility class becomes theme-controlled
+ * with zero component edits. The "current default" values match Tailwind's
+ * own stock scale exactly, so the default rollout is visually a no-op.
+ */
+export const RADIUS_STYLES = {
+  "Sharp (minimal rounding)": { lg: "0.25rem", xl: "0.375rem", "2xl": "0.5rem", "3xl": "0.75rem" },
+  "Soft (current default)": { lg: "0.5rem", xl: "0.75rem", "2xl": "1rem", "3xl": "1.5rem" },
+  "Rounded (pill-like)": { lg: "0.75rem", xl: "1.25rem", "2xl": "1.75rem", "3xl": "2.5rem" },
+} as const;
+
+export type RadiusStyleName = keyof typeof RADIUS_STYLES;
+
+export const SHADOW_STYLES = {
+  "Flat (minimal shadow)": {
+    md: "0 1px 2px -1px rgb(0 0 0 / 0.06)",
+    lg: "0 2px 4px -2px rgb(0 0 0 / 0.08)",
+    xl: "0 4px 6px -2px rgb(0 0 0 / 0.08)",
+  },
+  "Subtle (current default)": {
+    md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+    xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+  },
+  "Bold (pronounced depth)": {
+    md: "0 8px 12px -2px rgb(0 0 0 / 0.18)",
+    lg: "0 16px 24px -4px rgb(0 0 0 / 0.22)",
+    xl: "0 28px 36px -8px rgb(0 0 0 / 0.26)",
+  },
+} as const;
+
+export type ShadowStyleName = keyof typeof SHADOW_STYLES;
+
+export function buildShapeCssVars(radiusStyle: RadiusStyleName, shadowStyle: ShadowStyleName): string {
+  const radius = RADIUS_STYLES[radiusStyle] ?? RADIUS_STYLES["Soft (current default)"];
+  const shadow = SHADOW_STYLES[shadowStyle] ?? SHADOW_STYLES["Subtle (current default)"];
+
+  const declarations: string[] = [];
+  for (const [key, value] of Object.entries(radius)) declarations.push(`--radius-${key}:${value};`);
+  for (const [key, value] of Object.entries(shadow)) declarations.push(`--shadow-${key}:${value};`);
+  return declarations.join("");
+}

@@ -9,6 +9,7 @@
 import { CMS_CONFIG } from "@/lib/env";
 import type { IconName } from "@/components/ui/Icon";
 import type { GradientName } from "@/components/ui/gradients";
+import type { FontPairingName, RadiusStyleName, ShadowStyleName } from "@/lib/theme";
 
 export type Product = {
   slug: string;
@@ -286,27 +287,53 @@ export type ThemeSettings = {
   brandColor: string;
   accentColor: string;
   inkColor: string;
+  fontPairing: FontPairingName;
+  radiusStyle: RadiusStyleName;
+  shadowStyle: ShadowStyleName;
+  logo?: string;
+  favicon?: string;
 };
 
-// Matches the site's actual current hardcoded colors (tailwind.config.ts) —
-// used if Strapi has no theme-setting entry yet, or is unreachable, so the
-// site never renders unstyled.
+// Matches the site's actual current hardcoded look — used if Strapi has no
+// theme-setting entry yet, or is unreachable, so the site never renders
+// unstyled or with a broken font/shape choice.
 const DEFAULT_THEME: ThemeSettings = {
   brandColor: "#0324FF",
   accentColor: "#FFA31A",
   inkColor: "#000000",
+  fontPairing: "Modern Sans (Outfit + Rubik)",
+  radiusStyle: "Soft (current default)",
+  shadowStyle: "Subtle (current default)",
+};
+
+type RawThemeSettings = {
+  brandColor: string;
+  accentColor: string;
+  inkColor: string;
+  fontPairing: FontPairingName;
+  radiusStyle: RadiusStyleName;
+  shadowStyle: ShadowStyleName;
+  logo: StrapiMedia;
+  favicon: StrapiMedia;
 };
 
 type StrapiSingleResponse<T> = { data: T | null };
 
 export async function getThemeSettings(): Promise<ThemeSettings> {
   try {
-    const { data } = await cmsFetch<StrapiSingleResponse<ThemeSettings>>("/theme-setting");
+    const { data } = await cmsFetch<StrapiSingleResponse<RawThemeSettings>>(
+      "/theme-setting?populate[0]=logo&populate[1]=favicon",
+    );
     if (!data) return DEFAULT_THEME;
     return {
       brandColor: data.brandColor || DEFAULT_THEME.brandColor,
       accentColor: data.accentColor || DEFAULT_THEME.accentColor,
       inkColor: data.inkColor || DEFAULT_THEME.inkColor,
+      fontPairing: data.fontPairing || DEFAULT_THEME.fontPairing,
+      radiusStyle: data.radiusStyle || DEFAULT_THEME.radiusStyle,
+      shadowStyle: data.shadowStyle || DEFAULT_THEME.shadowStyle,
+      logo: mediaUrl(data.logo),
+      favicon: mediaUrl(data.favicon),
     };
   } catch {
     return DEFAULT_THEME;
