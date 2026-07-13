@@ -5,7 +5,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { company } from "@/lib/data/company";
 import { SITE_CONFIG } from "@/lib/env";
-import { getProductCategories, getServices, getPortfolioCategories } from "@/lib/cms";
+import { getProductCategories, getServices, getPortfolioCategories, getThemeSettings } from "@/lib/cms";
+import { buildThemeCssVars } from "@/lib/theme";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -45,11 +46,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [productCategories, services, portfolioCategories] = await Promise.all([
+  const [productCategories, services, portfolioCategories, themeSettings] = await Promise.all([
     getProductCategories(),
     getServices(),
     getPortfolioCategories(),
+    getThemeSettings(),
   ]);
+  const themeCssVars = buildThemeCssVars({
+    brand: themeSettings.brandColor,
+    accent: themeSettings.accentColor,
+    ink: themeSettings.inkColor,
+  });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -70,6 +77,15 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        {/* Brand colors from Strapi (theme-setting): every color utility class
+            site-wide reads these via tailwind.config.ts's var() references,
+            so a color change in Strapi recolors the whole site without a code change. */}
+        <style
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: `:root{${themeCssVars}}` }}
+        />
+      </head>
       <body
         className={`${rubik.variable} ${outfit.variable} font-sans flex min-h-screen flex-col bg-background text-foreground antialiased`}
       >

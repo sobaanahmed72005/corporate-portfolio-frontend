@@ -281,3 +281,34 @@ export async function getClientLogos(): Promise<ClientLogo[]> {
     src: mediaUrl(entry.logo),
   }));
 }
+
+export type ThemeSettings = {
+  brandColor: string;
+  accentColor: string;
+  inkColor: string;
+};
+
+// Matches the site's actual current hardcoded colors (tailwind.config.ts) —
+// used if Strapi has no theme-setting entry yet, or is unreachable, so the
+// site never renders unstyled.
+const DEFAULT_THEME: ThemeSettings = {
+  brandColor: "#0324FF",
+  accentColor: "#FFA31A",
+  inkColor: "#000000",
+};
+
+type StrapiSingleResponse<T> = { data: T | null };
+
+export async function getThemeSettings(): Promise<ThemeSettings> {
+  try {
+    const { data } = await cmsFetch<StrapiSingleResponse<ThemeSettings>>("/theme-setting");
+    if (!data) return DEFAULT_THEME;
+    return {
+      brandColor: data.brandColor || DEFAULT_THEME.brandColor,
+      accentColor: data.accentColor || DEFAULT_THEME.accentColor,
+      inkColor: data.inkColor || DEFAULT_THEME.inkColor,
+    };
+  } catch {
+    return DEFAULT_THEME;
+  }
+}
