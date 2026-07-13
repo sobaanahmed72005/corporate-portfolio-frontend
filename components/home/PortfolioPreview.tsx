@@ -4,15 +4,19 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 import { cn } from "@/lib/cn";
-import { portfolioCategories } from "@/lib/data/portfolio";
+import { getPortfolioCategories } from "@/lib/cms";
 
-const featured = portfolioCategories.map((category) => ({
-  category,
-  project: category.projects[0],
-}));
+export async function PortfolioPreview() {
+  const portfolioCategories = await getPortfolioCategories();
+  const featured = portfolioCategories
+    .filter((category) => category.projects.length > 0)
+    .map((category) => ({
+      category,
+      project: category.projects[0],
+    }));
 
-export function PortfolioPreview() {
   return (
     <section className="bg-black py-16 sm:py-24">
       <Container>
@@ -30,7 +34,11 @@ export function PortfolioPreview() {
               href={`/portfolio#${category.slug}`}
               className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/10"
             >
-              <GradientIconBadge icon={project.icon} gradient={category.gradient} />
+              {project.image ? (
+                <ImageSlot src={project.image} alt={project.title} aspect="video" className="mb-4 -mt-2 rounded-xl" />
+              ) : (
+                <GradientIconBadge icon={project.icon} gradient={category.gradient} />
+              )}
               <h3 className="mt-4 text-base font-semibold text-white">{project.title}</h3>
               <p className="mt-2 flex-1 text-sm text-slate-400">{project.summary}</p>
               <span className="mt-4 inline-block w-fit rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-300">

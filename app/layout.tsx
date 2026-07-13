@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { company } from "@/lib/data/company";
 import { SITE_CONFIG } from "@/lib/env";
-import { getProductCategories, getServices } from "@/lib/cms";
+import { getProductCategories, getServices, getPortfolioCategories } from "@/lib/cms";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -45,7 +45,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [productCategories, services] = await Promise.all([getProductCategories(), getServices()]);
+  const [productCategories, services, portfolioCategories] = await Promise.all([
+    getProductCategories(),
+    getServices(),
+    getPortfolioCategories(),
+  ]);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -74,7 +78,7 @@ export default async function RootLayout({
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <Header productCategories={productCategories} services={services} />
+        <Header productCategories={productCategories} services={services} portfolioCategories={portfolioCategories} />
         <main className="flex-1">{children}</main>
         <Footer productCategories={productCategories} />
       </body>

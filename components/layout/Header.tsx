@@ -8,8 +8,7 @@ import { Container } from "@/components/ui/Container";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu";
 import { company } from "@/lib/data/company";
-import { portfolioCategories } from "@/lib/data/portfolio";
-import type { ProductCategory, Service } from "@/lib/cms";
+import type { ProductCategory, Service, PortfolioCategory } from "@/lib/cms";
 import { cn } from "@/lib/cn";
 
 const navLinks = [
@@ -22,20 +21,14 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const portfolioMenuItems: MegaMenuItem[] = portfolioCategories.map((cat) => ({
-  href: `/portfolio#${cat.slug}`,
-  title: cat.name,
-  description: cat.description,
-  icon: cat.icon,
-  gradient: cat.gradient,
-}));
-
 export function Header({
   productCategories,
   services,
+  portfolioCategories,
 }: {
   productCategories: ProductCategory[];
   services: Service[];
+  portfolioCategories: PortfolioCategory[];
 }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -54,6 +47,14 @@ export function Header({
     description: service.description,
     icon: service.icon,
     gradient: service.gradient,
+  }));
+
+  const portfolioMenuItems: MegaMenuItem[] = portfolioCategories.map((cat) => ({
+    href: `/portfolio#${cat.slug}`,
+    title: cat.name,
+    description: cat.description,
+    icon: cat.icon,
+    gradient: cat.gradient,
   }));
 
   return (

@@ -25,6 +25,7 @@ export type ProductCategory = {
   description: string;
   icon: IconName;
   gradient: GradientName;
+  image?: string;
   products: Product[];
 };
 
@@ -68,6 +69,26 @@ export type Office = {
   photo?: string;
 };
 
+export type PortfolioProject = {
+  slug: string;
+  title: string;
+  summary: string;
+  highlight: string;
+  icon: IconName;
+  image?: string;
+  video?: string;
+};
+
+export type PortfolioCategory = {
+  slug: string;
+  name: string;
+  description: string;
+  icon: IconName;
+  gradient: GradientName;
+  image?: string;
+  projects: PortfolioProject[];
+};
+
 type StrapiMedia = { url: string } | null;
 type StrapiListResponse<T> = { data: T[] };
 
@@ -104,12 +125,13 @@ type RawProductCategory = {
   description: string;
   icon: IconName;
   gradient: GradientName;
+  image: StrapiMedia;
   products: RawProduct[];
 };
 
 export async function getProductCategories(): Promise<ProductCategory[]> {
   const { data } = await cmsFetch<StrapiListResponse<RawProductCategory>>(
-    "/product-categories?populate[products][populate]=image&sort=id:asc&pagination[pageSize]=100",
+    "/product-categories?populate[products][populate]=image&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
   );
   return data.map((category) => ({
     slug: category.slug,
@@ -118,6 +140,7 @@ export async function getProductCategories(): Promise<ProductCategory[]> {
     description: category.description,
     icon: category.icon,
     gradient: category.gradient,
+    image: mediaUrl(category.image),
     products: category.products.map((product) => ({
       slug: product.slug,
       name: product.name,
@@ -172,5 +195,48 @@ export async function getOffices(): Promise<Office[]> {
   return data.map((office) => ({
     ...office,
     photo: mediaUrl(office.photo),
+  }));
+}
+
+type RawPortfolioProject = {
+  slug: string;
+  title: string;
+  summary: string;
+  highlight: string;
+  icon: IconName;
+  image: StrapiMedia;
+  video: StrapiMedia;
+};
+
+type RawPortfolioCategory = {
+  slug: string;
+  name: string;
+  description: string;
+  icon: IconName;
+  gradient: GradientName;
+  image: StrapiMedia;
+  projects: RawPortfolioProject[];
+};
+
+export async function getPortfolioCategories(): Promise<PortfolioCategory[]> {
+  const { data } = await cmsFetch<StrapiListResponse<RawPortfolioCategory>>(
+    "/portfolio-categories?populate[projects][populate][0]=image&populate[projects][populate][1]=video&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
+  );
+  return data.map((category) => ({
+    slug: category.slug,
+    name: category.name,
+    description: category.description,
+    icon: category.icon,
+    gradient: category.gradient,
+    image: mediaUrl(category.image),
+    projects: category.projects.map((project) => ({
+      slug: project.slug,
+      title: project.title,
+      summary: project.summary,
+      highlight: project.highlight,
+      icon: project.icon,
+      image: mediaUrl(project.image),
+      video: mediaUrl(project.video),
+    })),
   }));
 }
