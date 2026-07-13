@@ -10,11 +10,11 @@ type CommonProps = {
 
 const variantClasses = {
   // Black pill — the site's default button style.
-  primary: "bg-ink-950 text-white shadow-md shadow-ink-950/20 hover:bg-ink-800",
+  primary: "bg-ink-950 text-ink-50 shadow-md shadow-ink-950/20 hover:bg-ink-800",
   // Vivid blue pill — used for primary hero/page CTAs.
   brand: "bg-brand-600 text-white shadow-md shadow-brand-600/25 hover:bg-brand-700",
   accent: "bg-accent-400 text-white shadow-md shadow-accent-400/25 hover:bg-accent-500",
-  outline: "border-2 border-ink-950 text-ink-950 hover:bg-ink-950 hover:text-white",
+  outline: "border-2 border-ink-950 text-ink-950 hover:bg-ink-950 hover:text-ink-50",
   ghost: "text-ink-950 hover:bg-ink-50",
   // Solid white button for use on colored/dark section backgrounds.
   white: "bg-white text-ink-950 shadow-md hover:bg-slate-100",

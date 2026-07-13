@@ -21,7 +21,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
   if (!active || !featured) return null;
 
   return (
-    <section className="bg-black py-16 sm:py-24">
+    <section className="bg-ink-950 py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Products"
@@ -44,7 +44,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   "flex shrink-0 items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm font-semibold transition-colors lg:shrink",
                   category.slug === active.slug
                     ? "border-brand-600 bg-brand-600/10 text-white"
-                    : "border-white/10 bg-white/5 text-slate-300 hover:border-white/25 hover:text-white",
+                    : "border-ink-50/10 bg-ink-50/5 text-ink-200 hover:border-ink-50/25 hover:text-ink-50",
                 )}
               >
                 <GradientIconBadge icon={category.icon} gradient={category.gradient} size="sm" className="h-9 w-9 shrink-0 rounded-lg" />
@@ -97,10 +97,10 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   href={company.storeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-4 transition-colors hover:border-white/25 hover:bg-white/10"
+                  className="flex items-center gap-3 rounded-xl border border-ink-50/10 bg-ink-50/5 p-4 transition-colors hover:border-ink-50/25 hover:bg-ink-50/10"
                 >
                   <GradientIconBadge icon={product.icon} gradient={active.gradient} size="sm" />
-                  <span className="text-sm font-medium text-white">{product.name}</span>
+                  <span className="text-sm font-medium text-ink-50">{product.name}</span>
                 </a>
               ))}
             </div>

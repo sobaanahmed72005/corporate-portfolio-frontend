@@ -17,37 +17,37 @@ export function Footer({
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-ink-950 text-slate-300">
+    <footer className="bg-ink-950 text-ink-200">
       <Container className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <div className="flex items-center gap-2">
             {logo && (
               <Image src={logo} alt={company.name} width={28} height={28} className="h-7 w-7 object-contain" />
             )}
-            <p className="font-display text-lg font-bold text-white">{company.name}</p>
+            <p className="font-display text-lg font-bold text-ink-50">{company.name}</p>
           </div>
-          <p className="mt-3 text-sm leading-relaxed text-slate-400">
+          <p className="mt-3 text-sm leading-relaxed text-ink-400">
             {company.description}
           </p>
           <div className="mt-4 flex gap-3">
             <a
               href={company.social.facebook}
               aria-label="Facebook"
-              className="rounded-full bg-white/10 p-2 hover:bg-white/20"
+              className="rounded-full bg-ink-50/10 p-2 hover:bg-ink-50/20"
             >
               <FacebookIcon className="h-4 w-4" />
             </a>
             <a
               href={company.social.instagram}
               aria-label="Instagram"
-              className="rounded-full bg-white/10 p-2 hover:bg-white/20"
+              className="rounded-full bg-ink-50/10 p-2 hover:bg-ink-50/20"
             >
               <InstagramIcon className="h-4 w-4" />
             </a>
             <a
               href={company.social.linkedin}
               aria-label="LinkedIn"
-              className="rounded-full bg-white/10 p-2 hover:bg-white/20"
+              className="rounded-full bg-ink-50/10 p-2 hover:bg-ink-50/20"
             >
               <LinkedinIcon className="h-4 w-4" />
             </a>
@@ -55,29 +55,29 @@ export function Footer({
         </div>
 
         <div>
-          <p className="font-display text-sm font-semibold uppercase tracking-wide text-white">
+          <p className="font-display text-sm font-semibold uppercase tracking-wide text-ink-50">
             Quick Links
           </p>
           <ul className="mt-4 space-y-2 text-sm">
-            <li><Link href="/" className="hover:text-white">Home</Link></li>
-            <li><Link href="/products" className="hover:text-white">Products</Link></li>
-            <li><Link href="/services" className="hover:text-white">Services</Link></li>
-            <li><Link href="/portfolio" className="hover:text-white">Portfolio</Link></li>
-            <li><Link href="/blog" className="hover:text-white">Blog</Link></li>
-            <li><Link href="/testimonials" className="hover:text-white">Testimonials</Link></li>
-            <li><Link href="/about" className="hover:text-white">About Us</Link></li>
-            <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
+            <li><Link href="/" className="hover:text-ink-50">Home</Link></li>
+            <li><Link href="/products" className="hover:text-ink-50">Products</Link></li>
+            <li><Link href="/services" className="hover:text-ink-50">Services</Link></li>
+            <li><Link href="/portfolio" className="hover:text-ink-50">Portfolio</Link></li>
+            <li><Link href="/blog" className="hover:text-ink-50">Blog</Link></li>
+            <li><Link href="/testimonials" className="hover:text-ink-50">Testimonials</Link></li>
+            <li><Link href="/about" className="hover:text-ink-50">About Us</Link></li>
+            <li><Link href="/contact" className="hover:text-ink-50">Contact</Link></li>
           </ul>
         </div>
 
         <div>
-          <p className="font-display text-sm font-semibold uppercase tracking-wide text-white">
+          <p className="font-display text-sm font-semibold uppercase tracking-wide text-ink-50">
             Product Categories
           </p>
           <ul className="mt-4 space-y-2 text-sm">
             {productCategories.map((cat) => (
               <li key={cat.slug}>
-                <Link href={`/products#${cat.slug}`} className="hover:text-white">
+                <Link href={`/products#${cat.slug}`} className="hover:text-ink-50">
                   {cat.shortName}
                 </Link>
               </li>
@@ -86,19 +86,19 @@ export function Footer({
         </div>
 
         <div>
-          <p className="font-display text-sm font-semibold uppercase tracking-wide text-white">
+          <p className="font-display text-sm font-semibold uppercase tracking-wide text-ink-50">
             Get in Touch
           </p>
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex items-start gap-2">
               <Phone className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`tel:${company.phone}`} className="hover:text-white">
+              <a href={`tel:${company.phone}`} className="hover:text-ink-50">
                 {company.phone}
               </a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`mailto:${company.email}`} className="hover:text-white">
+              <a href={`mailto:${company.email}`} className="hover:text-ink-50">
                 {company.email}
               </a>
             </li>
@@ -117,16 +117,16 @@ export function Footer({
         </div>
       </Container>
 
-      <div className="border-t border-white/10 py-5">
-        <Container className="flex flex-col items-center justify-between gap-3 text-xs text-slate-400 sm:flex-row">
+      <div className="border-t border-ink-50/10 py-5">
+        <Container className="flex flex-col items-center justify-between gap-3 text-xs text-ink-400 sm:flex-row">
           <p>
             &copy; {year} {company.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy-policy" className="hover:text-white">
+            <Link href="/privacy-policy" className="hover:text-ink-50">
               Privacy Policy
             </Link>
-            <Link href="/terms-and-conditions" className="hover:text-white">
+            <Link href="/terms-and-conditions" className="hover:text-ink-50">
               Terms &amp; Conditions
             </Link>
           </div>

@@ -9,7 +9,7 @@ export async function ServicesOverview() {
   const services = await getServices();
 
   return (
-    <section className="bg-slate-900 py-16 sm:py-24">
+    <section className="bg-ink-900 py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="What We Do"
@@ -22,13 +22,13 @@ export async function ServicesOverview() {
           {services.map((service) => (
             <div
               key={service.slug}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/10"
+              className="rounded-2xl border border-ink-50/10 bg-ink-50/5 p-6 backdrop-blur-sm transition-colors hover:border-ink-50/20 hover:bg-ink-50/10"
             >
               <GradientIconBadge icon={service.icon} gradient={service.gradient} />
-              <h3 className="mt-4 text-lg font-semibold text-white">
+              <h3 className="mt-4 text-lg font-semibold text-ink-50">
                 {service.name}
               </h3>
-              <p className="mt-2 text-sm text-slate-400">{service.description}</p>
+              <p className="mt-2 text-sm text-ink-400">{service.description}</p>
             </div>
           ))}
         </div>

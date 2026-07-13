@@ -43,7 +43,7 @@ export function ImageSlot({
       className={cn(
         "relative flex items-center justify-center overflow-hidden rounded-xl border border-dashed",
         aspectClasses[aspect],
-        onDark ? "border-white/20 bg-white/5 text-white/30" : "border-slate-300 bg-slate-100 text-slate-400",
+        onDark ? "border-ink-50/20 bg-ink-50/5 text-ink-50/30" : "border-slate-300 bg-slate-100 text-slate-400",
         className,
       )}
       role="img"

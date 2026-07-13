@@ -62,41 +62,41 @@ export function Header({
 
   return (
     <>
-      <div className="hidden bg-ink-950 text-slate-300 sm:block">
+      <div className="hidden bg-ink-950 text-ink-200 sm:block">
         <Container className="flex h-9 items-center justify-between text-xs">
           <div className="flex items-center gap-5">
             <a
               href={`mailto:${company.email}`}
-              className="flex items-center gap-1.5 hover:text-white"
+              className="flex items-center gap-1.5 hover:text-ink-50"
             >
               <Mail className="h-3.5 w-3.5" aria-hidden />
               {company.email}
             </a>
             <a
               href={`tel:${company.phone}`}
-              className="flex items-center gap-1.5 hover:text-white"
+              className="flex items-center gap-1.5 hover:text-ink-50"
             >
               <Phone className="h-3.5 w-3.5" aria-hidden />
               {company.phone}
             </a>
           </div>
           <div className="flex items-center gap-3">
-            <a href={company.social.facebook} aria-label="Facebook" className="hover:text-white">
+            <a href={company.social.facebook} aria-label="Facebook" className="hover:text-ink-50">
               <FacebookIcon className="h-3.5 w-3.5" />
             </a>
-            <a href={company.social.instagram} aria-label="Instagram" className="hover:text-white">
+            <a href={company.social.instagram} aria-label="Instagram" className="hover:text-ink-50">
               <InstagramIcon className="h-3.5 w-3.5" />
             </a>
-            <a href={company.social.linkedin} aria-label="LinkedIn" className="hover:text-white">
+            <a href={company.social.linkedin} aria-label="LinkedIn" className="hover:text-ink-50">
               <LinkedinIcon className="h-3.5 w-3.5" />
             </a>
           </div>
         </Container>
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-ink-50/10 bg-ink-950/95 backdrop-blur">
         <Container className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-display font-bold text-white">
+          <Link href="/" className="flex items-center gap-2 font-display font-bold text-ink-50">
             {logo ? (
               <Image
                 src={logo}
@@ -117,8 +117,8 @@ export function Header({
             <Link
               href="/"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white",
-                pathname === "/" && "bg-white/10 text-white",
+                "rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-50/10 hover:text-ink-50",
+                pathname === "/" && "bg-ink-50/10 text-ink-50",
               )}
             >
               Home
@@ -162,8 +162,8 @@ export function Header({
             <Link
               href="/blog"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white",
-                pathname.startsWith("/blog") && "bg-white/10 text-white",
+                "rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-50/10 hover:text-ink-50",
+                pathname.startsWith("/blog") && "bg-ink-50/10 text-ink-50",
               )}
             >
               Blog
@@ -171,8 +171,8 @@ export function Header({
             <Link
               href="/about"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white",
-                pathname.startsWith("/about") && "bg-white/10 text-white",
+                "rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-50/10 hover:text-ink-50",
+                pathname.startsWith("/about") && "bg-ink-50/10 text-ink-50",
               )}
             >
               About
@@ -180,8 +180,8 @@ export function Header({
             <Link
               href="/contact"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white",
-                pathname.startsWith("/contact") && "bg-white/10 text-white",
+                "rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-50/10 hover:text-ink-50",
+                pathname.startsWith("/contact") && "bg-ink-50/10 text-ink-50",
               )}
             >
               Contact
@@ -202,7 +202,7 @@ export function Header({
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-slate-300 md:hidden"
+            className="inline-flex items-center justify-center rounded-md p-2 text-ink-200 md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -212,14 +212,14 @@ export function Header({
         </Container>
 
         {open && (
-          <div className="border-t border-white/10 bg-black md:hidden">
+          <div className="border-t border-ink-50/10 bg-ink-950 md:hidden">
             <Container className="flex flex-col gap-1 py-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-50/10 hover:text-ink-50"
                 >
                   {link.label}
                 </Link>

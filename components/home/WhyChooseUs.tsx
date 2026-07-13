@@ -43,7 +43,7 @@ const reasons: {
 
 export function WhyChooseUs() {
   return (
-    <section className="bg-slate-900 py-16 sm:py-24">
+    <section className="bg-ink-900 py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Why Choose Us"
@@ -57,7 +57,7 @@ export function WhyChooseUs() {
           {reasons.map((reason) => (
             <div
               key={reason.title}
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/10"
+              className="rounded-2xl border border-ink-50/10 bg-ink-50/5 p-6 text-center backdrop-blur-sm transition-colors hover:border-ink-50/20 hover:bg-ink-50/10"
             >
               <span
                 className={cn(
@@ -67,11 +67,11 @@ export function WhyChooseUs() {
               >
                 <reason.icon className="h-7 w-7" aria-hidden />
               </span>
-              <h3 className="mt-4 text-base font-semibold text-white">
+              <h3 className="mt-4 text-base font-semibold text-ink-50">
                 {reason.title}
               </h3>
-              <p className="mt-2 text-sm text-slate-400">{reason.description}</p>
-              <span className="mt-3 inline-block rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-slate-300">
+              <p className="mt-2 text-sm text-ink-400">{reason.description}</p>
+              <span className="mt-3 inline-block rounded-full bg-ink-50/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-ink-200">
                 {reason.tag}
               </span>
             </div>

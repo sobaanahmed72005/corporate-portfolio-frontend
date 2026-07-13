@@ -14,20 +14,20 @@ export async function ProductSpotlight() {
     }));
 
   return (
-    <section className="bg-black py-10 sm:py-14">
+    <section className="bg-ink-950 py-10 sm:py-14">
       <Container>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {spotlight.map(({ category, product }) => (
             <div
               key={product.slug}
-              className="flex flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-5 text-center backdrop-blur-sm transition-colors hover:border-white/20 hover:bg-white/10"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-ink-50/10 bg-ink-50/5 p-5 text-center backdrop-blur-sm transition-colors hover:border-ink-50/20 hover:bg-ink-50/10"
             >
               {product.image ? (
                 <ImageSlot src={product.image} alt={product.name} aspect="square" className="w-full rounded-xl" />
               ) : (
                 <GradientIconBadge icon={product.icon} gradient={category.gradient} size="lg" />
               )}
-              <p className="font-display text-sm font-semibold text-white">{product.name}</p>
+              <p className="font-display text-sm font-semibold text-ink-50">{product.name}</p>
             </div>
           ))}
         </div>
