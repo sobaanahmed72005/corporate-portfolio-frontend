@@ -3,8 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #000000;
-  --foreground: #f1f5f9;
+  /* Tied to the ink color scale (set on :root by app/layout.tsx from
+     Strapi's inkColor) so the page's own root background/foreground
+     respond to theme edits too, not just individual ink utility classes. */
+  --background: var(--ink-950);
+  --foreground: var(--ink-50);
 }
 
 body {
