@@ -29,7 +29,7 @@ export function CtaBanner({
             className="pointer-events-none absolute inset-0 opacity-20"
             style={{
               backgroundImage:
-                "radial-gradient(circle at 15% 30%, white 0, transparent 30%), radial-gradient(circle at 85% 80%, #ffa31a 0, transparent 35%)",
+                "radial-gradient(circle at 15% 30%, white 0, transparent 30%), radial-gradient(circle at 85% 80%, var(--accent-400) 0, transparent 35%)",
             }}
             aria-hidden
           />

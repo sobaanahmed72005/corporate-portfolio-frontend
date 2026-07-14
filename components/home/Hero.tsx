@@ -34,7 +34,7 @@ export async function Hero() {
           className="pointer-events-none absolute inset-0 opacity-40"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 15% 20%, #0324ff 0, transparent 40%), radial-gradient(circle at 85% 0%, #ffa31a 0, transparent 40%)",
+              "radial-gradient(circle at 15% 20%, var(--brand-600) 0, transparent 40%), radial-gradient(circle at 85% 0%, var(--accent-400) 0, transparent 40%)",
           }}
           aria-hidden
         />
@@ -68,7 +68,7 @@ export async function Hero() {
         <div className="relative mx-auto w-full max-w-md">
           <div
             className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-30 blur-3xl"
-            style={{ background: "radial-gradient(circle, #0324ff 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(circle, var(--brand-600) 0%, transparent 70%)" }}
             aria-hidden
           />
           <ImageSlot
