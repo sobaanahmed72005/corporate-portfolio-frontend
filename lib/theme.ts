@@ -26,14 +26,22 @@ export type FamilyName =
   | "page"
   | "card"
   | "button"
-  | "navHighlight";
+  | "navHighlight"
+  | "headerText"
+  | "footerText"
+  | "pageText"
+  | "cardText";
 
 // Which shade each family's picked color represents, and which shades that
 // family actually has (accent has no 950; matches tailwind.config.ts today).
-// header/footer/page/card are each an independent dark-surface color (their
-// own Strapi field); button/navHighlight are each an independent brand-style
-// accent color — all six replace what used to be one shared "ink"/"brand"
-// role split across many different UI zones.
+// header/footer/page/card are each an independent dark-surface background
+// color (their own Strapi field); headerText/footerText/pageText/cardText
+// are each that same zone's independent TEXT color (pivot 50, the lightest
+// shade — the opposite anchor from the background families' pivot 950 — so
+// darker shades in each text family's scale are progressively more muted
+// text, not a second background). button/navHighlight are each an
+// independent brand-style accent color — together these replace what used
+// to be one shared "ink"/"brand" role split across many different UI zones.
 const FAMILIES: Record<FamilyName, { pivot: Shade; shades: readonly Shade[] }> = {
   brand: { pivot: 600, shades: SHADE_KEYS },
   accent: { pivot: 400, shades: SHADE_KEYS.filter((s) => s !== 950) },
@@ -43,6 +51,10 @@ const FAMILIES: Record<FamilyName, { pivot: Shade; shades: readonly Shade[] }> =
   card: { pivot: 950, shades: SHADE_KEYS },
   button: { pivot: 600, shades: SHADE_KEYS },
   navHighlight: { pivot: 600, shades: SHADE_KEYS },
+  headerText: { pivot: 50, shades: SHADE_KEYS },
+  footerText: { pivot: 50, shades: SHADE_KEYS },
+  pageText: { pivot: 50, shades: SHADE_KEYS },
+  cardText: { pivot: 50, shades: SHADE_KEYS },
 };
 
 function hexToHsl(hex: string): { h: number; s: number; l: number } {

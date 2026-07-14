@@ -57,7 +57,7 @@ export function WhyChooseUs() {
           {reasons.map((reason) => (
             <div
               key={reason.title}
-              className="rounded-2xl border border-card-50/10 bg-card-50/5 p-6 text-center backdrop-blur-sm transition-colors hover:border-card-50/20 hover:bg-card-50/10"
+              className="rounded-2xl border border-cardText-50/10 bg-cardText-50/5 p-6 text-center backdrop-blur-sm transition-colors hover:border-cardText-50/20 hover:bg-cardText-50/10"
             >
               <span
                 className={cn(
@@ -67,11 +67,11 @@ export function WhyChooseUs() {
               >
                 <reason.icon className="h-7 w-7" aria-hidden />
               </span>
-              <h3 className="mt-4 text-base font-semibold text-card-50">
+              <h3 className="mt-4 text-base font-semibold text-cardText-50">
                 {reason.title}
               </h3>
-              <p className="mt-2 text-sm text-card-400">{reason.description}</p>
-              <span className="mt-3 inline-block rounded-full bg-card-50/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-card-200">
+              <p className="mt-2 text-sm text-cardText-400">{reason.description}</p>
+              <span className="mt-3 inline-block rounded-full bg-cardText-50/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-cardText-200">
                 {reason.tag}
               </span>
             </div>

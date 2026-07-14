@@ -9,20 +9,20 @@ import { getTestimonials, type Testimonial } from "@/lib/cms";
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <div className="flex w-[320px] shrink-0 flex-col rounded-2xl border border-card-50/10 bg-card-50/5 p-6 backdrop-blur-sm">
+    <div className="flex w-[320px] shrink-0 flex-col rounded-2xl border border-cardText-50/10 bg-cardText-50/5 p-6 backdrop-blur-sm">
       <div className="flex items-center gap-0.5">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
             key={i}
             className={cn(
               "h-4 w-4",
-              i < testimonial.rating ? "fill-accent-500 text-accent-500" : "fill-card-50/10 text-card-50/10",
+              i < testimonial.rating ? "fill-accent-500 text-accent-500" : "fill-cardText-50/10 text-cardText-50/10",
             )}
             aria-hidden
           />
         ))}
       </div>
-      <p className="mt-4 flex-1 text-sm leading-relaxed text-card-200">
+      <p className="mt-4 flex-1 text-sm leading-relaxed text-cardText-200">
         &ldquo;{testimonial.quote}&rdquo;
       </p>
       <div className="mt-5 flex items-center gap-3">
@@ -44,8 +44,8 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           </span>
         )}
         <div>
-          <p className="text-sm font-semibold text-card-50">{testimonial.name}</p>
-          <p className="text-xs text-card-400">{testimonial.role}</p>
+          <p className="text-sm font-semibold text-cardText-50">{testimonial.name}</p>
+          <p className="text-xs text-cardText-400">{testimonial.role}</p>
         </div>
       </div>
     </div>

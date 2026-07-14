@@ -34,7 +34,7 @@ export function NewsletterForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <p className="font-display text-sm font-semibold uppercase tracking-wide text-footer-50">
+      <p className="font-display text-sm font-semibold uppercase tracking-wide text-footerText-50">
         Subscribe to Our Newsletter
       </p>
       <div className="mt-4 flex gap-2">
@@ -42,7 +42,7 @@ export function NewsletterForm() {
           type="email"
           placeholder="you@example.com"
           aria-label="Email address"
-          className="w-full min-w-0 rounded-lg border border-footer-50/15 bg-footer-50/5 px-3 py-2 text-sm text-footer-50 placeholder:text-footer-400 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
+          className="w-full min-w-0 rounded-lg border border-footerText-50/15 bg-footerText-50/5 px-3 py-2 text-sm text-footerText-50 placeholder:text-footerText-400 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
           {...register("email")}
         />
         <button

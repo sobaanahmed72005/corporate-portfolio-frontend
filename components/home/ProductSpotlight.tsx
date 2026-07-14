@@ -20,14 +20,14 @@ export async function ProductSpotlight() {
           {spotlight.map(({ category, product }) => (
             <div
               key={product.slug}
-              className="flex flex-col items-center gap-3 rounded-2xl border border-card-50/10 bg-card-50/5 p-5 text-center backdrop-blur-sm transition-colors hover:border-card-50/20 hover:bg-card-50/10"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-cardText-50/10 bg-cardText-50/5 p-5 text-center backdrop-blur-sm transition-colors hover:border-cardText-50/20 hover:bg-cardText-50/10"
             >
               {product.image ? (
                 <ImageSlot src={product.image} alt={product.name} aspect="square" className="w-full rounded-xl" />
               ) : (
                 <GradientIconBadge icon={product.icon} color={category.iconColor} size="lg" />
               )}
-              <p className="font-display text-sm font-semibold text-card-50">{product.name}</p>
+              <p className="font-display text-sm font-semibold text-cardText-50">{product.name}</p>
             </div>
           ))}
         </div>

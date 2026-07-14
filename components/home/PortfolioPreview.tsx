@@ -32,16 +32,16 @@ export async function PortfolioPreview() {
             <Link
               key={project.slug}
               href={`/portfolio#${category.slug}`}
-              className="flex flex-col rounded-2xl border border-card-50/10 bg-card-50/5 p-6 backdrop-blur-sm transition-colors hover:border-card-50/20 hover:bg-card-50/10"
+              className="flex flex-col rounded-2xl border border-cardText-50/10 bg-cardText-50/5 p-6 backdrop-blur-sm transition-colors hover:border-cardText-50/20 hover:bg-cardText-50/10"
             >
               {project.image ? (
                 <ImageSlot src={project.image} alt={project.title} aspect="video" className="mb-4 -mt-2 rounded-xl" />
               ) : (
                 <GradientIconBadge icon={project.icon} color={category.iconColor} />
               )}
-              <h3 className="mt-4 text-base font-semibold text-card-50">{project.title}</h3>
-              <p className="mt-2 flex-1 text-sm text-card-400">{project.summary}</p>
-              <span className="mt-4 inline-block w-fit rounded-full bg-card-50/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-card-200">
+              <h3 className="mt-4 text-base font-semibold text-cardText-50">{project.title}</h3>
+              <p className="mt-2 flex-1 text-sm text-cardText-400">{project.summary}</p>
+              <span className="mt-4 inline-block w-fit rounded-full bg-cardText-50/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-cardText-200">
                 {project.highlight}
               </span>
             </Link>

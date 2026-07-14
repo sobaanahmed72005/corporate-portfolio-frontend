@@ -62,41 +62,41 @@ export function Header({
 
   return (
     <>
-      <div className="hidden bg-header-950 text-header-200 sm:block">
+      <div className="hidden bg-header-950 text-headerText-200 sm:block">
         <Container className="flex h-9 items-center justify-between text-xs">
           <div className="flex items-center gap-5">
             <a
               href={`mailto:${company.email}`}
-              className="flex items-center gap-1.5 hover:text-header-50"
+              className="flex items-center gap-1.5 hover:text-headerText-50"
             >
               <Mail className="h-3.5 w-3.5" aria-hidden />
               {company.email}
             </a>
             <a
               href={`tel:${company.phone}`}
-              className="flex items-center gap-1.5 hover:text-header-50"
+              className="flex items-center gap-1.5 hover:text-headerText-50"
             >
               <Phone className="h-3.5 w-3.5" aria-hidden />
               {company.phone}
             </a>
           </div>
           <div className="flex items-center gap-3">
-            <a href={company.social.facebook} aria-label="Facebook" className="hover:text-header-50">
+            <a href={company.social.facebook} aria-label="Facebook" className="hover:text-headerText-50">
               <FacebookIcon className="h-3.5 w-3.5" />
             </a>
-            <a href={company.social.instagram} aria-label="Instagram" className="hover:text-header-50">
+            <a href={company.social.instagram} aria-label="Instagram" className="hover:text-headerText-50">
               <InstagramIcon className="h-3.5 w-3.5" />
             </a>
-            <a href={company.social.linkedin} aria-label="LinkedIn" className="hover:text-header-50">
+            <a href={company.social.linkedin} aria-label="LinkedIn" className="hover:text-headerText-50">
               <LinkedinIcon className="h-3.5 w-3.5" />
             </a>
           </div>
         </Container>
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-header-50/10 bg-header-950/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-headerText-50/10 bg-header-950/95 backdrop-blur">
         <Container className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-display font-bold text-header-50">
+          <Link href="/" className="flex items-center gap-2 font-display font-bold text-headerText-50">
             {logo ? (
               <Image
                 src={logo}
@@ -117,8 +117,8 @@ export function Header({
             <Link
               href="/"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-header-200 hover:bg-header-50/10 hover:text-header-50",
-                pathname === "/" && "bg-header-50/10 text-navHighlight-400",
+                "rounded-md px-3 py-2 text-sm font-medium text-headerText-200 hover:bg-headerText-50/10 hover:text-headerText-50",
+                pathname === "/" && "bg-headerText-50/10 text-navHighlight-400",
               )}
             >
               Home
@@ -162,8 +162,8 @@ export function Header({
             <Link
               href="/blog"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-header-200 hover:bg-header-50/10 hover:text-header-50",
-                pathname.startsWith("/blog") && "bg-header-50/10 text-navHighlight-400",
+                "rounded-md px-3 py-2 text-sm font-medium text-headerText-200 hover:bg-headerText-50/10 hover:text-headerText-50",
+                pathname.startsWith("/blog") && "bg-headerText-50/10 text-navHighlight-400",
               )}
             >
               Blog
@@ -171,8 +171,8 @@ export function Header({
             <Link
               href="/about"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-header-200 hover:bg-header-50/10 hover:text-header-50",
-                pathname.startsWith("/about") && "bg-header-50/10 text-navHighlight-400",
+                "rounded-md px-3 py-2 text-sm font-medium text-headerText-200 hover:bg-headerText-50/10 hover:text-headerText-50",
+                pathname.startsWith("/about") && "bg-headerText-50/10 text-navHighlight-400",
               )}
             >
               About
@@ -180,8 +180,8 @@ export function Header({
             <Link
               href="/contact"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-header-200 hover:bg-header-50/10 hover:text-header-50",
-                pathname.startsWith("/contact") && "bg-header-50/10 text-navHighlight-400",
+                "rounded-md px-3 py-2 text-sm font-medium text-headerText-200 hover:bg-headerText-50/10 hover:text-headerText-50",
+                pathname.startsWith("/contact") && "bg-headerText-50/10 text-navHighlight-400",
               )}
             >
               Contact
@@ -202,7 +202,7 @@ export function Header({
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-header-200 md:hidden"
+            className="inline-flex items-center justify-center rounded-md p-2 text-headerText-200 md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -212,14 +212,14 @@ export function Header({
         </Container>
 
         {open && (
-          <div className="border-t border-header-50/10 bg-header-950 md:hidden">
+          <div className="border-t border-headerText-50/10 bg-header-950 md:hidden">
             <Container className="flex flex-col gap-1 py-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-header-200 hover:bg-header-50/10 hover:text-header-50"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-headerText-200 hover:bg-headerText-50/10 hover:text-headerText-50"
                 >
                   {link.label}
                 </Link>

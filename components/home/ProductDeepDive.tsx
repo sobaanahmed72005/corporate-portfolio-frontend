@@ -25,10 +25,10 @@ export async function ProductDeepDive() {
           <p className="font-display text-sm font-semibold uppercase tracking-wide text-violet-400">
             Flagship Category
           </p>
-          <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight text-page-50 sm:text-4xl">
+          <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight text-pageText-50 sm:text-4xl">
             {flagship.name}
           </h2>
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-page-200">
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-pageText-200">
             {flagship.description} Starting with {flagshipProduct.name.toLowerCase()} —{" "}
             {flagshipProduct.description.toLowerCase()}
           </p>
@@ -38,8 +38,8 @@ export async function ProductDeepDive() {
         </div>
 
         <div className="relative mx-auto flex h-72 w-72 items-center justify-center sm:h-96 sm:w-96">
-          <div className="absolute inset-0 rounded-full border border-page-50/10" aria-hidden />
-          <div className="absolute inset-8 rounded-full border border-page-50/10" aria-hidden />
+          <div className="absolute inset-0 rounded-full border border-pageText-50/10" aria-hidden />
+          <div className="absolute inset-8 rounded-full border border-pageText-50/10" aria-hidden />
           <div className="absolute inset-16 rounded-full bg-gradient-to-br from-brand-600 to-violet-600 opacity-90" aria-hidden />
           <Icon name={flagship.icon} className="relative h-24 w-24 text-white" aria-hidden />
         </div>

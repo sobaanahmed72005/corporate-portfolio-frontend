@@ -46,13 +46,13 @@ export async function Hero() {
           <p className="mb-4 font-display text-sm font-semibold uppercase tracking-wide text-accent-400">
             IT Accessories &middot; Security &middot; Solar &middot; Networking
           </p>
-          <h1 className="font-display text-4xl font-extrabold leading-tight tracking-tight text-page-50 sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-4xl font-extrabold leading-tight tracking-tight text-pageText-50 sm:text-5xl lg:text-6xl">
             {company.shortName}&rsquo;s Trusted Partner for Smart, Secure Infrastructure
           </h1>
-          <h2 className="mt-4 font-display text-xl font-semibold leading-snug text-page-50/80 sm:text-2xl">
+          <h2 className="mt-4 font-display text-xl font-semibold leading-snug text-pageText-50/80 sm:text-2xl">
             {company.tagline}
           </h2>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-page-200">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-pageText-200">
             {company.description}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -76,16 +76,16 @@ export async function Hero() {
             alt="Flagship product"
             aspect="square"
             onDark
-            className="rounded-3xl border-card-50/15"
+            className="rounded-3xl border-cardText-50/15"
           />
           <div className="mt-4 grid grid-cols-4 gap-3">
             {productCategories.map((cat) => (
               <div
                 key={cat.slug}
-                className="flex flex-col items-center gap-1.5 rounded-xl border border-card-50/15 bg-card-50/5 p-3 text-center backdrop-blur-sm"
+                className="flex flex-col items-center gap-1.5 rounded-xl border border-cardText-50/15 bg-cardText-50/5 p-3 text-center backdrop-blur-sm"
               >
                 <GradientIconBadge icon={cat.icon} color={cat.iconColor} size="sm" className="rounded-full" />
-                <span className="text-[11px] font-medium text-card-50">{cat.shortName}</span>
+                <span className="text-[11px] font-medium text-cardText-50">{cat.shortName}</span>
               </div>
             ))}
           </div>
