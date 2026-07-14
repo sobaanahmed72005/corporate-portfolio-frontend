@@ -15,7 +15,7 @@ export function ServiceCard({ service }: { service: Service }) {
       className="scroll-mt-24 flex flex-col rounded-2xl border border-slate-200 p-6 shadow-sm transition-shadow hover:shadow-lg"
     >
       <GradientIconBadge icon={service.icon} color={service.iconColor} />
-      <h2 className="mt-4 text-lg font-semibold text-ink-950">{service.name}</h2>
+      <h2 className="mt-4 text-lg font-semibold text-slate-900">{service.name}</h2>
       <p className="mt-2 text-sm text-slate-600">{service.description}</p>
       <ul className="mt-4 flex-1 space-y-2">
         {service.features.map((feature) => (

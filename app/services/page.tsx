@@ -19,7 +19,7 @@ export default async function ServicesPage() {
       <section className="border-b border-slate-200 bg-slate-50 py-14">
         <Container className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">Our Services</h1>
+            <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Our Services</h1>
             <p className="mt-2 max-w-xl text-slate-600">
               From installation to ongoing support, our technicians handle the
               full setup so your systems work reliably from day one.

@@ -14,9 +14,9 @@ const config: Config = {
         // Values come from CSS custom properties set at request time in
         // app/layout.tsx, derived (lib/theme.ts) from corporate-portfolio-cms's
         // theme-setting single type. Editing a color in Strapi recolors every
-        // brand-*/accent-*/ink-* class site-wide — no code change needed.
-        // Fallback values baked into lib/cms.ts's DEFAULT_THEME match the
-        // hex values these used to be hardcoded to.
+        // class in that family site-wide — no code change needed. Fallback
+        // values baked into lib/cms.ts's DEFAULT_THEME match the hex values
+        // these used to be hardcoded to.
         brand: {
           50: "var(--brand-50)",
           100: "var(--brand-100)",
@@ -42,18 +42,87 @@ const config: Config = {
           800: "var(--accent-800)",
           900: "var(--accent-900)",
         },
-        ink: {
-          50: "var(--ink-50)",
-          100: "var(--ink-100)",
-          200: "var(--ink-200)",
-          300: "var(--ink-300)",
-          400: "var(--ink-400)",
-          500: "var(--ink-500)",
-          600: "var(--ink-600)",
-          700: "var(--ink-700)",
-          800: "var(--ink-800)",
-          900: "var(--ink-900)",
-          950: "var(--ink-950)",
+        // header/footer/page/card each have their own independent dark-
+        // surface color (their own Strapi field, replacing what used to be
+        // one shared "ink" family); button/navHighlight likewise replace
+        // brandColor's two former split roles.
+        header: {
+          50: "var(--header-50)",
+          100: "var(--header-100)",
+          200: "var(--header-200)",
+          300: "var(--header-300)",
+          400: "var(--header-400)",
+          500: "var(--header-500)",
+          600: "var(--header-600)",
+          700: "var(--header-700)",
+          800: "var(--header-800)",
+          900: "var(--header-900)",
+          950: "var(--header-950)",
+        },
+        footer: {
+          50: "var(--footer-50)",
+          100: "var(--footer-100)",
+          200: "var(--footer-200)",
+          300: "var(--footer-300)",
+          400: "var(--footer-400)",
+          500: "var(--footer-500)",
+          600: "var(--footer-600)",
+          700: "var(--footer-700)",
+          800: "var(--footer-800)",
+          900: "var(--footer-900)",
+          950: "var(--footer-950)",
+        },
+        page: {
+          50: "var(--page-50)",
+          100: "var(--page-100)",
+          200: "var(--page-200)",
+          300: "var(--page-300)",
+          400: "var(--page-400)",
+          500: "var(--page-500)",
+          600: "var(--page-600)",
+          700: "var(--page-700)",
+          800: "var(--page-800)",
+          900: "var(--page-900)",
+          950: "var(--page-950)",
+        },
+        card: {
+          50: "var(--card-50)",
+          100: "var(--card-100)",
+          200: "var(--card-200)",
+          300: "var(--card-300)",
+          400: "var(--card-400)",
+          500: "var(--card-500)",
+          600: "var(--card-600)",
+          700: "var(--card-700)",
+          800: "var(--card-800)",
+          900: "var(--card-900)",
+          950: "var(--card-950)",
+        },
+        button: {
+          50: "var(--button-50)",
+          100: "var(--button-100)",
+          200: "var(--button-200)",
+          300: "var(--button-300)",
+          400: "var(--button-400)",
+          500: "var(--button-500)",
+          600: "var(--button-600)",
+          700: "var(--button-700)",
+          800: "var(--button-800)",
+          900: "var(--button-900)",
+          950: "var(--button-950)",
+        },
+        navHighlight: {
+          50: "var(--navHighlight-50)",
+          100: "var(--navHighlight-100)",
+          200: "var(--navHighlight-200)",
+          300: "var(--navHighlight-300)",
+          400: "var(--navHighlight-400)",
+          500: "var(--navHighlight-500)",
+          600: "var(--navHighlight-600)",
+          700: "var(--navHighlight-700)",
+          800: "var(--navHighlight-800)",
+          900: "var(--navHighlight-900)",
+          950: "var(--navHighlight-950)",
         },
       },
       fontFamily: {

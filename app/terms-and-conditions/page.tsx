@@ -85,7 +85,7 @@ export default function TermsAndConditionsPage() {
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">
         <Container>
-          <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">Terms &amp; Conditions</h1>
+          <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Terms &amp; Conditions</h1>
           <p className="mt-2 max-w-2xl text-slate-600">
             The terms that apply to using our website and services.
           </p>
@@ -95,7 +95,7 @@ export default function TermsAndConditionsPage() {
       <Container className="max-w-3xl space-y-10 py-16">
         {sections.map((section) => (
           <div key={section.heading}>
-            <h2 className="text-xl font-semibold text-ink-950">{section.heading}</h2>
+            <h2 className="text-xl font-semibold text-slate-900">{section.heading}</h2>
             <div className="mt-3 space-y-3 text-sm leading-relaxed text-slate-600">
               {section.paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>

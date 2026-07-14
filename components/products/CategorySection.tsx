@@ -8,7 +8,7 @@ export function CategorySection({ category }: { category: ProductCategory }) {
       <div className="flex items-start gap-4">
         <GradientIconBadge icon={category.icon} color={category.iconColor} size="lg" />
         <div>
-          <h2 className="text-xl font-bold text-ink-950 sm:text-2xl">
+          <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">
             {category.name}
           </h2>
           <p className="mt-1 text-sm text-slate-600">{category.description}</p>

@@ -51,18 +51,18 @@ function Counter({ stat }: { stat: Stat }) {
 
   return (
     <div ref={ref} className="text-center">
-      <p className="font-display text-4xl font-extrabold text-ink-50 sm:text-5xl">
+      <p className="font-display text-4xl font-extrabold text-page-50 sm:text-5xl">
         {value}
         {stat.suffix}
       </p>
-      <p className="mt-2 text-sm font-medium text-ink-200 sm:text-base">{stat.label}</p>
+      <p className="mt-2 text-sm font-medium text-page-200 sm:text-base">{stat.label}</p>
     </div>
   );
 }
 
 export function StatsCounter({ stats }: { stats: Stat[] }) {
   return (
-    <section className="bg-ink-950 py-14 sm:py-16">
+    <section className="bg-page-950 py-14 sm:py-16">
       <Container>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
           {stats.map((stat) => (

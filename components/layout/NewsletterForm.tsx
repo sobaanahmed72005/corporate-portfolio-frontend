@@ -34,7 +34,7 @@ export function NewsletterForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <p className="font-display text-sm font-semibold uppercase tracking-wide text-ink-50">
+      <p className="font-display text-sm font-semibold uppercase tracking-wide text-footer-50">
         Subscribe to Our Newsletter
       </p>
       <div className="mt-4 flex gap-2">
@@ -42,14 +42,14 @@ export function NewsletterForm() {
           type="email"
           placeholder="you@example.com"
           aria-label="Email address"
-          className="w-full min-w-0 rounded-lg border border-ink-50/15 bg-ink-50/5 px-3 py-2 text-sm text-ink-50 placeholder:text-ink-400 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
+          className="w-full min-w-0 rounded-lg border border-footer-50/15 bg-footer-50/5 px-3 py-2 text-sm text-footer-50 placeholder:text-footer-400 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
           {...register("email")}
         />
         <button
           type="submit"
           disabled={status === "submitting"}
           aria-label="Subscribe"
-          className="inline-flex shrink-0 items-center justify-center rounded-lg bg-brand-600 p-2.5 text-white transition-colors hover:bg-brand-700 disabled:opacity-60"
+          className="inline-flex shrink-0 items-center justify-center rounded-lg bg-button-600 p-2.5 text-white transition-colors hover:bg-button-700 disabled:opacity-60"
         >
           {status === "submitting" ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />

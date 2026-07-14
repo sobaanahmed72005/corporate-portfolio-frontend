@@ -19,7 +19,7 @@ export default async function TestimonialsPage() {
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">
         <Container>
-          <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">Testimonials &amp; Reviews</h1>
+          <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Testimonials &amp; Reviews</h1>
           <p className="mt-2 max-w-2xl text-slate-600">
             What clients say about their CCTV, solar, networking, and supply
             projects with us.
@@ -61,7 +61,7 @@ export default async function TestimonialsPage() {
                   {testimonial.name.charAt(0)}
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-ink-950">
+                  <p className="text-sm font-semibold text-slate-900">
                     {testimonial.name}
                   </p>
                   <p className="text-xs text-slate-500">{testimonial.role}</p>

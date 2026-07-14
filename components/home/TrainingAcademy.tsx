@@ -8,7 +8,7 @@ export async function TrainingAcademy() {
   const courses = await getCourses();
 
   return (
-    <section className="bg-ink-900 py-16 sm:py-24">
+    <section className="bg-page-900 py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Training"
@@ -23,11 +23,11 @@ export async function TrainingAcademy() {
           {courses.map((course) => (
             <div
               key={course.slug}
-              className="flex flex-col items-center gap-3 rounded-2xl border border-ink-50/10 bg-ink-50/5 p-6 text-center backdrop-blur-sm"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-card-50/10 bg-card-50/5 p-6 text-center backdrop-blur-sm"
             >
               <GradientIconBadge icon={course.icon} color={course.iconColor} size="lg" />
-              <h3 className="text-base font-semibold text-ink-50">{course.name}</h3>
-              <p className="text-sm text-ink-400">{course.description}</p>
+              <h3 className="text-base font-semibold text-card-50">{course.name}</h3>
+              <p className="text-sm text-card-400">{course.description}</p>
             </div>
           ))}
         </div>

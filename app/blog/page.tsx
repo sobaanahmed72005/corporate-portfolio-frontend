@@ -17,7 +17,7 @@ export default async function BlogPage() {
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">
         <Container>
-          <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">Our Blog</h1>
+          <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Our Blog</h1>
           <p className="mt-2 max-w-2xl text-slate-600">
             Practical guides on CCTV, solar power, networking, and IT
             accessories — written from what we see on real installations.
@@ -35,7 +35,7 @@ export default async function BlogPage() {
               <span className="w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
                 {post.category}
               </span>
-              <h2 className="mt-4 text-lg font-semibold text-ink-950">
+              <h2 className="mt-4 text-lg font-semibold text-slate-900">
                 <Link href={`/blog/${post.slug}`} className="hover:text-brand-700">
                   {post.title}
                 </Link>

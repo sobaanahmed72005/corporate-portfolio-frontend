@@ -18,14 +18,31 @@ type Shade = (typeof SHADE_KEYS)[number];
 const LIGHT_ANCHOR = 97; // lightness % used for the lightest generated shade
 const DARK_ANCHOR = 8; // lightness % used for the darkest generated shade
 
-export type FamilyName = "brand" | "accent" | "ink";
+export type FamilyName =
+  | "brand"
+  | "accent"
+  | "header"
+  | "footer"
+  | "page"
+  | "card"
+  | "button"
+  | "navHighlight";
 
 // Which shade each family's picked color represents, and which shades that
 // family actually has (accent has no 950; matches tailwind.config.ts today).
+// header/footer/page/card are each an independent dark-surface color (their
+// own Strapi field); button/navHighlight are each an independent brand-style
+// accent color — all six replace what used to be one shared "ink"/"brand"
+// role split across many different UI zones.
 const FAMILIES: Record<FamilyName, { pivot: Shade; shades: readonly Shade[] }> = {
   brand: { pivot: 600, shades: SHADE_KEYS },
   accent: { pivot: 400, shades: SHADE_KEYS.filter((s) => s !== 950) },
-  ink: { pivot: 950, shades: SHADE_KEYS },
+  header: { pivot: 950, shades: SHADE_KEYS },
+  footer: { pivot: 950, shades: SHADE_KEYS },
+  page: { pivot: 950, shades: SHADE_KEYS },
+  card: { pivot: 950, shades: SHADE_KEYS },
+  button: { pivot: 600, shades: SHADE_KEYS },
+  navHighlight: { pivot: 600, shades: SHADE_KEYS },
 };
 
 function hexToHsl(hex: string): { h: number; s: number; l: number } {
@@ -98,11 +115,7 @@ function generateShades(hex: string, family: FamilyName): Partial<Record<Shade, 
   return result;
 }
 
-export type ThemeColors = {
-  brand: string;
-  accent: string;
-  ink: string;
-};
+export type ThemeColors = Record<FamilyName, string>;
 
 /** Returns a CSS string of custom property declarations, e.g. "--brand-50:#eaf0ff;--brand-100:#d6e0ff;...". */
 export function buildThemeCssVars(colors: ThemeColors): string {

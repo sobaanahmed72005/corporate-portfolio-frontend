@@ -9,15 +9,15 @@ type CommonProps = {
 };
 
 const variantClasses = {
-  // Black pill — the site's default button style.
-  primary: "bg-ink-950 text-ink-50 shadow-md shadow-ink-950/20 hover:bg-ink-800",
-  // Vivid blue pill — used for primary hero/page CTAs.
-  brand: "bg-brand-600 text-white shadow-md shadow-brand-600/25 hover:bg-brand-700",
+  // Dark pill — the site's default button style, for light backgrounds.
+  primary: "bg-slate-900 text-white shadow-md shadow-slate-900/20 hover:bg-slate-800",
+  // Main action-button color, set from Strapi's buttonColor field.
+  brand: "bg-button-600 text-white shadow-md shadow-button-600/25 hover:bg-button-700",
   accent: "bg-accent-400 text-white shadow-md shadow-accent-400/25 hover:bg-accent-500",
-  outline: "border-2 border-ink-950 text-ink-950 hover:bg-ink-950 hover:text-ink-50",
-  ghost: "text-ink-950 hover:bg-ink-50",
+  outline: "border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white",
+  ghost: "text-slate-900 hover:bg-slate-100",
   // Solid white button for use on colored/dark section backgrounds.
-  white: "bg-white text-ink-950 shadow-md hover:bg-slate-100",
+  white: "bg-white text-slate-900 shadow-md hover:bg-slate-100",
   // Outlined button for use on colored/dark section backgrounds.
   outlineWhite: "border-2 border-white/70 text-white hover:bg-white/10",
 };
@@ -29,7 +29,7 @@ const sizeClasses = {
 };
 
 const base =
-  "inline-flex items-center justify-center gap-2 rounded-full font-display font-semibold uppercase tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600";
+  "inline-flex items-center justify-center gap-2 rounded-full font-display font-semibold uppercase tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-button-600";
 
 type LinkButtonProps = CommonProps & {
   href: string;

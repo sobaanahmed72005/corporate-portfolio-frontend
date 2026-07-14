@@ -65,8 +65,8 @@ export function NavMegaMenu({
         href={href}
         onClick={handleClick}
         className={cn(
-          "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-600",
-          active && "bg-slate-50 text-brand-600",
+          "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-navHighlight-600",
+          active && "bg-slate-50 text-navHighlight-600",
         )}
       >
         {label}
@@ -88,7 +88,7 @@ export function NavMegaMenu({
             >
               <GradientIconBadge icon={item.icon} color={item.iconColor} size="sm" />
               <span>
-                <span className="block text-sm font-semibold text-ink-950">{item.title}</span>
+                <span className="block text-sm font-semibold text-slate-900">{item.title}</span>
                 <span className="block text-xs text-slate-500">{item.description}</span>
               </span>
             </Link>
@@ -97,7 +97,7 @@ export function NavMegaMenu({
 
         <div className="mt-3 flex items-center justify-between gap-4 rounded-xl bg-slate-50 p-4">
           <div>
-            <p className="text-sm font-semibold text-ink-950">{cta.title}</p>
+            <p className="text-sm font-semibold text-slate-900">{cta.title}</p>
             <p className="text-xs text-slate-500">{cta.description}</p>
           </div>
           <LinkButton href={cta.href} size="sm" variant="brand" className="shrink-0">

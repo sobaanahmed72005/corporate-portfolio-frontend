@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <span className="mt-4 block w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
             {post.category}
           </span>
-          <h1 className="mt-4 max-w-3xl font-display text-3xl font-extrabold leading-tight text-ink-950 sm:text-4xl">
+          <h1 className="mt-4 max-w-3xl font-display text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl">
             {post.title}
           </h1>
           <div className="mt-4 flex items-center gap-4 text-sm text-slate-500">

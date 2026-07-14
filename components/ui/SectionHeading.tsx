@@ -37,13 +37,13 @@ export function SectionHeading({
       <h2
         className={cn(
           "font-display text-2xl font-extrabold tracking-tight sm:text-3xl",
-          onDark ? "text-ink-50" : "text-ink-950",
+          onDark ? "text-page-50" : "text-slate-900",
         )}
       >
         {title}
       </h2>
       {description && (
-        <p className={cn("mt-3 text-base", onDark ? "text-ink-400" : "text-slate-600")}>
+        <p className={cn("mt-3 text-base", onDark ? "text-page-400" : "text-slate-600")}>
           {description}
         </p>
       )}

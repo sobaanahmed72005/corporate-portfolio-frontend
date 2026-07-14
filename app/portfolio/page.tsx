@@ -19,7 +19,7 @@ export default async function PortfolioPage() {
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">
         <Container>
-          <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">Our Portfolio</h1>
+          <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Our Portfolio</h1>
           <p className="mt-2 max-w-2xl text-slate-600">
             A look at the CCTV, solar, networking, and bulk supply projects
             we&apos;ve delivered for homes, offices, and corporate clients.
@@ -53,7 +53,7 @@ export default async function PortfolioPage() {
                   ) : null}
                   <div className="flex flex-1 flex-col p-6">
                     <GradientIconBadge icon={project.icon} color={category.iconColor} size="sm" />
-                    <h3 className="mt-4 text-base font-semibold text-ink-950">
+                    <h3 className="mt-4 text-base font-semibold text-slate-900">
                       {project.title}
                     </h3>
                     <p className="mt-2 flex-1 text-sm text-slate-600">{project.summary}</p>

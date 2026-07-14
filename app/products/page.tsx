@@ -19,7 +19,7 @@ export default async function ProductsPage() {
       <section className="border-b border-slate-200 bg-slate-50 py-14">
         <Container className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">Our Products</h1>
+            <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Our Products</h1>
             <p className="mt-2 max-w-xl text-slate-600">
               A look at what we supply. For pricing, availability, and to place
               an order, visit our online store.

@@ -36,7 +36,7 @@ export default function AboutPage() {
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-16">
         <Container>
-          <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">About {company.name}</h1>
+          <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">About {company.name}</h1>
           <p className="mt-4 max-w-2xl text-slate-600">{company.description}</p>
         </Container>
       </section>
@@ -54,7 +54,7 @@ export default function AboutPage() {
               <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
                 <value.icon className="h-6 w-6" aria-hidden />
               </span>
-              <h3 className="mt-4 text-lg font-semibold text-ink-950">
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">
                 {value.title}
               </h3>
               <p className="mt-2 text-sm text-slate-600">{value.description}</p>

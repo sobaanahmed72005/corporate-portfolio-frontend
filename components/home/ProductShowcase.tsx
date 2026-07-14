@@ -22,7 +22,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
   if (!active || !featured) return null;
 
   return (
-    <section className="bg-ink-950 py-16 sm:py-24">
+    <section className="bg-page-950 py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Products"
@@ -45,7 +45,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   "flex shrink-0 items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm font-semibold transition-colors lg:shrink",
                   category.slug === active.slug
                     ? "border-brand-600 bg-brand-600/10 text-white"
-                    : "border-ink-50/10 bg-ink-50/5 text-ink-200 hover:border-ink-50/25 hover:text-ink-50",
+                    : "border-card-50/10 bg-card-50/5 text-card-200 hover:border-card-50/25 hover:text-card-50",
                 )}
               >
                 <GradientIconBadge icon={category.icon} color={category.iconColor} size="sm" className="h-9 w-9 shrink-0 rounded-lg" />
@@ -84,7 +84,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   href={company.storeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-display font-semibold uppercase tracking-wide text-ink-950"
+                  className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-display font-semibold uppercase tracking-wide text-slate-900"
                 >
                   Shop on our Store <ArrowRight className="h-4 w-4" aria-hidden />
                 </a>
@@ -98,10 +98,10 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   href={company.storeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-xl border border-ink-50/10 bg-ink-50/5 p-4 transition-colors hover:border-ink-50/25 hover:bg-ink-50/10"
+                  className="flex items-center gap-3 rounded-xl border border-card-50/10 bg-card-50/5 p-4 transition-colors hover:border-card-50/25 hover:bg-card-50/10"
                 >
                   <GradientIconBadge icon={product.icon} color={active.iconColor} size="sm" />
-                  <span className="text-sm font-medium text-ink-50">{product.name}</span>
+                  <span className="text-sm font-medium text-card-50">{product.name}</span>
                 </a>
               ))}
             </div>

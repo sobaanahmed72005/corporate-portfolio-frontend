@@ -47,7 +47,7 @@ export default async function ContactPage() {
     <>
       <section className="border-b border-slate-200 bg-slate-50 py-14">
         <Container>
-          <h1 className="font-display text-3xl font-extrabold text-ink-950 sm:text-4xl">Contact Us</h1>
+          <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Contact Us</h1>
           <p className="mt-2 max-w-xl text-slate-600">
             Have a question about a product, need an installation quote, or want
             to place a bulk order? Send us a message.
@@ -71,7 +71,7 @@ export default async function ContactPage() {
               <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
                 <channel.icon className="h-6 w-6" aria-hidden />
               </span>
-              <h3 className="mt-4 text-lg font-semibold text-ink-950">
+              <h3 className="mt-4 text-lg font-semibold text-slate-900">
                 {channel.title}
               </h3>
               <p className="mt-2 flex-1 text-sm text-slate-600">
@@ -93,7 +93,7 @@ export default async function ContactPage() {
 
       <Container className="grid grid-cols-1 gap-12 pb-16 lg:grid-cols-5">
         <div className="lg:col-span-3">
-          <h2 className="text-lg font-semibold text-ink-950">
+          <h2 className="text-lg font-semibold text-slate-900">
             Send Us a Message
           </h2>
           <p className="mt-1 text-sm text-slate-600">
@@ -106,7 +106,7 @@ export default async function ContactPage() {
 
         <div className="lg:col-span-2">
           <div className="rounded-xl border border-slate-200 p-6">
-            <h2 className="text-lg font-semibold text-ink-950">Our Address</h2>
+            <h2 className="text-lg font-semibold text-slate-900">Our Address</h2>
             <div className="mt-4 flex items-start gap-3 text-sm text-slate-700">
               <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-700" />
               <p>

@@ -83,7 +83,12 @@ export default async function RootLayout({
     buildThemeCssVars({
       brand: themeSettings.brandColor,
       accent: themeSettings.accentColor,
-      ink: themeSettings.inkColor,
+      header: themeSettings.headerColor,
+      footer: themeSettings.footerColor,
+      page: themeSettings.pageBackgroundColor,
+      card: themeSettings.cardColor,
+      button: themeSettings.buttonColor,
+      navHighlight: themeSettings.navHighlightColor,
     }) +
     buildFontCssVars(themeSettings.fontPairing) +
     buildShapeCssVars(themeSettings.radiusStyle, themeSettings.shadowStyle);

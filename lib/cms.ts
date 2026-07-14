@@ -286,7 +286,12 @@ export async function getClientLogos(): Promise<ClientLogo[]> {
 export type ThemeSettings = {
   brandColor: string;
   accentColor: string;
-  inkColor: string;
+  headerColor: string;
+  footerColor: string;
+  pageBackgroundColor: string;
+  cardColor: string;
+  buttonColor: string;
+  navHighlightColor: string;
   fontPairing: FontPairingName;
   radiusStyle: RadiusStyleName;
   shadowStyle: ShadowStyleName;
@@ -300,7 +305,12 @@ export type ThemeSettings = {
 const DEFAULT_THEME: ThemeSettings = {
   brandColor: "#0324FF",
   accentColor: "#FFA31A",
-  inkColor: "#000000",
+  headerColor: "#000000",
+  footerColor: "#000000",
+  pageBackgroundColor: "#000000",
+  cardColor: "#000000",
+  buttonColor: "#0324FF",
+  navHighlightColor: "#0324FF",
   fontPairing: "Modern Sans (Outfit + Rubik)",
   radiusStyle: "Soft (current default)",
   shadowStyle: "Subtle (current default)",
@@ -309,7 +319,12 @@ const DEFAULT_THEME: ThemeSettings = {
 type RawThemeSettings = {
   brandColor: string;
   accentColor: string;
-  inkColor: string;
+  headerColor: string;
+  footerColor: string;
+  pageBackgroundColor: string;
+  cardColor: string;
+  buttonColor: string;
+  navHighlightColor: string;
   fontPairing: FontPairingName;
   radiusStyle: RadiusStyleName;
   shadowStyle: ShadowStyleName;
@@ -328,7 +343,12 @@ export async function getThemeSettings(): Promise<ThemeSettings> {
     return {
       brandColor: data.brandColor || DEFAULT_THEME.brandColor,
       accentColor: data.accentColor || DEFAULT_THEME.accentColor,
-      inkColor: data.inkColor || DEFAULT_THEME.inkColor,
+      headerColor: data.headerColor || DEFAULT_THEME.headerColor,
+      footerColor: data.footerColor || DEFAULT_THEME.footerColor,
+      pageBackgroundColor: data.pageBackgroundColor || DEFAULT_THEME.pageBackgroundColor,
+      cardColor: data.cardColor || DEFAULT_THEME.cardColor,
+      buttonColor: data.buttonColor || DEFAULT_THEME.buttonColor,
+      navHighlightColor: data.navHighlightColor || DEFAULT_THEME.navHighlightColor,
       fontPairing: data.fontPairing || DEFAULT_THEME.fontPairing,
       radiusStyle: data.radiusStyle || DEFAULT_THEME.radiusStyle,
       shadowStyle: data.shadowStyle || DEFAULT_THEME.shadowStyle,
