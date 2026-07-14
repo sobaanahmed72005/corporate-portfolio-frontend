@@ -186,3 +186,16 @@ export function buildShapeCssVars(radiusStyle: RadiusStyleName, shadowStyle: Sha
   for (const [key, value] of Object.entries(shadow)) declarations.push(`--shadow-${key}:${value};`);
   return declarations.join("");
 }
+
+/**
+ * Category icon badges (products/services/portfolio/courses) each pick one
+ * custom color in Strapi; this derives a second, darker stop from it so the
+ * badge keeps the same two-stop gradient look the old named-gradient system
+ * (components/ui/gradients.ts) had, without the user needing to pick two
+ * colors themselves.
+ */
+export function deriveGradientStops(hex: string): { from: string; to: string } {
+  const { h, s, l } = hexToHsl(hex);
+  const to = hslToHex(h, s, Math.max(l - 18, 10));
+  return { from: hex, to };
+}

@@ -25,7 +25,7 @@ export type ProductCategory = {
   shortName: string;
   description: string;
   icon: IconName;
-  gradient: GradientName;
+  iconColor: string;
   image?: string;
   products: Product[];
 };
@@ -36,7 +36,7 @@ export type Service = {
   description: string;
   features: string[];
   icon: IconName;
-  gradient: GradientName;
+  iconColor: string;
 };
 
 export type BlogPost = {
@@ -85,7 +85,7 @@ export type PortfolioCategory = {
   name: string;
   description: string;
   icon: IconName;
-  gradient: GradientName;
+  iconColor: string;
   image?: string;
   projects: PortfolioProject[];
 };
@@ -101,7 +101,7 @@ export type Course = {
   name: string;
   description: string;
   icon: IconName;
-  gradient: GradientName;
+  iconColor: string;
 };
 
 export type ClientLogo = {
@@ -144,7 +144,7 @@ type RawProductCategory = {
   shortName: string;
   description: string;
   icon: IconName;
-  gradient: GradientName;
+  iconColor: string;
   image: StrapiMedia;
   products: RawProduct[];
 };
@@ -159,7 +159,7 @@ export async function getProductCategories(): Promise<ProductCategory[]> {
     shortName: category.shortName,
     description: category.description,
     icon: category.icon,
-    gradient: category.gradient,
+    iconColor: category.iconColor,
     image: mediaUrl(category.image),
     products: category.products.map((product) => ({
       slug: product.slug,
@@ -233,7 +233,7 @@ type RawPortfolioCategory = {
   name: string;
   description: string;
   icon: IconName;
-  gradient: GradientName;
+  iconColor: string;
   image: StrapiMedia;
   projects: RawPortfolioProject[];
 };
@@ -247,7 +247,7 @@ export async function getPortfolioCategories(): Promise<PortfolioCategory[]> {
     name: category.name,
     description: category.description,
     icon: category.icon,
-    gradient: category.gradient,
+    iconColor: category.iconColor,
     image: mediaUrl(category.image),
     projects: category.projects.map((project) => ({
       slug: project.slug,

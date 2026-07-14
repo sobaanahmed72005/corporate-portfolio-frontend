@@ -41,7 +41,7 @@ export function Header({
     title: cat.name,
     description: cat.description,
     icon: cat.icon,
-    gradient: cat.gradient,
+    iconColor: cat.iconColor,
   }));
 
   const serviceMenuItems: MegaMenuItem[] = services.map((service) => ({
@@ -49,7 +49,7 @@ export function Header({
     title: service.name,
     description: service.description,
     icon: service.icon,
-    gradient: service.gradient,
+    iconColor: service.iconColor,
   }));
 
   const portfolioMenuItems: MegaMenuItem[] = portfolioCategories.map((cat) => ({
@@ -57,7 +57,7 @@ export function Header({
     title: cat.name,
     description: cat.description,
     icon: cat.icon,
-    gradient: cat.gradient,
+    iconColor: cat.iconColor,
   }));
 
   return (

@@ -1,17 +1,20 @@
 import Link from "next/link";
 import { Check, ArrowRight } from "lucide-react";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
-import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
+import { GRADIENT_PILL_BASE } from "@/components/ui/gradients";
+import { deriveGradientStops } from "@/lib/theme";
 import { cn } from "@/lib/cn";
 import type { Service } from "@/lib/cms";
 
 export function ServiceCard({ service }: { service: Service }) {
+  const stops = deriveGradientStops(service.iconColor);
+
   return (
     <div
       id={service.slug}
       className="scroll-mt-24 flex flex-col rounded-2xl border border-slate-200 p-6 shadow-sm transition-shadow hover:shadow-lg"
     >
-      <GradientIconBadge icon={service.icon} gradient={service.gradient} />
+      <GradientIconBadge icon={service.icon} color={service.iconColor} />
       <h2 className="mt-4 text-lg font-semibold text-ink-950">{service.name}</h2>
       <p className="mt-2 text-sm text-slate-600">{service.description}</p>
       <ul className="mt-4 flex-1 space-y-2">
@@ -24,7 +27,8 @@ export function ServiceCard({ service }: { service: Service }) {
       </ul>
       <Link
         href="/contact"
-        className={cn(GRADIENT_PILL_BASE, GRADIENTS[service.gradient].pill, "mt-5")}
+        className={cn(GRADIENT_PILL_BASE, "mt-5")}
+        style={{ backgroundImage: `linear-gradient(to right, ${stops.from}, ${stops.to})` }}
       >
         Request This Service <ArrowRight className="h-4 w-4" aria-hidden />
       </Link>

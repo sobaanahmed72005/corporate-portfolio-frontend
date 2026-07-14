@@ -6,7 +6,6 @@ import { ChevronDown } from "lucide-react";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { LinkButton } from "@/components/ui/Button";
 import type { IconName } from "@/components/ui/Icon";
-import type { GradientName } from "@/components/ui/gradients";
 import { cn } from "@/lib/cn";
 
 const HOVER_SUPPRESS_MS = 2000;
@@ -16,7 +15,7 @@ export type MegaMenuItem = {
   title: string;
   description: string;
   icon: IconName;
-  gradient: GradientName;
+  iconColor: string;
 };
 
 export function NavMegaMenu({
@@ -87,7 +86,7 @@ export function NavMegaMenu({
               href={item.href}
               className="flex items-start gap-3 rounded-xl p-2.5 hover:bg-slate-50"
             >
-              <GradientIconBadge icon={item.icon} gradient={item.gradient} size="sm" />
+              <GradientIconBadge icon={item.icon} color={item.iconColor} size="sm" />
               <span>
                 <span className="block text-sm font-semibold text-ink-950">{item.title}</span>
                 <span className="block text-xs text-slate-500">{item.description}</span>

@@ -25,7 +25,7 @@ export async function OfficesSection() {
               className="flex flex-col gap-4 rounded-2xl border border-ink-50/15 bg-ink-50/5 p-6"
             >
               <div className="flex items-center gap-3">
-                <GradientIconBadge icon={office.icon} gradient="blue" size="sm" />
+                <GradientIconBadge icon={office.icon} color="#3B82F6" size="sm" />
                 <p className="font-display text-lg font-semibold">{office.name}</p>
               </div>
               <ul className="space-y-2 text-sm text-ink-200">

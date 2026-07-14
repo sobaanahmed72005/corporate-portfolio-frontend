@@ -25,7 +25,7 @@ export async function TrainingAcademy() {
               key={course.slug}
               className="flex flex-col items-center gap-3 rounded-2xl border border-ink-50/10 bg-ink-50/5 p-6 text-center backdrop-blur-sm"
             >
-              <GradientIconBadge icon={course.icon} gradient={course.gradient} size="lg" />
+              <GradientIconBadge icon={course.icon} color={course.iconColor} size="lg" />
               <h3 className="text-base font-semibold text-ink-50">{course.name}</h3>
               <p className="text-sm text-ink-400">{course.description}</p>
             </div>

@@ -1,15 +1,17 @@
 import { Icon, type IconName } from "@/components/ui/Icon";
-import { GRADIENTS, type GradientName } from "@/components/ui/gradients";
+import { deriveGradientStops } from "@/lib/theme";
 import { cn } from "@/lib/cn";
 
 export function GradientIconBadge({
   icon,
-  gradient,
+  color,
   size = "md",
   className,
 }: {
   icon: IconName;
-  gradient: GradientName;
+  /** Hex color picked per category/service/course in Strapi; a darker
+   * second stop is derived automatically for the badge's gradient look. */
+  color: string;
   size?: "sm" | "md" | "lg";
   className?: string;
 }) {
@@ -19,15 +21,16 @@ export function GradientIconBadge({
     lg: "h-14 w-14 rounded-xl",
   };
   const iconSizes = { sm: "h-5 w-5", md: "h-6 w-6", lg: "h-7 w-7" };
+  const stops = deriveGradientStops(color);
 
   return (
     <span
       className={cn(
-        "inline-flex shrink-0 items-center justify-center bg-gradient-to-br text-white shadow-sm",
-        GRADIENTS[gradient].badge,
+        "inline-flex shrink-0 items-center justify-center text-white shadow-sm",
         sizeClasses[size],
         className,
       )}
+      style={{ backgroundImage: `linear-gradient(to bottom right, ${stops.from}, ${stops.to})` }}
     >
       <Icon name={icon} className={iconSizes[size]} aria-hidden />
     </span>

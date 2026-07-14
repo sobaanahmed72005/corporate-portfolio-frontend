@@ -24,7 +24,7 @@ export async function ServicesOverview() {
               key={service.slug}
               className="rounded-2xl border border-ink-50/10 bg-ink-50/5 p-6 backdrop-blur-sm transition-colors hover:border-ink-50/20 hover:bg-ink-50/10"
             >
-              <GradientIconBadge icon={service.icon} gradient={service.gradient} />
+              <GradientIconBadge icon={service.icon} color={service.iconColor} />
               <h3 className="mt-4 text-lg font-semibold text-ink-50">
                 {service.name}
               </h3>

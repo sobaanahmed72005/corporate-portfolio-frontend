@@ -11,6 +11,7 @@ import { Icon } from "@/components/ui/Icon";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { company } from "@/lib/data/company";
 import { cn } from "@/lib/cn";
+import { deriveGradientStops } from "@/lib/theme";
 import type { ProductCategory } from "@/lib/cms";
 
 export function ProductShowcase({ productCategories }: { productCategories: ProductCategory[] }) {
@@ -47,7 +48,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                     : "border-ink-50/10 bg-ink-50/5 text-ink-200 hover:border-ink-50/25 hover:text-ink-50",
                 )}
               >
-                <GradientIconBadge icon={category.icon} gradient={category.gradient} size="sm" className="h-9 w-9 shrink-0 rounded-lg" />
+                <GradientIconBadge icon={category.icon} color={category.iconColor} size="sm" className="h-9 w-9 shrink-0 rounded-lg" />
                 <span className="whitespace-nowrap lg:whitespace-normal">{category.shortName}</span>
               </button>
             ))}
@@ -56,10 +57,10 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
           {/* Featured panel + rest of category */}
           <div>
             <div
-              className={cn(
-                "flex flex-col gap-6 rounded-3xl border border-white/10 bg-gradient-to-br p-8 sm:flex-row sm:items-center sm:p-10",
-                GRADIENTS[active.gradient].badge,
-              )}
+              className="flex flex-col gap-6 rounded-3xl border border-white/10 p-8 sm:flex-row sm:items-center sm:p-10"
+              style={{
+                backgroundImage: `linear-gradient(to bottom right, ${deriveGradientStops(active.iconColor).from}, ${deriveGradientStops(active.iconColor).to})`,
+              }}
             >
               {featured.image ? (
                 <ImageSlot
@@ -99,7 +100,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 rounded-xl border border-ink-50/10 bg-ink-50/5 p-4 transition-colors hover:border-ink-50/25 hover:bg-ink-50/10"
                 >
-                  <GradientIconBadge icon={product.icon} gradient={active.gradient} size="sm" />
+                  <GradientIconBadge icon={product.icon} color={active.iconColor} size="sm" />
                   <span className="text-sm font-medium text-ink-50">{product.name}</span>
                 </a>
               ))}

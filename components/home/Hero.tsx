@@ -84,7 +84,7 @@ export async function Hero() {
                 key={cat.slug}
                 className="flex flex-col items-center gap-1.5 rounded-xl border border-ink-50/15 bg-ink-50/5 p-3 text-center backdrop-blur-sm"
               >
-                <GradientIconBadge icon={cat.icon} gradient={cat.gradient} size="sm" className="rounded-full" />
+                <GradientIconBadge icon={cat.icon} color={cat.iconColor} size="sm" className="rounded-full" />
                 <span className="text-[11px] font-medium text-ink-50">{cat.shortName}</span>
               </div>
             ))}

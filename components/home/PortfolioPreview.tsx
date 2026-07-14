@@ -37,7 +37,7 @@ export async function PortfolioPreview() {
               {project.image ? (
                 <ImageSlot src={project.image} alt={project.title} aspect="video" className="mb-4 -mt-2 rounded-xl" />
               ) : (
-                <GradientIconBadge icon={project.icon} gradient={category.gradient} />
+                <GradientIconBadge icon={project.icon} color={category.iconColor} />
               )}
               <h3 className="mt-4 text-base font-semibold text-ink-50">{project.title}</h3>
               <p className="mt-2 flex-1 text-sm text-ink-400">{project.summary}</p>

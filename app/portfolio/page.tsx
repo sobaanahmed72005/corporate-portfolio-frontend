@@ -35,7 +35,7 @@ export default async function PortfolioPage() {
         >
           <Container>
             <div className="flex items-center gap-4">
-              <GradientIconBadge icon={category.icon} gradient={category.gradient} size="lg" />
+              <GradientIconBadge icon={category.icon} color={category.iconColor} size="lg" />
               <SectionHeading title={category.name} description={category.description} />
             </div>
 
@@ -52,7 +52,7 @@ export default async function PortfolioPage() {
                     <ImageSlot src={project.image} alt={project.title} aspect="video" />
                   ) : null}
                   <div className="flex flex-1 flex-col p-6">
-                    <GradientIconBadge icon={project.icon} gradient={category.gradient} size="sm" />
+                    <GradientIconBadge icon={project.icon} color={category.iconColor} size="sm" />
                     <h3 className="mt-4 text-base font-semibold text-ink-950">
                       {project.title}
                     </h3>

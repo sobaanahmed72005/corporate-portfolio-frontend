@@ -25,7 +25,7 @@ export async function ProductSpotlight() {
               {product.image ? (
                 <ImageSlot src={product.image} alt={product.name} aspect="square" className="w-full rounded-xl" />
               ) : (
-                <GradientIconBadge icon={product.icon} gradient={category.gradient} size="lg" />
+                <GradientIconBadge icon={product.icon} color={category.iconColor} size="lg" />
               )}
               <p className="font-display text-sm font-semibold text-ink-50">{product.name}</p>
             </div>
