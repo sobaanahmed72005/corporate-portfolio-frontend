@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Star } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { CtaBanner } from "@/components/home/CtaBanner";
-import { GRADIENTS } from "@/components/ui/gradients";
+import { deriveGradientStops } from "@/lib/theme";
 import { cn } from "@/lib/cn";
 import { company } from "@/lib/data/company";
 import { getTestimonials } from "@/lib/cms";
@@ -53,10 +53,10 @@ export default async function TestimonialsPage() {
               </p>
               <div className="mt-5 flex items-center gap-3">
                 <span
-                  className={cn(
-                    "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white",
-                    GRADIENTS[testimonial.gradient].badge,
-                  )}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white"
+                  style={{
+                    backgroundImage: `linear-gradient(to bottom right, ${deriveGradientStops(testimonial.iconColor).from}, ${deriveGradientStops(testimonial.iconColor).to})`,
+                  }}
                 >
                   {testimonial.name.charAt(0)}
                 </span>

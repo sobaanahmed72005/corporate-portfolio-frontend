@@ -8,7 +8,6 @@
 
 import { CMS_CONFIG } from "@/lib/env";
 import type { IconName } from "@/components/ui/Icon";
-import type { GradientName } from "@/components/ui/gradients";
 import type { FontPairingName, RadiusStyleName, ShadowStyleName } from "@/lib/theme";
 
 export type Product = {
@@ -56,7 +55,7 @@ export type Testimonial = {
   role: string;
   quote: string;
   rating: 1 | 2 | 3 | 4 | 5;
-  gradient: GradientName;
+  iconColor: string;
   photo?: string;
 };
 
@@ -67,7 +66,16 @@ export type Office = {
   email: string;
   address: string;
   icon: IconName;
+  iconColor: string;
   photo?: string;
+};
+
+export type Reason = {
+  title: string;
+  description: string;
+  tag: string;
+  icon: IconName;
+  iconColor: string;
 };
 
 export type PortfolioProject = {
@@ -268,6 +276,11 @@ export async function getStats(): Promise<Stat[]> {
 
 export async function getCourses(): Promise<Course[]> {
   const { data } = await cmsFetch<StrapiListResponse<Course>>("/courses?sort=id:asc&pagination[pageSize]=100");
+  return data;
+}
+
+export async function getReasons(): Promise<Reason[]> {
+  const { data } = await cmsFetch<StrapiListResponse<Reason>>("/reasons?sort=id:asc&pagination[pageSize]=100");
   return data;
 }
 

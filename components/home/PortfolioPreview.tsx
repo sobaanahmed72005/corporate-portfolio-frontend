@@ -3,9 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
-import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
+import { LinkButton } from "@/components/ui/Button";
 import { ImageSlot } from "@/components/ui/ImageSlot";
-import { cn } from "@/lib/cn";
 import { getPortfolioCategories } from "@/lib/cms";
 
 export async function PortfolioPreview() {
@@ -49,12 +48,9 @@ export async function PortfolioPreview() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Link
-            href="/portfolio"
-            className={cn(GRADIENT_PILL_BASE, GRADIENTS.blue.pill, "w-fit")}
-          >
+          <LinkButton href="/portfolio" variant="brand" size="sm" className="w-fit">
             View Full Portfolio <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
+          </LinkButton>
         </div>
       </Container>
     </section>

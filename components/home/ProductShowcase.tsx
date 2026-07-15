@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
-import { GRADIENT_PILL_BASE, GRADIENTS } from "@/components/ui/gradients";
+import { LinkButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { company } from "@/lib/data/company";
@@ -109,9 +108,9 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Link href="/products" className={cn(GRADIENT_PILL_BASE, GRADIENTS.blue.pill, "w-fit")}>
+          <LinkButton href="/products" variant="brand" size="sm" className="w-fit">
             View All Products <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
+          </LinkButton>
         </div>
       </Container>
     </section>

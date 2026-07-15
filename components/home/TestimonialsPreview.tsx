@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { Star, ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ImageSlot } from "@/components/ui/ImageSlot";
-import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
+import { LinkButton } from "@/components/ui/Button";
+import { deriveGradientStops } from "@/lib/theme";
 import { cn } from "@/lib/cn";
 import { getTestimonials, type Testimonial } from "@/lib/cms";
 
@@ -35,10 +35,10 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           />
         ) : (
           <span
-            className={cn(
-              "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br text-sm font-semibold text-white",
-              GRADIENTS[testimonial.gradient].badge,
-            )}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white"
+            style={{
+              backgroundImage: `linear-gradient(to bottom right, ${deriveGradientStops(testimonial.iconColor).from}, ${deriveGradientStops(testimonial.iconColor).to})`,
+            }}
           >
             {testimonial.name.charAt(0)}
           </span>
@@ -80,9 +80,9 @@ export async function TestimonialsPreview() {
 
       <Container>
         <div className="mt-10 flex justify-center">
-          <Link href="/testimonials" className={cn(GRADIENT_PILL_BASE, GRADIENTS.blue.pill, "w-fit")}>
+          <LinkButton href="/testimonials" variant="brand" size="sm" className="w-fit">
             Read More Reviews <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
+          </LinkButton>
         </div>
       </Container>
     </section>

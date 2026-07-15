@@ -2,8 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { GRADIENTS, GRADIENT_PILL_BASE } from "@/components/ui/gradients";
-import { cn } from "@/lib/cn";
+import { LinkButton } from "@/components/ui/Button";
 import { getBlogPosts } from "@/lib/cms";
 
 export async function LatestUpdates() {
@@ -53,9 +52,9 @@ export async function LatestUpdates() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <Link href="/blog" className={cn(GRADIENT_PILL_BASE, GRADIENTS.blue.pill, "w-fit")}>
+          <LinkButton href="/blog" variant="brand" size="sm" className="w-fit">
             Read More on the Blog <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
+          </LinkButton>
         </div>
       </Container>
     </section>

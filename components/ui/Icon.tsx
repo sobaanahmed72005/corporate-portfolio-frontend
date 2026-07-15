@@ -30,6 +30,8 @@ import {
   Headset,
   ShieldAlert,
   MonitorCog,
+  Truck,
+  BadgeCheck,
   type LucideProps,
 } from "lucide-react";
 
@@ -65,6 +67,8 @@ const iconMap = {
   headset: Headset,
   "shield-alert": ShieldAlert,
   "monitor-cog": MonitorCog,
+  truck: Truck,
+  "badge-check": BadgeCheck,
 } as const;
 
 export type IconName = keyof typeof iconMap;
