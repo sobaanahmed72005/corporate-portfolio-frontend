@@ -41,7 +41,7 @@ export async function LatestUpdates() {
                 href={`/blog/${post.slug}`}
                 className="flex flex-col gap-1 p-5 transition-colors hover:bg-card-950"
               >
-                <p className="font-display text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-300">
+                <p className="font-display text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-700">
                   {post.category}
                 </p>
                 <h4 className="line-clamp-2 text-sm font-semibold text-cardText-950">{post.title}</h4>

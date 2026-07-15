@@ -74,11 +74,11 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                 </span>
               )}
               <div>
-                <p className="font-display text-xs font-semibold uppercase tracking-wide text-white/70">
+                <p className="font-display text-xs font-semibold uppercase tracking-wide text-white">
                   Featured in {active.shortName}
                 </p>
                 <h3 className="mt-1 font-display text-2xl font-extrabold text-white">{featured.name}</h3>
-                <p className="mt-2 max-w-xl text-sm text-white/85">{featured.description}</p>
+                <p className="mt-2 max-w-xl text-sm text-white">{featured.description}</p>
                 <a
                   href={company.storeUrl}
                   target="_blank"

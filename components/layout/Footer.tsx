@@ -17,7 +17,7 @@ export function Footer({
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-footer-950 text-footerText-800">
+    <footer className="bg-footer-950 text-footerText-950">
       <Container className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
         <div>
           <div className="flex items-center gap-2">
@@ -59,14 +59,14 @@ export function Footer({
             Quick Links
           </p>
           <ul className="mt-4 space-y-2 text-sm">
-            <li><Link href="/" className="hover:text-footerText-950">Home</Link></li>
-            <li><Link href="/products" className="hover:text-footerText-950">Products</Link></li>
-            <li><Link href="/services" className="hover:text-footerText-950">Services</Link></li>
-            <li><Link href="/portfolio" className="hover:text-footerText-950">Portfolio</Link></li>
-            <li><Link href="/blog" className="hover:text-footerText-950">Blog</Link></li>
-            <li><Link href="/testimonials" className="hover:text-footerText-950">Testimonials</Link></li>
-            <li><Link href="/about" className="hover:text-footerText-950">About Us</Link></li>
-            <li><Link href="/contact" className="hover:text-footerText-950">Contact</Link></li>
+            <li><Link href="/" className="hover:text-navHighlight-600">Home</Link></li>
+            <li><Link href="/products" className="hover:text-navHighlight-600">Products</Link></li>
+            <li><Link href="/services" className="hover:text-navHighlight-600">Services</Link></li>
+            <li><Link href="/portfolio" className="hover:text-navHighlight-600">Portfolio</Link></li>
+            <li><Link href="/blog" className="hover:text-navHighlight-600">Blog</Link></li>
+            <li><Link href="/testimonials" className="hover:text-navHighlight-600">Testimonials</Link></li>
+            <li><Link href="/about" className="hover:text-navHighlight-600">About Us</Link></li>
+            <li><Link href="/contact" className="hover:text-navHighlight-600">Contact</Link></li>
           </ul>
         </div>
 
@@ -77,7 +77,7 @@ export function Footer({
           <ul className="mt-4 space-y-2 text-sm">
             {productCategories.map((cat) => (
               <li key={cat.slug}>
-                <Link href={`/products#${cat.slug}`} className="hover:text-footerText-950">
+                <Link href={`/products#${cat.slug}`} className="hover:text-navHighlight-600">
                   {cat.shortName}
                 </Link>
               </li>
@@ -92,13 +92,13 @@ export function Footer({
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex items-start gap-2">
               <Phone className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`tel:${company.phone}`} className="hover:text-footerText-950">
+              <a href={`tel:${company.phone}`} className="hover:text-navHighlight-600">
                 {company.phone}
               </a>
             </li>
             <li className="flex items-start gap-2">
               <Mail className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={`mailto:${company.email}`} className="hover:text-footerText-950">
+              <a href={`mailto:${company.email}`} className="hover:text-navHighlight-600">
                 {company.email}
               </a>
             </li>
@@ -123,10 +123,10 @@ export function Footer({
             &copy; {year} {company.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
-            <Link href="/privacy-policy" className="hover:text-footerText-950">
+            <Link href="/privacy-policy" className="hover:text-navHighlight-600">
               Privacy Policy
             </Link>
-            <Link href="/terms-and-conditions" className="hover:text-footerText-950">
+            <Link href="/terms-and-conditions" className="hover:text-navHighlight-600">
               Terms &amp; Conditions
             </Link>
           </div>

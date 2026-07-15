@@ -62,7 +62,7 @@ export function Header({
 
   return (
     <>
-      <div className="hidden bg-header-950 text-headerText-800 sm:block">
+      <div className="hidden bg-header-950 text-headerText-900 sm:block">
         <Container className="flex h-9 items-center justify-between text-xs">
           <div className="flex items-center gap-5">
             <a
@@ -117,8 +117,8 @@ export function Header({
             <Link
               href="/"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-headerText-800 hover:bg-headerText-950/10 hover:text-headerText-950",
-                pathname === "/" && "bg-headerText-950/10 text-navHighlight-400",
+                "rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10",
+                pathname === "/" && "bg-headerText-950/10 text-navHighlight-600",
               )}
             >
               Home
@@ -162,8 +162,8 @@ export function Header({
             <Link
               href="/blog"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-headerText-800 hover:bg-headerText-950/10 hover:text-headerText-950",
-                pathname.startsWith("/blog") && "bg-headerText-950/10 text-navHighlight-400",
+                "rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10",
+                pathname.startsWith("/blog") && "bg-headerText-950/10 text-navHighlight-600",
               )}
             >
               Blog
@@ -171,8 +171,8 @@ export function Header({
             <Link
               href="/about"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-headerText-800 hover:bg-headerText-950/10 hover:text-headerText-950",
-                pathname.startsWith("/about") && "bg-headerText-950/10 text-navHighlight-400",
+                "rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10",
+                pathname.startsWith("/about") && "bg-headerText-950/10 text-navHighlight-600",
               )}
             >
               About
@@ -180,8 +180,8 @@ export function Header({
             <Link
               href="/contact"
               className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium text-headerText-800 hover:bg-headerText-950/10 hover:text-headerText-950",
-                pathname.startsWith("/contact") && "bg-headerText-950/10 text-navHighlight-400",
+                "rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10",
+                pathname.startsWith("/contact") && "bg-headerText-950/10 text-navHighlight-600",
               )}
             >
               Contact
@@ -202,7 +202,7 @@ export function Header({
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-headerText-800 md:hidden"
+            className="inline-flex items-center justify-center rounded-md p-2 text-headerText-950 md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -219,7 +219,7 @@ export function Header({
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-md px-3 py-2 text-sm font-medium text-headerText-800 hover:bg-headerText-950/10 hover:text-headerText-950"
+                  className="rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10"
                 >
                   {link.label}
                 </Link>

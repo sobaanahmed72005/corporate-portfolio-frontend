@@ -68,8 +68,8 @@ export function NavMegaMenu({
           // This trigger sits inline in the header bar alongside Header.tsx's
           // other nav links — it uses the header's own text color, not the
           // dropdown panel's content-card colors below.
-          "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-headerText-800 hover:bg-headerText-950/10 hover:text-navHighlight-400",
-          active && "bg-headerText-950/10 text-navHighlight-400",
+          "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10 hover:text-navHighlight-600",
+          active && "bg-headerText-950/10 text-navHighlight-600",
         )}
       >
         {label}
