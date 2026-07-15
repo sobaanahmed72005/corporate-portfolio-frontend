@@ -33,7 +33,7 @@ export async function TrainingAcademy() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <LinkButton href="/contact" variant="outlineWhite" size="lg">
+          <LinkButton href="/contact" variant="outline" size="lg">
             Ask About Training
           </LinkButton>
         </div>

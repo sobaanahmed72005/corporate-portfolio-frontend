@@ -34,7 +34,7 @@ export async function ServicesOverview() {
         </div>
 
         <div className="mt-10 flex justify-center">
-          <LinkButton href="/services" variant="outlineWhite" size="lg">
+          <LinkButton href="/services" variant="outline" size="lg">
             View All Services <ArrowRight className="h-4 w-4" />
           </LinkButton>
         </div>

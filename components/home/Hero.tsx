@@ -59,7 +59,7 @@ export async function Hero() {
             <LinkButton href="/products" size="lg" variant="brand">
               Browse Products <ArrowRight className="h-4 w-4" aria-hidden />
             </LinkButton>
-            <LinkButton href="/contact" size="lg" variant="outlineWhite">
+            <LinkButton href="/contact" size="lg" variant="outline">
               Get a Quote
             </LinkButton>
           </div>
