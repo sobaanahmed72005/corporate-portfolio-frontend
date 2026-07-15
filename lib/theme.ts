@@ -172,6 +172,7 @@ export const FONT_PAIRINGS = {
   "Technical Grotesk (Space Grotesk + Inter)": { heading: "--font-space-grotesk", body: "--font-inter" },
   "Classic Corporate (Merriweather + Inter)": { heading: "--font-merriweather", body: "--font-inter" },
   "Single Family — Inter": { heading: "--font-inter", body: "--font-inter" },
+  "Single Family — Outfit": { heading: "--font-outfit", body: "--font-outfit" },
 } as const;
 
 export type FontPairingName = keyof typeof FONT_PAIRINGS;

@@ -14,7 +14,7 @@ import { buildThemeCssVars, buildFontCssVars, buildShapeCssVars } from "@/lib/th
 // arbitrary family. Unselected pairings cost extra self-hosted files in the
 // build output, not client bandwidth — browsers only fetch a font when its
 // family is actually referenced by computed style.
-const outfit = Outfit({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--font-outfit" });
+const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-outfit" });
 const rubik = Rubik({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-rubik" });
 const playfair = Playfair_Display({
   subsets: ["latin"],
