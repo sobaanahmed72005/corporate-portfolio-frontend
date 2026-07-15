@@ -51,11 +51,11 @@ function Counter({ stat }: { stat: Stat }) {
 
   return (
     <div ref={ref} className="text-center">
-      <p className="font-display text-4xl font-extrabold text-pageText-50 sm:text-5xl">
+      <p className="font-display text-4xl font-extrabold text-pageText-950 sm:text-5xl">
         {value}
         {stat.suffix}
       </p>
-      <p className="mt-2 text-sm font-medium text-pageText-200 sm:text-base">{stat.label}</p>
+      <p className="mt-2 text-sm font-medium text-pageText-800 sm:text-base">{stat.label}</p>
     </div>
   );
 }

@@ -38,18 +38,19 @@ export type FamilyName =
 
 // Which shade each family's picked color represents, and which shades that
 // family actually has (accent has no 950; matches tailwind.config.ts today).
-// header/footer/page/card are each an independent dark-surface background
-// color (their own Strapi field); headerText/footerText/pageText/cardText
-// are each that same zone's independent TEXT color (pivot 50, the lightest
-// shade — the opposite anchor from the background families' pivot 950 — so
-// darker shades in each text family's scale are progressively more muted
-// text, not a second background). section/contentCard are the mirror image
-// for the site's LIGHT inner pages (About/Contact/Products/etc.) — pivot 50
-// since the picked color IS a light background; sectionText/contentCardText
-// are pivot 950 since that picked color is dark text on that light
-// background. button/navHighlight are each an independent brand-style
-// accent color — together these replace what used to be one shared
-// "ink"/"brand" role split across many different UI zones.
+// header/footer/page/card are each an independent surface background color
+// (their own Strapi field). headerText/footerText/pageText/cardText are
+// each that same zone's independent TEXT color — pivot 950 (the darkest
+// shade), same direction as sectionText/contentCardText: the picked color
+// is the primary/darkest text, and lighter shades in that family's scale
+// are progressively more muted, trending toward the light background
+// rather than toward black. (A pivot-50 "text gets darker as it mutes"
+// direction only makes sense paired with a dark background; header/footer/
+// page/card are treated as light-background zones here.) section/
+// contentCard are pivot 50 since the picked color IS a light background.
+// button/navHighlight are each an independent brand-style accent color —
+// together these replace what used to be one shared "ink"/"brand" role
+// split across many different UI zones.
 const FAMILIES: Record<FamilyName, { pivot: Shade; shades: readonly Shade[] }> = {
   brand: { pivot: 600, shades: SHADE_KEYS },
   accent: { pivot: 400, shades: SHADE_KEYS.filter((s) => s !== 950) },
@@ -59,10 +60,10 @@ const FAMILIES: Record<FamilyName, { pivot: Shade; shades: readonly Shade[] }> =
   card: { pivot: 950, shades: SHADE_KEYS },
   button: { pivot: 600, shades: SHADE_KEYS },
   navHighlight: { pivot: 600, shades: SHADE_KEYS },
-  headerText: { pivot: 50, shades: SHADE_KEYS },
-  footerText: { pivot: 50, shades: SHADE_KEYS },
-  pageText: { pivot: 50, shades: SHADE_KEYS },
-  cardText: { pivot: 50, shades: SHADE_KEYS },
+  headerText: { pivot: 950, shades: SHADE_KEYS },
+  footerText: { pivot: 950, shades: SHADE_KEYS },
+  pageText: { pivot: 950, shades: SHADE_KEYS },
+  cardText: { pivot: 950, shades: SHADE_KEYS },
   section: { pivot: 50, shades: SHADE_KEYS },
   contentCard: { pivot: 50, shades: SHADE_KEYS },
   sectionText: { pivot: 950, shades: SHADE_KEYS },

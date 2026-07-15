@@ -8,7 +8,7 @@
      foreground respond to theme edits too, not just individual page
      utility classes. */
   --background: var(--page-950);
-  --foreground: var(--page-50);
+  --foreground: var(--pageText-950);
 }
 
 body {

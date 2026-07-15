@@ -3,13 +3,13 @@ import { Container } from "@/components/ui/Container";
 
 export function EventsTeaser() {
   return (
-    <section className="border-y border-pageText-50/10 bg-page-900 py-14 text-center sm:py-16">
+    <section className="border-y border-pageText-950/10 bg-page-900 py-14 text-center sm:py-16">
       <Container>
         <CalendarClock className="mx-auto h-8 w-8 text-brand-300" aria-hidden />
-        <h2 className="mt-4 font-display text-2xl font-extrabold text-pageText-50 sm:text-3xl">
+        <h2 className="mt-4 font-display text-2xl font-extrabold text-pageText-950 sm:text-3xl">
           Events &amp; Workshops
         </h2>
-        <p className="mx-auto mt-2 max-w-md font-display text-sm font-semibold uppercase tracking-wide text-pageText-400">
+        <p className="mx-auto mt-2 max-w-md font-display text-sm font-semibold uppercase tracking-wide text-pageText-600">
           Coming Soon
         </p>
       </Container>

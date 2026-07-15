@@ -43,8 +43,8 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                 className={cn(
                   "flex shrink-0 items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm font-semibold transition-colors lg:shrink",
                   category.slug === active.slug
-                    ? "border-brand-600 bg-brand-600/10 text-white"
-                    : "border-cardText-50/10 bg-cardText-50/5 text-cardText-200 hover:border-cardText-50/25 hover:text-cardText-50",
+                    ? "border-brand-600 bg-brand-600/10 text-cardText-950"
+                    : "border-cardText-950/10 bg-cardText-950/5 text-cardText-800 hover:border-cardText-950/25 hover:text-cardText-950",
                 )}
               >
                 <GradientIconBadge icon={category.icon} color={category.iconColor} size="sm" className="h-9 w-9 shrink-0 rounded-lg" />
@@ -97,10 +97,10 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   href={company.storeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-xl border border-cardText-50/10 bg-cardText-50/5 p-4 transition-colors hover:border-cardText-50/25 hover:bg-cardText-50/10"
+                  className="flex items-center gap-3 rounded-xl border border-cardText-950/10 bg-cardText-950/5 p-4 transition-colors hover:border-cardText-950/25 hover:bg-cardText-950/10"
                 >
                   <GradientIconBadge icon={product.icon} color={active.iconColor} size="sm" />
-                  <span className="text-sm font-medium text-cardText-50">{product.name}</span>
+                  <span className="text-sm font-medium text-cardText-950">{product.name}</span>
                 </a>
               ))}
             </div>

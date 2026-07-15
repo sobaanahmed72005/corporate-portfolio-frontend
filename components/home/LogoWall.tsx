@@ -11,7 +11,7 @@ export async function LogoWall() {
   return (
     <section className="overflow-hidden bg-page-950 py-14 sm:py-20">
       <Container>
-        <p className="mb-8 text-center font-display text-sm font-semibold uppercase tracking-wide text-pageText-400">
+        <p className="mb-8 text-center font-display text-sm font-semibold uppercase tracking-wide text-pageText-600">
           Trusted by Industry Leaders
         </p>
       </Container>

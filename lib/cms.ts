@@ -320,23 +320,23 @@ export type ThemeSettings = {
   favicon?: string;
 };
 
-// Matches the site's actual current hardcoded look — used if Strapi has no
+// Matches the site's actual current look — used if Strapi has no
 // theme-setting entry yet, or is unreachable, so the site never renders
 // unstyled or with a broken font/shape choice.
 const DEFAULT_THEME: ThemeSettings = {
-  brandColor: "#0324FF",
-  accentColor: "#FFA31A",
-  headerColor: "#000000",
-  footerColor: "#000000",
-  pageBackgroundColor: "#000000",
-  cardColor: "#000000",
-  buttonColor: "#0324FF",
-  navHighlightColor: "#0324FF",
-  headerTextColor: "#F7F7F7",
-  footerTextColor: "#F7F7F7",
-  pageTextColor: "#F7F7F7",
-  cardTextColor: "#F7F7F7",
-  sectionColor: "#F8FAFC",
+  brandColor: "#2563EB",
+  accentColor: "#38BDF8",
+  headerColor: "#FFFFFF",
+  footerColor: "#F8FAFC",
+  pageBackgroundColor: "#FFFFFF",
+  cardColor: "#EFF6FF",
+  buttonColor: "#2563EB",
+  navHighlightColor: "#2563EB",
+  headerTextColor: "#0F172A",
+  footerTextColor: "#0F172A",
+  pageTextColor: "#0F172A",
+  cardTextColor: "#0F172A",
+  sectionColor: "#EFF6FF",
   sectionTextColor: "#0F172A",
   contentCardColor: "#FFFFFF",
   contentCardTextColor: "#0F172A",

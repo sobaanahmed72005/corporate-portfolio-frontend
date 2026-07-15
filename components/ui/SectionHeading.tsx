@@ -22,12 +22,12 @@ export function SectionHeading({
   className?: string;
 }) {
   const textColor = onDark
-    ? "text-pageText-50"
+    ? "text-pageText-950"
     : onSection
       ? "text-sectionText-950"
       : "text-contentCardText-950";
   const descriptionColor = onDark
-    ? "text-pageText-400"
+    ? "text-pageText-600"
     : onSection
       ? "text-sectionText-600"
       : "text-contentCardText-600";
