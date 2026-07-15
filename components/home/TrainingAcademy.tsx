@@ -12,6 +12,7 @@ export async function TrainingAcademy() {
       <Container>
         <SectionHeading
           eyebrow="Training"
+          eyebrowColor="text-cyan-600"
           title="Get Certified With Our Installer Program"
           description="Hands-on courses for technicians and resellers who want to install to our standard."
           align="center"

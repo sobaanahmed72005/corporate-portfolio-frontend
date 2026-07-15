@@ -63,6 +63,7 @@ export async function TestimonialsPreview() {
       <Container>
         <SectionHeading
           eyebrow="Feedback That Matters"
+          eyebrowColor="text-rose-500"
           title="Trusted by Homes and Businesses"
           align="center"
           className="mx-auto"

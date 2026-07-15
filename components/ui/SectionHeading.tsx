@@ -2,6 +2,7 @@ import { cn } from "@/lib/cn";
 
 export function SectionHeading({
   eyebrow,
+  eyebrowColor,
   title,
   description,
   align = "left",
@@ -10,6 +11,10 @@ export function SectionHeading({
   className,
 }: {
   eyebrow?: string;
+  /** Overrides the default brand-color eyebrow — pass a Tailwind text-color
+   * class (e.g. "text-rose-500") to give a section its own accent instead
+   * of every section sharing the same brand blue. */
+  eyebrowColor?: string;
   title: string;
   description?: string;
   align?: "left" | "center";
@@ -44,7 +49,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mb-2 font-display text-[13px] font-medium uppercase tracking-[0.15em]",
-            onDark ? "text-brand-300" : "text-brand-600",
+            eyebrowColor ?? (onDark ? "text-brand-300" : "text-brand-600"),
           )}
         >
           {eyebrow}

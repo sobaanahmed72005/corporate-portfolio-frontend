@@ -23,7 +23,6 @@ export async function LogoWall() {
               src={logo.src}
               alt={logo.alt}
               aspect="wide"
-              onDark
               className="w-40 shrink-0 grayscale transition-[filter] hover:grayscale-0"
             />
           ))}

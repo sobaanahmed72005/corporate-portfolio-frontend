@@ -14,7 +14,7 @@ export async function LatestUpdates() {
   return (
     <section className="border-t border-pageText-950/10 bg-page-950 py-20 sm:py-32">
       <Container>
-        <SectionHeading eyebrow="From the Blog" title="Latest Updates" onDark />
+        <SectionHeading eyebrow="From the Blog" eyebrowColor="text-amber-500" title="Latest Updates" onDark />
 
         <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-[1.3fr_1fr]">
           <Link

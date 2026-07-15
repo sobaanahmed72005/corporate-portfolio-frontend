@@ -21,6 +21,7 @@ export async function PortfolioPreview() {
       <Container>
         <SectionHeading
           eyebrow="Our Work"
+          eyebrowColor="text-violet-500"
           title="Recent Projects"
           description="A sample of the CCTV, solar, networking, and supply projects we've delivered for clients."
           onDark

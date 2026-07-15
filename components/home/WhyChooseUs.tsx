@@ -11,6 +11,7 @@ export async function WhyChooseUs() {
       <Container>
         <SectionHeading
           eyebrow="Why Choose Us"
+          eyebrowColor="text-orange-500"
           title="Built on Reliability and Support"
           align="center"
           className="mx-auto"

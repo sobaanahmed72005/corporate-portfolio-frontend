@@ -13,6 +13,7 @@ export async function ServicesOverview() {
       <Container>
         <SectionHeading
           eyebrow="What We Do"
+          eyebrowColor="text-emerald-500"
           title="Installation & Support Services"
           description="Beyond supplying equipment, we install and maintain it — so it works reliably from day one."
           onDark
