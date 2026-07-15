@@ -324,14 +324,14 @@ export type ThemeSettings = {
 // theme-setting entry yet, or is unreachable, so the site never renders
 // unstyled or with a broken font/shape choice.
 const DEFAULT_THEME: ThemeSettings = {
-  brandColor: "#2563EB",
-  accentColor: "#38BDF8",
+  brandColor: "#1E40AF",
+  accentColor: "#6366F1",
   headerColor: "#FFFFFF",
   footerColor: "#F8FAFC",
   pageBackgroundColor: "#FFFFFF",
   cardColor: "#EFF6FF",
   buttonColor: "#2563EB",
-  navHighlightColor: "#2563EB",
+  navHighlightColor: "#0EA5E9",
   headerTextColor: "#0F172A",
   footerTextColor: "#0F172A",
   pageTextColor: "#0F172A",
