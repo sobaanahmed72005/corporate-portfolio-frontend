@@ -25,7 +25,7 @@ function Pill({ label, dark }: { label: string; dark: boolean }) {
     <span
       className={cn(
         "inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 font-display text-sm font-semibold",
-        dark ? "bg-brand-600 text-white" : "border border-cardText-950/10 bg-cardText-950/5 text-cardText-950",
+        dark ? "bg-brand-600 text-white" : "border border-cardText-950/10 bg-card-950 text-cardText-950",
       )}
     >
       <Sparkles className="h-3.5 w-3.5 text-accent-500" aria-hidden />
@@ -54,7 +54,7 @@ function Row({ items, animation }: { items: string[]; animation: string }) {
 
 export function TrustTicker() {
   return (
-    <div className="overflow-hidden bg-page-900 py-10">
+    <div className="overflow-hidden border-t border-pageText-950/10 bg-page-900 py-10">
       <Container>
         <p className="mb-6 text-center font-display text-sm font-semibold uppercase tracking-wide text-pageText-600">
           Trusted by Homes and Businesses Across Pakistan

@@ -14,7 +14,7 @@ export async function ProductDeepDive() {
   if (!flagship || !flagshipProduct) return null;
 
   return (
-    <section className="relative overflow-hidden bg-page-900 py-20 sm:py-28">
+    <section className="relative overflow-hidden border-t border-pageText-950/10 bg-page-900 py-20 sm:py-28">
       <div
         className="pointer-events-none absolute inset-y-0 right-0 w-1/2 opacity-30 blur-3xl"
         style={{ background: "radial-gradient(circle at 70% 50%, #8b5cf6 0%, transparent 65%)" }}

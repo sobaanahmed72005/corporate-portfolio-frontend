@@ -7,7 +7,7 @@ export async function OfficesSection() {
   const offices = await getOffices();
 
   return (
-    <section className="bg-page-950 py-16 text-pageText-950 sm:py-24">
+    <section className="border-t border-pageText-950/10 bg-page-950 py-16 text-pageText-950 sm:py-24">
       <Container>
         <div className="max-w-2xl">
           <p className="mb-2 font-display text-sm font-semibold uppercase tracking-wide text-accent-400">
@@ -22,7 +22,7 @@ export async function OfficesSection() {
           {offices.map((office) => (
             <div
               key={office.slug}
-              className="flex flex-col gap-4 rounded-2xl border border-cardText-950/15 bg-cardText-950/5 p-6"
+              className="flex flex-col gap-4 rounded-2xl border border-cardText-950/15 bg-card-950 p-6"
             >
               <div className="flex items-center gap-3">
                 <GradientIconBadge icon={office.icon} color={office.iconColor} size="sm" />

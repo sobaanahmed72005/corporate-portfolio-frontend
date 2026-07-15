@@ -75,14 +75,13 @@ export async function Hero() {
             src={heroImageSrc}
             alt="Flagship product"
             aspect="square"
-            onDark
             className="rounded-3xl border-cardText-950/15"
           />
           <div className="mt-4 grid grid-cols-4 gap-3">
             {productCategories.map((cat) => (
               <div
                 key={cat.slug}
-                className="flex flex-col items-center gap-1.5 rounded-xl border border-cardText-950/15 bg-cardText-950/5 p-3 text-center backdrop-blur-sm"
+                className="flex flex-col items-center gap-1.5 rounded-xl border border-cardText-950/15 bg-card-950 p-3 text-center backdrop-blur-sm"
               >
                 <GradientIconBadge icon={cat.icon} color={cat.iconColor} size="sm" className="rounded-full" />
                 <span className="text-[11px] font-medium text-cardText-950">{cat.shortName}</span>

@@ -44,7 +44,7 @@ export function ImageSlot({
         "relative flex items-center justify-center overflow-hidden rounded-xl border border-dashed",
         aspectClasses[aspect],
         onDark
-          ? "border-cardText-950/20 bg-cardText-950/5 text-cardText-950/30"
+          ? "border-cardText-50/20 bg-cardText-50/5 text-cardText-50/30"
           : "border-contentCardText-300 bg-contentCard-100 text-contentCardText-400",
         className,
       )}

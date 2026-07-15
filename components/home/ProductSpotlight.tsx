@@ -14,13 +14,13 @@ export async function ProductSpotlight() {
     }));
 
   return (
-    <section className="bg-page-950 py-10 sm:py-14">
+    <section className="border-t border-pageText-950/10 bg-page-950 py-10 sm:py-14">
       <Container>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {spotlight.map(({ category, product }) => (
             <div
               key={product.slug}
-              className="flex flex-col items-center gap-3 rounded-2xl border border-cardText-950/10 bg-cardText-950/5 p-5 text-center backdrop-blur-sm transition-colors hover:border-cardText-950/20 hover:bg-cardText-950/10"
+              className="flex flex-col items-center gap-3 rounded-2xl border border-cardText-950/10 bg-card-950 p-5 text-center shadow-sm transition-all hover:border-cardText-950/20 hover:shadow-md"
             >
               {product.image ? (
                 <ImageSlot src={product.image} alt={product.name} aspect="square" className="w-full rounded-xl" />

@@ -17,7 +17,7 @@ export async function PortfolioPreview() {
     }));
 
   return (
-    <section className="bg-page-950 py-16 sm:py-24">
+    <section className="border-t border-pageText-950/10 bg-page-950 py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Our Work"
@@ -31,7 +31,7 @@ export async function PortfolioPreview() {
             <Link
               key={project.slug}
               href={`/portfolio#${category.slug}`}
-              className="flex flex-col rounded-2xl border border-cardText-950/10 bg-cardText-950/5 p-6 backdrop-blur-sm transition-colors hover:border-cardText-950/20 hover:bg-cardText-950/10"
+              className="flex flex-col rounded-2xl border border-cardText-950/10 bg-card-950 p-6 shadow-sm transition-all hover:border-cardText-950/20 hover:shadow-md"
             >
               {project.image ? (
                 <ImageSlot src={project.image} alt={project.title} aspect="video" className="mb-4 -mt-2 rounded-xl" />
