@@ -40,7 +40,7 @@ export default async function BlogPage() {
                   {post.title}
                 </Link>
               </h2>
-              <div className="mt-2 flex items-center gap-3 text-xs text-contentCardText-500">
+              <div className="mt-2 flex items-center gap-3 text-xs text-contentCardText-600">
                 <span className="flex items-center gap-1">
                   <User className="h-3.5 w-3.5" aria-hidden />
                   {post.author}

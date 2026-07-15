@@ -92,7 +92,7 @@ export function NavMegaMenu({
               <GradientIconBadge icon={item.icon} color={item.iconColor} size="sm" />
               <span>
                 <span className="block text-sm font-semibold text-contentCardText-950">{item.title}</span>
-                <span className="block text-xs text-contentCardText-500">{item.description}</span>
+                <span className="block text-xs text-contentCardText-600">{item.description}</span>
               </span>
             </Link>
           ))}
@@ -101,7 +101,7 @@ export function NavMegaMenu({
         <div className="mt-3 flex items-center justify-between gap-4 rounded-xl bg-contentCard-100 p-4">
           <div>
             <p className="text-sm font-semibold text-contentCardText-950">{cta.title}</p>
-            <p className="text-xs text-contentCardText-500">{cta.description}</p>
+            <p className="text-xs text-contentCardText-600">{cta.description}</p>
           </div>
           <LinkButton href={cta.href} size="sm" variant="brand" className="shrink-0">
             {cta.ctaLabel}

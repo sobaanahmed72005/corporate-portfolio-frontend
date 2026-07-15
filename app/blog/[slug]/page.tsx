@@ -34,7 +34,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         <Container>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-sm text-sectionText-500 hover:text-brand-600"
+            className="inline-flex items-center gap-1.5 text-sm text-sectionText-600 hover:text-brand-600"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
             Back to Blog
@@ -45,7 +45,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <h1 className="mt-4 max-w-3xl font-display text-3xl font-extrabold leading-tight text-sectionText-950 sm:text-4xl">
             {post.title}
           </h1>
-          <div className="mt-4 flex items-center gap-4 text-sm text-sectionText-500">
+          <div className="mt-4 flex items-center gap-4 text-sm text-sectionText-600">
             <span className="flex items-center gap-1.5">
               <User className="h-4 w-4" aria-hidden />
               {post.author}

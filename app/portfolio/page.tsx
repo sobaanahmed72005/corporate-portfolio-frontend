@@ -57,7 +57,7 @@ export default async function PortfolioPage() {
                       {project.title}
                     </h3>
                     <p className="mt-2 flex-1 text-sm text-contentCardText-600">{project.summary}</p>
-                    <span className="mt-4 inline-block w-fit rounded-full bg-contentCard-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-contentCardText-500">
+                    <span className="mt-4 inline-block w-fit rounded-full bg-contentCard-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-contentCardText-600">
                       {project.highlight}
                     </span>
                   </div>

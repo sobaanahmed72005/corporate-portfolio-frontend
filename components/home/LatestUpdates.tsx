@@ -45,7 +45,7 @@ export async function LatestUpdates() {
                   {post.category}
                 </p>
                 <h4 className="line-clamp-2 text-sm font-semibold text-cardText-950">{post.title}</h4>
-                <p className="text-xs text-cardText-500">{post.date}</p>
+                <p className="text-xs text-cardText-600">{post.date}</p>
               </Link>
             ))}
           </div>

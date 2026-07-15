@@ -64,7 +64,7 @@ export default async function TestimonialsPage() {
                   <p className="text-sm font-semibold text-contentCardText-950">
                     {testimonial.name}
                   </p>
-                  <p className="text-xs text-contentCardText-500">{testimonial.role}</p>
+                  <p className="text-xs text-contentCardText-600">{testimonial.role}</p>
                 </div>
               </div>
             </div>

@@ -68,7 +68,7 @@ export function ContactForm({ services }: { services: Service[] }) {
 
       <div>
         <label htmlFor="phone" className="block text-sm font-medium text-contentCardText-700">
-          Phone <span className="text-contentCardText-400">(optional)</span>
+          Phone <span className="text-contentCardText-600">(optional)</span>
         </label>
         <input
           id="phone"
@@ -83,7 +83,7 @@ export function ContactForm({ services }: { services: Service[] }) {
 
       <div>
         <label htmlFor="subject" className="block text-sm font-medium text-contentCardText-700">
-          What are you interested in? <span className="text-contentCardText-400">(optional)</span>
+          What are you interested in? <span className="text-contentCardText-600">(optional)</span>
         </label>
         <select
           id="subject"

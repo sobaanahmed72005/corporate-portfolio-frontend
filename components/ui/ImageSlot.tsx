@@ -45,7 +45,7 @@ export function ImageSlot({
         aspectClasses[aspect],
         onDark
           ? "border-cardText-50/20 bg-cardText-50/5 text-cardText-50/30"
-          : "border-contentCardText-300 bg-contentCard-100 text-contentCardText-400",
+          : "border-contentCardText-300 bg-contentCard-100 text-contentCardText-600",
         className,
       )}
       role="img"
