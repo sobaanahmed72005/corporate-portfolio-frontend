@@ -15,12 +15,12 @@ export default async function ServicesPage() {
   const services = await getServices();
 
   return (
-    <>
-      <section className="border-b border-slate-200 bg-slate-50 py-14">
+    <div className="bg-contentCard-50">
+      <section className="border-b border-section-200 bg-section-50 py-14">
         <Container className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Our Services</h1>
-            <p className="mt-2 max-w-xl text-slate-600">
+            <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">Our Services</h1>
+            <p className="mt-2 max-w-xl text-sectionText-600">
               From installation to ongoing support, our technicians handle the
               full setup so your systems work reliably from day one.
             </p>
@@ -44,6 +44,6 @@ export default async function ServicesPage() {
         description="Tell us about your site and requirements — we'll put together a quote for the right equipment and installation plan."
         primaryLabel="Get a Free Quote"
       />
-    </>
+    </div>
   );
 }

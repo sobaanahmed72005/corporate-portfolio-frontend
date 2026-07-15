@@ -10,13 +10,19 @@ type CommonProps = {
 
 const variantClasses = {
   // Dark pill — the site's default button style, for light backgrounds.
-  primary: "bg-slate-900 text-white shadow-md shadow-slate-900/20 hover:bg-slate-800",
+  // Tied to the same contentCardText color used for headings/body text on
+  // those backgrounds, so it stays consistent if that color changes.
+  primary:
+    "bg-contentCardText-950 text-contentCard-50 shadow-md shadow-contentCardText-950/20 hover:bg-contentCardText-800",
   // Main action-button color, set from Strapi's buttonColor field.
   brand: "bg-button-600 text-white shadow-md shadow-button-600/25 hover:bg-button-700",
   accent: "bg-accent-400 text-white shadow-md shadow-accent-400/25 hover:bg-accent-500",
-  outline: "border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white",
-  ghost: "text-slate-900 hover:bg-slate-100",
-  // Solid white button for use on colored/dark section backgrounds.
+  outline:
+    "border-2 border-contentCardText-950 text-contentCardText-950 hover:bg-contentCardText-950 hover:text-contentCard-50",
+  ghost: "text-contentCardText-950 hover:bg-contentCard-100",
+  // Solid white button for use on colored/dark section backgrounds — stays
+  // literal white on purpose, it needs to contrast against whatever
+  // brand/accent color is behind it, not follow a zone of its own.
   white: "bg-white text-slate-900 shadow-md hover:bg-slate-100",
   // Outlined button for use on colored/dark section backgrounds.
   outlineWhite: "border-2 border-white/70 text-white hover:bg-white/10",

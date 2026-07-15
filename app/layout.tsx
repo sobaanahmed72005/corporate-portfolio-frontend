@@ -93,6 +93,10 @@ export default async function RootLayout({
       footerText: themeSettings.footerTextColor,
       pageText: themeSettings.pageTextColor,
       cardText: themeSettings.cardTextColor,
+      section: themeSettings.sectionColor,
+      sectionText: themeSettings.sectionTextColor,
+      contentCard: themeSettings.contentCardColor,
+      contentCardText: themeSettings.contentCardTextColor,
     }) +
     buildFontCssVars(themeSettings.fontPairing) +
     buildShapeCssVars(themeSettings.radiusStyle, themeSettings.shadowStyle);

@@ -296,6 +296,10 @@ export type ThemeSettings = {
   footerTextColor: string;
   pageTextColor: string;
   cardTextColor: string;
+  sectionColor: string;
+  sectionTextColor: string;
+  contentCardColor: string;
+  contentCardTextColor: string;
   fontPairing: FontPairingName;
   radiusStyle: RadiusStyleName;
   shadowStyle: ShadowStyleName;
@@ -319,6 +323,10 @@ const DEFAULT_THEME: ThemeSettings = {
   footerTextColor: "#F7F7F7",
   pageTextColor: "#F7F7F7",
   cardTextColor: "#F7F7F7",
+  sectionColor: "#F8FAFC",
+  sectionTextColor: "#0F172A",
+  contentCardColor: "#FFFFFF",
+  contentCardTextColor: "#0F172A",
   fontPairing: "Modern Sans (Outfit + Rubik)",
   radiusStyle: "Soft (current default)",
   shadowStyle: "Subtle (current default)",
@@ -337,6 +345,10 @@ type RawThemeSettings = {
   footerTextColor: string;
   pageTextColor: string;
   cardTextColor: string;
+  sectionColor: string;
+  sectionTextColor: string;
+  contentCardColor: string;
+  contentCardTextColor: string;
   fontPairing: FontPairingName;
   radiusStyle: RadiusStyleName;
   shadowStyle: ShadowStyleName;
@@ -365,6 +377,10 @@ export async function getThemeSettings(): Promise<ThemeSettings> {
       footerTextColor: data.footerTextColor || DEFAULT_THEME.footerTextColor,
       pageTextColor: data.pageTextColor || DEFAULT_THEME.pageTextColor,
       cardTextColor: data.cardTextColor || DEFAULT_THEME.cardTextColor,
+      sectionColor: data.sectionColor || DEFAULT_THEME.sectionColor,
+      sectionTextColor: data.sectionTextColor || DEFAULT_THEME.sectionTextColor,
+      contentCardColor: data.contentCardColor || DEFAULT_THEME.contentCardColor,
+      contentCardTextColor: data.contentCardTextColor || DEFAULT_THEME.contentCardTextColor,
       fontPairing: data.fontPairing || DEFAULT_THEME.fontPairing,
       radiusStyle: data.radiusStyle || DEFAULT_THEME.radiusStyle,
       shadowStyle: data.shadowStyle || DEFAULT_THEME.shadowStyle,

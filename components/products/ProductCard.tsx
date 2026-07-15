@@ -11,10 +11,10 @@ export function ProductCard({
   color: string;
 }) {
   return (
-    <div className="flex flex-col rounded-2xl border border-slate-200 p-5 shadow-sm transition-shadow hover:shadow-lg">
+    <div className="flex flex-col rounded-2xl border border-contentCard-200 bg-contentCard-50 p-5 shadow-sm transition-shadow hover:shadow-lg">
       <GradientIconBadge icon={product.icon} color={color} size="sm" />
-      <h3 className="mt-3 text-base font-semibold text-slate-900">{product.name}</h3>
-      <p className="mt-1 flex-1 text-sm text-slate-600">{product.description}</p>
+      <h3 className="mt-3 text-base font-semibold text-contentCardText-950">{product.name}</h3>
+      <p className="mt-1 flex-1 text-sm text-contentCardText-600">{product.description}</p>
       <GradientPillLink
         href={company.storeUrl}
         target="_blank"

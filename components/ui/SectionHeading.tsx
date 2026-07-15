@@ -6,6 +6,7 @@ export function SectionHeading({
   description,
   align = "left",
   onDark = false,
+  onSection = false,
   className,
 }: {
   eyebrow?: string;
@@ -14,8 +15,23 @@ export function SectionHeading({
   align?: "left" | "center";
   /** Use light text — for sections with a dark background. */
   onDark?: boolean;
+  /** Use section text color instead of the (default) content-card text color
+   * — for use inside a light gray banner/divider section rather than a
+   * white card area. Ignored when onDark is set. */
+  onSection?: boolean;
   className?: string;
 }) {
+  const textColor = onDark
+    ? "text-pageText-50"
+    : onSection
+      ? "text-sectionText-950"
+      : "text-contentCardText-950";
+  const descriptionColor = onDark
+    ? "text-pageText-400"
+    : onSection
+      ? "text-sectionText-600"
+      : "text-contentCardText-600";
+
   return (
     <div
       className={cn(
@@ -37,13 +53,13 @@ export function SectionHeading({
       <h2
         className={cn(
           "font-display text-2xl font-extrabold tracking-tight sm:text-3xl",
-          onDark ? "text-pageText-50" : "text-slate-900",
+          textColor,
         )}
       >
         {title}
       </h2>
       {description && (
-        <p className={cn("mt-3 text-base", onDark ? "text-pageText-400" : "text-slate-600")}>
+        <p className={cn("mt-3 text-base", descriptionColor)}>
           {description}
         </p>
       )}

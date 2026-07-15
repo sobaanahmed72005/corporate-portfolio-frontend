@@ -33,11 +33,11 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <>
-      <section className="border-b border-slate-200 bg-slate-50 py-16">
+    <div className="bg-contentCard-50">
+      <section className="border-b border-section-200 bg-section-50 py-16">
         <Container>
-          <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">About {company.name}</h1>
-          <p className="mt-4 max-w-2xl text-slate-600">{company.description}</p>
+          <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">About {company.name}</h1>
+          <p className="mt-4 max-w-2xl text-sectionText-600">{company.description}</p>
         </Container>
       </section>
 
@@ -50,14 +50,14 @@ export default function AboutPage() {
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
           {values.map((value) => (
-            <div key={value.title} className="rounded-xl border border-slate-200 p-6">
+            <div key={value.title} className="rounded-xl border border-contentCard-200 bg-contentCard-50 p-6">
               <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
                 <value.icon className="h-6 w-6" aria-hidden />
               </span>
-              <h3 className="mt-4 text-lg font-semibold text-slate-900">
+              <h3 className="mt-4 text-lg font-semibold text-contentCardText-950">
                 {value.title}
               </h3>
-              <p className="mt-2 text-sm text-slate-600">{value.description}</p>
+              <p className="mt-2 text-sm text-contentCardText-600">{value.description}</p>
             </div>
           ))}
         </div>
@@ -68,6 +68,6 @@ export default function AboutPage() {
         description="Let's talk about your project and how we can help you get set up right."
         primaryLabel="Get In Touch"
       />
-    </>
+    </div>
   );
 }

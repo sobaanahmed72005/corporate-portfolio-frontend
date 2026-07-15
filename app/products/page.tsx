@@ -15,12 +15,12 @@ export default async function ProductsPage() {
   const productCategories = await getProductCategories();
 
   return (
-    <>
-      <section className="border-b border-slate-200 bg-slate-50 py-14">
+    <div className="bg-contentCard-50">
+      <section className="border-b border-section-200 bg-section-50 py-14">
         <Container className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Our Products</h1>
-            <p className="mt-2 max-w-xl text-slate-600">
+            <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">Our Products</h1>
+            <p className="mt-2 max-w-xl text-sectionText-600">
               A look at what we supply. For pricing, availability, and to place
               an order, visit our online store.
             </p>
@@ -37,11 +37,11 @@ export default async function ProductsPage() {
         </Container>
       </section>
 
-      <Container className="divide-y divide-slate-200">
+      <Container className="divide-y divide-contentCard-200">
         {productCategories.map((category) => (
           <CategorySection key={category.slug} category={category} />
         ))}
       </Container>
-    </>
+    </div>
   );
 }

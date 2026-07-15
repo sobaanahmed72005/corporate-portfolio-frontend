@@ -37,13 +37,13 @@ export function ContactForm({ services }: { services: Service[] }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="name" className="block text-sm font-medium text-contentCardText-700">
           Name
         </label>
         <input
           id="name"
           type="text"
-          className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
+          className="mt-1 w-full rounded-lg border border-contentCard-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
           {...register("name")}
         />
         {errors.name && (
@@ -52,13 +52,13 @@ export function ContactForm({ services }: { services: Service[] }) {
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="email" className="block text-sm font-medium text-contentCardText-700">
           Email
         </label>
         <input
           id="email"
           type="email"
-          className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
+          className="mt-1 w-full rounded-lg border border-contentCard-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
           {...register("email")}
         />
         {errors.email && (
@@ -67,13 +67,13 @@ export function ContactForm({ services }: { services: Service[] }) {
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-slate-700">
-          Phone <span className="text-slate-400">(optional)</span>
+        <label htmlFor="phone" className="block text-sm font-medium text-contentCardText-700">
+          Phone <span className="text-contentCardText-400">(optional)</span>
         </label>
         <input
           id="phone"
           type="tel"
-          className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
+          className="mt-1 w-full rounded-lg border border-contentCard-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
           {...register("phone")}
         />
         {errors.phone && (
@@ -82,12 +82,12 @@ export function ContactForm({ services }: { services: Service[] }) {
       </div>
 
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-slate-700">
-          What are you interested in? <span className="text-slate-400">(optional)</span>
+        <label htmlFor="subject" className="block text-sm font-medium text-contentCardText-700">
+          What are you interested in? <span className="text-contentCardText-400">(optional)</span>
         </label>
         <select
           id="subject"
-          className="mt-1 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
+          className="mt-1 w-full rounded-lg border border-contentCard-300 bg-contentCard-50 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
           defaultValue=""
           {...register("subject")}
         >
@@ -101,13 +101,13 @@ export function ContactForm({ services }: { services: Service[] }) {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="message" className="block text-sm font-medium text-contentCardText-700">
           Message
         </label>
         <textarea
           id="message"
           rows={5}
-          className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
+          className="mt-1 w-full rounded-lg border border-contentCard-300 px-3 py-2 text-sm focus:border-brand-600 focus:outline-none focus:ring-1 focus:ring-brand-600"
           {...register("message")}
         />
         {errors.message && (

@@ -29,12 +29,12 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   if (!post) notFound();
 
   return (
-    <>
-      <section className="border-b border-slate-200 bg-slate-50 py-14">
+    <div className="bg-contentCard-50">
+      <section className="border-b border-section-200 bg-section-50 py-14">
         <Container>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-brand-600"
+            className="inline-flex items-center gap-1.5 text-sm text-sectionText-500 hover:text-brand-600"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
             Back to Blog
@@ -42,10 +42,10 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <span className="mt-4 block w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
             {post.category}
           </span>
-          <h1 className="mt-4 max-w-3xl font-display text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl">
+          <h1 className="mt-4 max-w-3xl font-display text-3xl font-extrabold leading-tight text-sectionText-950 sm:text-4xl">
             {post.title}
           </h1>
-          <div className="mt-4 flex items-center gap-4 text-sm text-slate-500">
+          <div className="mt-4 flex items-center gap-4 text-sm text-sectionText-500">
             <span className="flex items-center gap-1.5">
               <User className="h-4 w-4" aria-hidden />
               {post.author}
@@ -59,7 +59,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
       </section>
 
       <Container className="max-w-3xl py-16">
-        <div className="space-y-5 text-base leading-relaxed text-slate-700">
+        <div className="space-y-5 text-base leading-relaxed text-contentCardText-700">
           {post.body.split(/\n{2,}/).map((paragraph, i) => (
             <p key={i}>{paragraph}</p>
           ))}
@@ -71,6 +71,6 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         description="Get in touch and we'll help you plan the right setup for your home or business."
         primaryLabel="Contact Us"
       />
-    </>
+    </div>
   );
 }

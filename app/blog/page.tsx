@@ -14,11 +14,11 @@ export default async function BlogPage() {
   const blogPosts = await getBlogPosts();
 
   return (
-    <>
-      <section className="border-b border-slate-200 bg-slate-50 py-14">
+    <div className="bg-contentCard-50">
+      <section className="border-b border-section-200 bg-section-50 py-14">
         <Container>
-          <h1 className="font-display text-3xl font-extrabold text-slate-900 sm:text-4xl">Our Blog</h1>
-          <p className="mt-2 max-w-2xl text-slate-600">
+          <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">Our Blog</h1>
+          <p className="mt-2 max-w-2xl text-sectionText-600">
             Practical guides on CCTV, solar power, networking, and IT
             accessories — written from what we see on real installations.
           </p>
@@ -30,17 +30,17 @@ export default async function BlogPage() {
           {blogPosts.map((post) => (
             <article
               key={post.slug}
-              className="flex flex-col rounded-2xl border border-slate-200 p-6 shadow-sm transition-shadow hover:shadow-lg"
+              className="flex flex-col rounded-2xl border border-contentCard-200 bg-contentCard-50 p-6 shadow-sm transition-shadow hover:shadow-lg"
             >
               <span className="w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
                 {post.category}
               </span>
-              <h2 className="mt-4 text-lg font-semibold text-slate-900">
+              <h2 className="mt-4 text-lg font-semibold text-contentCardText-950">
                 <Link href={`/blog/${post.slug}`} className="hover:text-brand-700">
                   {post.title}
                 </Link>
               </h2>
-              <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
+              <div className="mt-2 flex items-center gap-3 text-xs text-contentCardText-500">
                 <span className="flex items-center gap-1">
                   <User className="h-3.5 w-3.5" aria-hidden />
                   {post.author}
@@ -50,7 +50,7 @@ export default async function BlogPage() {
                   {post.date}
                 </span>
               </div>
-              <p className="mt-3 flex-1 text-sm text-slate-600">{post.excerpt}</p>
+              <p className="mt-3 flex-1 text-sm text-contentCardText-600">{post.excerpt}</p>
               <Link
                 href={`/blog/${post.slug}`}
                 className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800"
@@ -61,6 +61,6 @@ export default async function BlogPage() {
           ))}
         </div>
       </Container>
-    </>
+    </div>
   );
 }
