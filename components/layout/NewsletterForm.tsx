@@ -42,7 +42,7 @@ export function NewsletterForm() {
           type="email"
           placeholder="you@example.com"
           aria-label="Email address"
-          className="w-full min-w-0 rounded-lg border border-footerText-950/15 bg-footerText-950/5 px-3 py-2 text-sm text-footerText-950 placeholder:text-footerText-600 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
+          className="w-full min-w-0 rounded-lg border border-footerText-950/15 bg-white px-3 py-2 text-sm text-footerText-950 placeholder:text-footerText-600 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
           {...register("email")}
         />
         <button
@@ -58,14 +58,14 @@ export function NewsletterForm() {
           )}
         </button>
       </div>
-      {errors.email && <p className="mt-2 text-xs text-rose-400">{errors.email.message}</p>}
+      {errors.email && <p className="mt-2 text-xs text-rose-600">{errors.email.message}</p>}
       {status === "success" && (
-        <p className="mt-2 flex items-center gap-1.5 text-xs text-emerald-400">
+        <p className="mt-2 flex items-center gap-1.5 text-xs text-emerald-600">
           <CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> Subscribed — thanks!
         </p>
       )}
       {status === "error" && (
-        <p className="mt-2 flex items-center gap-1.5 text-xs text-rose-400">
+        <p className="mt-2 flex items-center gap-1.5 text-xs text-rose-600">
           <AlertCircle className="h-3.5 w-3.5" aria-hidden /> Something went wrong. Please try again.
         </p>
       )}
