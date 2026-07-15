@@ -14,7 +14,7 @@ export async function ProductDeepDive() {
   if (!flagship || !flagshipProduct) return null;
 
   return (
-    <section className="relative overflow-hidden border-t border-pageText-950/10 bg-page-900 py-20 sm:py-28">
+    <section className="relative overflow-hidden border-t border-pageText-950/10 bg-page-900 py-24 sm:py-32">
       <div
         className="pointer-events-none absolute inset-y-0 right-0 w-1/2 opacity-30 blur-3xl"
         style={{ background: "radial-gradient(circle at 70% 50%, #8b5cf6 0%, transparent 65%)" }}
@@ -22,7 +22,7 @@ export async function ProductDeepDive() {
       />
       <Container className="relative grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
         <div>
-          <p className="font-display text-sm font-semibold uppercase tracking-wide text-violet-400">
+          <p className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-violet-400">
             Flagship Category
           </p>
           <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight text-pageText-950 sm:text-4xl">

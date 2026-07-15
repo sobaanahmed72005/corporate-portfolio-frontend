@@ -30,9 +30,9 @@ export default async function BlogPage() {
           {blogPosts.map((post) => (
             <article
               key={post.slug}
-              className="flex flex-col rounded-2xl border border-contentCard-200 bg-contentCard-50 p-6 shadow-sm transition-shadow hover:shadow-lg"
+              className="flex flex-col rounded-3xl border border-contentCard-200 bg-contentCard-50 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
             >
-              <span className="w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700">
+              <span className="w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brand-700">
                 {post.category}
               </span>
               <h2 className="mt-4 text-lg font-semibold text-contentCardText-950">

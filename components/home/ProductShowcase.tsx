@@ -21,7 +21,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
   if (!active || !featured) return null;
 
   return (
-    <section className="border-t border-pageText-950/10 bg-page-950 py-16 sm:py-24">
+    <section className="border-t border-pageText-950/10 bg-page-950 py-20 sm:py-32">
       <Container>
         <SectionHeading
           eyebrow="Products"
@@ -83,7 +83,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   href={company.storeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-display font-semibold uppercase tracking-wide text-slate-900"
+                  className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2 text-sm font-sans font-semibold text-slate-900 transition-all duration-300 ease-out hover:-translate-y-0.5"
                 >
                   Shop on our Store <ArrowRight className="h-4 w-4" aria-hidden />
                 </a>
@@ -97,7 +97,7 @@ export function ProductShowcase({ productCategories }: { productCategories: Prod
                   href={company.storeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-xl border border-cardText-950/10 bg-card-950 p-4 shadow-sm transition-all hover:border-cardText-950/25 hover:shadow-md"
+                  className="flex items-center gap-3 rounded-xl border border-cardText-950/10 bg-card-950 p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:border-cardText-950/25 hover:shadow-md"
                 >
                   <GradientIconBadge icon={product.icon} color={active.iconColor} size="sm" />
                   <span className="text-sm font-medium text-cardText-950">{product.name}</span>

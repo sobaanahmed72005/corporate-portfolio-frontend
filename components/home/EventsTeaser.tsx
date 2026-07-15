@@ -9,7 +9,7 @@ export function EventsTeaser() {
         <h2 className="mt-4 font-display text-2xl font-extrabold text-pageText-950 sm:text-3xl">
           Events &amp; Workshops
         </h2>
-        <p className="mx-auto mt-2 max-w-md font-display text-sm font-semibold uppercase tracking-wide text-pageText-600">
+        <p className="mx-auto mt-2 max-w-md font-display text-sm font-semibold uppercase tracking-[0.15em] text-pageText-600">
           Coming Soon
         </p>
       </Container>

@@ -12,7 +12,7 @@ export async function LatestUpdates() {
   if (!featured) return null;
 
   return (
-    <section className="border-t border-pageText-950/10 bg-page-950 py-16 sm:py-24">
+    <section className="border-t border-pageText-950/10 bg-page-950 py-20 sm:py-32">
       <Container>
         <SectionHeading eyebrow="From the Blog" title="Latest Updates" onDark />
 
@@ -21,7 +21,7 @@ export async function LatestUpdates() {
             href={`/blog/${featured.slug}`}
             className="group flex flex-col justify-end rounded-3xl border border-brand-700/20 bg-gradient-to-br from-brand-600 to-brand-900 p-8 transition-colors hover:from-brand-500 hover:to-brand-800 sm:p-10"
           >
-            <p className="font-display text-xs font-semibold uppercase tracking-wide text-accent-300">
+            <p className="font-display text-xs font-semibold uppercase tracking-[0.15em] text-accent-300">
               {featured.category}
             </p>
             <h3 className="mt-3 font-display text-2xl font-extrabold text-white sm:text-3xl">
@@ -41,7 +41,7 @@ export async function LatestUpdates() {
                 href={`/blog/${post.slug}`}
                 className="flex flex-col gap-1 p-5 transition-colors hover:bg-card-950"
               >
-                <p className="font-display text-[11px] font-semibold uppercase tracking-wide text-brand-300">
+                <p className="font-display text-[11px] font-semibold uppercase tracking-[0.15em] text-brand-300">
                   {post.category}
                 </p>
                 <h4 className="line-clamp-2 text-sm font-semibold text-cardText-950">{post.title}</h4>

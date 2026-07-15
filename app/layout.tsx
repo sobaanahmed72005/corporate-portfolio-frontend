@@ -31,7 +31,7 @@ const spaceGrotesk = Space_Grotesk({
   weight: ["600", "700"],
   variable: "--font-space-grotesk",
 });
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-inter" });
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-inter" });
 const merriweather = Merriweather({
   subsets: ["latin"],
   weight: ["700", "900"],

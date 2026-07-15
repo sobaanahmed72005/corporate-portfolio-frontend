@@ -43,7 +43,7 @@ export default async function PortfolioPage() {
               {category.projects.map((project) => (
                 <div
                   key={project.slug}
-                  className="flex flex-col overflow-hidden rounded-2xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-shadow hover:shadow-lg"
+                  className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
                 >
                   {project.video ? (
                     // eslint-disable-next-line jsx-a11y/media-has-caption

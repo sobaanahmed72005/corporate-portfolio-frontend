@@ -43,7 +43,7 @@ export function SectionHeading({
       {eyebrow && (
         <p
           className={cn(
-            "mb-2 font-display text-sm font-semibold uppercase tracking-wide",
+            "mb-2 font-display text-[13px] font-medium uppercase tracking-[0.15em]",
             onDark ? "text-brand-300" : "text-brand-600",
           )}
         >
@@ -52,14 +52,14 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "font-display text-2xl font-extrabold tracking-tight sm:text-3xl",
+          "font-display text-3xl font-bold tracking-tight sm:text-4xl",
           textColor,
         )}
       >
         {title}
       </h2>
       {description && (
-        <p className={cn("mt-3 text-base", descriptionColor)}>
+        <p className={cn("mt-3 text-base leading-[1.8]", descriptionColor)}>
           {description}
         </p>
       )}

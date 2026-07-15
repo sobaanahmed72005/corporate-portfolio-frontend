@@ -34,7 +34,7 @@ export function NewsletterForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <p className="font-display text-sm font-semibold uppercase tracking-wide text-footerText-950">
+      <p className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-footerText-950">
         Subscribe to Our Newsletter
       </p>
       <div className="mt-4 flex gap-2">

@@ -193,7 +193,7 @@ export function Header({
               href={company.storeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-accent-400 px-4 py-2.5 text-sm font-display font-semibold uppercase tracking-wide text-white shadow-md shadow-accent-400/25 transition-colors hover:bg-accent-500"
+              className="inline-flex items-center gap-2 rounded-xl bg-accent-400 px-4 py-2.5 text-sm font-sans font-semibold text-white shadow-md shadow-accent-400/25 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-500"
             >
               <ShoppingBag className="h-4 w-4" aria-hidden />
               Visit Our Store
@@ -228,7 +228,7 @@ export function Header({
                 href={company.storeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-accent-400 px-4 py-2.5 text-sm font-display font-semibold uppercase tracking-wide text-white"
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-accent-400 px-4 py-2.5 text-sm font-sans font-semibold text-white transition-all duration-300 ease-out hover:bg-accent-500"
               >
                 <ShoppingBag className="h-4 w-4" aria-hidden />
                 Visit Our Store

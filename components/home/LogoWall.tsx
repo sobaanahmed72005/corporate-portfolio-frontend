@@ -9,9 +9,9 @@ export async function LogoWall() {
   const track = [...clientLogos, ...clientLogos];
 
   return (
-    <section className="overflow-hidden border-t border-pageText-950/10 bg-page-950 py-14 sm:py-20">
+    <section className="overflow-hidden border-t border-pageText-950/10 bg-page-950 py-16 sm:py-24">
       <Container>
-        <p className="mb-8 text-center font-display text-sm font-semibold uppercase tracking-wide text-pageText-600">
+        <p className="mb-8 text-center font-display text-sm font-semibold uppercase tracking-[0.15em] text-pageText-600">
           Trusted by Industry Leaders
         </p>
       </Container>
