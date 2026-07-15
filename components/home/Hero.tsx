@@ -46,10 +46,10 @@ export async function Hero() {
           <p className="mb-4 font-display text-[13px] font-medium uppercase tracking-[0.15em] text-accent-500">
             IT Accessories &middot; Security &middot; Solar &middot; Networking
           </p>
-          <h1 className="font-display text-4xl font-bold leading-[1.1] tracking-tight text-pageText-950 sm:text-5xl">
+          <h1 className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-pageText-950 sm:text-5xl lg:text-6xl">
             {company.shortName}&rsquo;s Trusted Partner for Smart, Secure Infrastructure
           </h1>
-          <h2 className="mt-4 font-display text-xl font-semibold leading-snug text-pageText-950/80 sm:text-2xl">
+          <h2 className="mt-4 font-display text-xl font-semibold leading-snug text-pageText-700 sm:text-2xl">
             {company.tagline}
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-[1.8] text-pageText-800">

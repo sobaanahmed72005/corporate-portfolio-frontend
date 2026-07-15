@@ -12,7 +12,7 @@ export function ServiceCard({ service }: { service: Service }) {
   return (
     <div
       id={service.slug}
-      className="scroll-mt-24 flex flex-col rounded-3xl border border-contentCard-200 bg-contentCard-50 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
+      className="scroll-mt-24 flex flex-col rounded-3xl border border-contentCard-200 bg-contentCard-50 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
     >
       <GradientIconBadge icon={service.icon} color={service.iconColor} />
       <h2 className="mt-4 text-lg font-semibold text-contentCardText-950">{service.name}</h2>

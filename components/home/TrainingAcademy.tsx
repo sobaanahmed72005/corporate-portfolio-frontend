@@ -23,7 +23,7 @@ export async function TrainingAcademy() {
           {courses.map((course) => (
             <div
               key={course.slug}
-              className="flex flex-col items-center gap-3 rounded-3xl border border-cardText-950/10 bg-card-950 p-6 text-center shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
+              className="flex flex-col items-center gap-3 rounded-3xl border border-cardText-950/10 bg-card-950 p-8 text-center shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
             >
               <GradientIconBadge icon={course.icon} color={course.iconColor} size="lg" />
               <h3 className="text-base font-semibold text-cardText-950">{course.name}</h3>

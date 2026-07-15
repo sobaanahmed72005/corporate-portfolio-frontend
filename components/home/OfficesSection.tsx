@@ -22,7 +22,7 @@ export async function OfficesSection() {
           {offices.map((office) => (
             <div
               key={office.slug}
-              className="flex flex-col gap-4 rounded-3xl border border-cardText-950/15 bg-card-950 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
+              className="flex flex-col gap-4 rounded-3xl border border-cardText-950/15 bg-card-950 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
             >
               <div className="flex items-center gap-3">
                 <GradientIconBadge icon={office.icon} color={office.iconColor} size="sm" />

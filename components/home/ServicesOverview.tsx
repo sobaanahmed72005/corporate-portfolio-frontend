@@ -22,7 +22,7 @@ export async function ServicesOverview() {
           {services.map((service) => (
             <div
               key={service.slug}
-              className="rounded-3xl border border-cardText-950/10 bg-card-950 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
+              className="rounded-3xl border border-cardText-950/10 bg-card-950 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
             >
               <GradientIconBadge icon={service.icon} color={service.iconColor} />
               <h3 className="mt-4 text-lg font-semibold text-cardText-950">

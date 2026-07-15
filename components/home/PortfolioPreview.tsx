@@ -31,7 +31,7 @@ export async function PortfolioPreview() {
             <Link
               key={project.slug}
               href={`/portfolio#${category.slug}`}
-              className="flex flex-col rounded-3xl border border-cardText-950/10 bg-card-950 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
+              className="flex flex-col rounded-3xl border border-cardText-950/10 bg-card-950 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
             >
               {project.image ? (
                 <ImageSlot src={project.image} alt={project.title} aspect="video" className="mb-4 -mt-2 rounded-xl" />

@@ -66,7 +66,7 @@ export default async function ContactPage() {
           {reachChannels.map((channel) => (
             <div
               key={channel.title}
-              className="flex flex-col rounded-3xl border border-contentCard-200 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
+              className="flex flex-col rounded-3xl border border-contentCard-200 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
             >
               <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
                 <channel.icon className="h-6 w-6" aria-hidden />

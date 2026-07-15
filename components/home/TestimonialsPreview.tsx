@@ -9,7 +9,7 @@ import { getTestimonials, type Testimonial } from "@/lib/cms";
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <div className="flex w-[320px] shrink-0 flex-col rounded-3xl border border-cardText-950/10 bg-card-950 p-6 shadow-sm">
+    <div className="flex w-[320px] shrink-0 flex-col rounded-3xl border border-cardText-950/10 bg-card-950 p-8 shadow-sm">
       <div className="flex items-center gap-0.5">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star

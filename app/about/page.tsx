@@ -50,7 +50,7 @@ export default function AboutPage() {
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
           {values.map((value) => (
-            <div key={value.title} className="rounded-3xl border border-contentCard-200 bg-contentCard-50 p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">
+            <div key={value.title} className="rounded-3xl border border-contentCard-200 bg-contentCard-50 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">
               <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
                 <value.icon className="h-6 w-6" aria-hidden />
               </span>
