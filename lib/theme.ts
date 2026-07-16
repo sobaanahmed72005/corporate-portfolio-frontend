@@ -118,8 +118,24 @@ function hslToHex(h: number, s: number, l: number): string {
   return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
-function generateShades(hex: string, family: FamilyName): Partial<Record<Shade, string>> {
+const HEX_COLOR_RE = /^#[0-9a-fA-F]{6}$/;
+const FALLBACK_HEX = "#888888";
+
+// These values end up written verbatim into a <style> tag in app/layout.tsx
+// (the pivot shade below uses the input string as-is, not the numeric HSL
+// round-trip), so anything that isn't a real #RRGGBB hex color is replaced
+// with a neutral fallback instead of being trusted — a malformed or
+// malicious value in Strapi's theme-setting could otherwise break out of
+// the style block.
+function sanitizeHex(hex: string): string {
+  if (HEX_COLOR_RE.test(hex)) return hex;
+  console.error(`[theme] invalid color value ignored: ${JSON.stringify(hex)}`);
+  return FALLBACK_HEX;
+}
+
+function generateShades(rawHex: string, family: FamilyName): Partial<Record<Shade, string>> {
   const { pivot, shades } = FAMILIES[family];
+  const hex = sanitizeHex(rawHex);
   const { h, s, l: pivotL } = hexToHsl(hex);
   const pivotIndex = shades.indexOf(pivot);
 
@@ -234,7 +250,8 @@ export function buildShapeCssVars(radiusStyle: RadiusStyleName, shadowStyle: Sha
  * (components/ui/gradients.ts) had, without the user needing to pick two
  * colors themselves.
  */
-export function deriveGradientStops(hex: string): { from: string; to: string } {
+export function deriveGradientStops(rawHex: string): { from: string; to: string } {
+  const hex = sanitizeHex(rawHex);
   const { h, s, l } = hexToHsl(hex);
   const to = hslToHex(h, s, Math.max(l - 18, 10));
   return { from: hex, to };

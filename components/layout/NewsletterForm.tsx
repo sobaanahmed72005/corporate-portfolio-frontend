@@ -34,6 +34,12 @@ export function NewsletterForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      {/* Honeypot — see ContactForm.tsx for the full explanation. */}
+      <div className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label htmlFor="newsletter-website">Leave this field empty</label>
+        <input id="newsletter-website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
+      </div>
+
       <p className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-footerText-950">
         Subscribe to Our Newsletter
       </p>

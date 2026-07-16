@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 
@@ -23,36 +22,13 @@ export function Footer({
         <div>
           <div className="flex items-center gap-2">
             {logo && (
-              <Image src={logo} alt={company.name} width={28} height={28} className="h-7 w-7 object-contain" />
+              <Image src={logo} alt={company.name} width={28} height={28} className="h-7 w-7 shrink-0 object-contain" />
             )}
-            <p className="font-display text-lg font-bold text-footerText-950">{company.name}</p>
+            <p className="font-display text-lg font-bold text-footerText-950">{company.shortName}</p>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-footerText-600">
             {company.description}
           </p>
-          <div className="mt-4 flex gap-3">
-            <a
-              href={company.social.facebook}
-              aria-label="Facebook"
-              className="rounded-full bg-footerText-950/10 p-2 hover:bg-footerText-950/20"
-            >
-              <FacebookIcon className="h-4 w-4" />
-            </a>
-            <a
-              href={company.social.instagram}
-              aria-label="Instagram"
-              className="rounded-full bg-footerText-950/10 p-2 hover:bg-footerText-950/20"
-            >
-              <InstagramIcon className="h-4 w-4" />
-            </a>
-            <a
-              href={company.social.linkedin}
-              aria-label="LinkedIn"
-              className="rounded-full bg-footerText-950/10 p-2 hover:bg-footerText-950/20"
-            >
-              <LinkedinIcon className="h-4 w-4" />
-            </a>
-          </div>
         </div>
 
         <div>

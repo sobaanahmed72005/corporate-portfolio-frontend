@@ -23,7 +23,7 @@ two can be built, deployed, and scaled independently — see §8.
 |---|---|
 | **Next.js 14 (App Router) + TypeScript** | Pages are server-rendered (SSR/SSG), so search engines get full HTML immediately — important for local searches like "CCTV installation Pakistan." TypeScript catches mistakes (wrong prop, typo'd field) at compile time instead of in production. |
 | **Tailwind CSS** | Keeps spacing, color, and typography consistent across every page without hand-rolled CSS files drifting out of sync. |
-| **Strapi CMS** for editorial content, **typed files** (`lib/data/*.ts`) for low-churn site config | Products/services/blog/testimonials/offices change often enough that a non-developer needs a UI — those live in Strapi (see §7). Company info, portfolio, stats, training, and client logos still change rarely enough that a plain TypeScript file is simpler than another content type. |
+| **Strapi CMS** for all editorial content and site config | Products/services/blog/testimonials/offices, company info, theme, portfolio, stats, and client logos are all Strapi content types — the whole site is admin-editable with no code change or redeploy needed (see §7). |
 | **react-hook-form + Zod** | The one real interactive feature is the contact form. Zod defines the validation rules once client-side for instant feedback; corporate-portfolio-api re-validates with its own copy of the same schema server-side (never trust the client). |
 | **Vitest** | Fast unit tests for the one piece of logic worth testing (form validation rules). |
 | **Vercel** (recommended host) | Zero-config deploys for Next.js, free tier, automatic HTTPS, easy custom domain hookup later. |
@@ -51,8 +51,12 @@ components/
   contact/              ContactForm (client component)
   layout/               (cont.) NewsletterForm (client component, used in Footer)
 lib/
-  cms.ts                 Strapi client + types (Product, ProductCategory, Service, BlogPost, Testimonial, Office)
-  data/                 Site config: company.ts, portfolio.ts, stats.ts, training.ts, clientLogos.ts
+  cms.ts                 Strapi client + types (CompanyInfo, ThemeSettings, Product, ProductCategory,
+                        Service, BlogPost, Testimonial, Office, PortfolioCategory, Stat, ClientLogo, ...)
+                        — every fetcher falls back to safe placeholder data via withFallback() if the
+                        CMS is unreachable, instead of throwing
+  theme.ts               Derives the Strapi-picked color palette into CSS custom properties
+  markdown.tsx            Small dependency-free renderer for the blog post richtext field
   validations/          Zod schemas (contact.ts, newsletter.ts) + tests
   env.ts                Single source of truth for env vars (SITE_CONFIG, API_CONFIG, CMS_CONFIG)
   endpoints.ts          Single source of truth for backend API route paths (ENDPOINTS)
@@ -68,23 +72,23 @@ Most editorial content now lives in **corporate-portfolio-cms** (a separate
 Strapi 5 repo/deployment — see §7), not in this repo:
 
 - **Products & product categories, services, blog posts, testimonials,
-  offices** — fetched at request/build time via `lib/cms.ts`'s typed helpers
-  (`getProductCategories`, `getServices`, `getBlogPosts`, `getBlogPost`,
-  `getTestimonials`, `getOffices`). Edit these from the Strapi admin panel;
-  no code change or redeploy needed. `lib/cms.ts` also defines the TS types
-  (`Product`, `ProductCategory`, `Service`, `BlogPost`, `Testimonial`,
-  `Office`) consumed across the app.
+  offices, portfolio categories/projects, stats, client logos, Company Info,
+  and theme settings** — fetched at request/build time via `lib/cms.ts`'s
+  typed helpers (`getProductCategories`, `getServices`, `getBlogPosts`,
+  `getBlogPost`, `getTestimonials`, `getOffices`, `getPortfolioCategories`,
+  `getStats`, `getClientLogos`, `getCompanyInfo`, `getThemeSettings`). Edit
+  any of these from the Strapi admin panel; no code change or redeploy
+  needed. `lib/cms.ts` also defines the TS types (`Product`,
+  `ProductCategory`, `Service`, `BlogPost`, `Testimonial`, `Office`,
+  `PortfolioCategory`, `Stat`, `ClientLogo`, `CompanyInfo`, `ThemeSettings`)
+  consumed across the app.
 
-A few things still live in `lib/data/` — low-churn "site config" rather than
-day-to-day editorial content:
-
-- **`company.ts`** — name, tagline, phone, email, address, WhatsApp number,
-  store URL, social links. Every page reads from here, so updating contact
-  info means editing one file.
-- **`portfolio.ts`, `stats.ts`, `training.ts`, `clientLogos.ts`** — same
-  static-file pattern as before. Candidates to move into Strapi later using
-  the same pattern as the content types above, if they start changing often
-  enough to be worth it.
+There is no `lib/data/` anymore — everything that used to be a static
+TypeScript file (company info, portfolio, stats, client logos) has been
+migrated into Strapi content types, following the same pattern as the rest
+of the content model. The one exception, `training.ts`, was removed
+entirely along with its homepage section (this business doesn't offer
+certification/training).
 
 ### Why icons instead of photos
 
@@ -229,9 +233,11 @@ it's needed.
 
 - **Real product/testimonial/office photos** — see §4 and §7. Upload in the
   Strapi media library; no code change needed.
-- **More content types in the CMS** — `portfolio.ts`, `stats.ts`,
-  `training.ts`, `clientLogos.ts` (§4) are the remaining candidates, using the
-  same content-type + `lib/cms.ts` helper pattern as §7.
+- **A newsletter backend** — `NewsletterForm.tsx` posts to
+  `ENDPOINTS.NEWSLETTER` (`/api/newsletter`), but corporate-portfolio-api
+  currently only implements `/api/contact` — this endpoint doesn't exist yet.
+  Add it there following the same pattern as the contact route (rate limit,
+  honeypot, body-size guard) before this form goes live.
 - **On-demand revalidation** — currently ISR (60s) per §7. A Strapi webhook
   calling a Next.js Route Handler that runs `revalidatePath`/`revalidateTag`
   would make edits appear instantly instead of within 60s.

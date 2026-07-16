@@ -5,6 +5,7 @@ import { ArrowLeft, CalendarDays, User } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { CtaBanner } from "@/components/home/CtaBanner";
 import { getBlogPost, getBlogPosts } from "@/lib/cms";
+import { renderMarkdown } from "@/lib/markdown";
 
 export async function generateStaticParams() {
   const blogPosts = await getBlogPosts();
@@ -60,9 +61,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
 
       <Container className="max-w-3xl py-16">
         <div className="space-y-5 text-base leading-relaxed text-contentCardText-700">
-          {post.body.split(/\n{2,}/).map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
+          {renderMarkdown(post.body)}
         </div>
       </Container>
 

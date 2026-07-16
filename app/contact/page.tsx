@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { getServices, getCompanyInfo, type CompanyInfo } from "@/lib/cms";
+import { getServices, getCompanyInfo, getWhatsAppLink, type CompanyInfo } from "@/lib/cms";
 
 export async function generateMetadata(): Promise<Metadata> {
   const company = await getCompanyInfo();
@@ -30,7 +30,7 @@ function getReachChannels(company: CompanyInfo) {
       description:
         "Have a quick question? Message us on WhatsApp for fast answers about products, quotes, or scheduling an installation.",
       ctaLabel: "Live WhatsApp Chat",
-      href: `https://wa.me/${company.whatsapp.replace("+", "")}`,
+      href: getWhatsAppLink(company),
       external: true,
     },
     {

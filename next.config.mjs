@@ -1,4 +1,33 @@
 const strapiUrl = new URL(process.env.STRAPI_URL || "http://localhost:1337");
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+// Next.js's theme <style>/JSON-LD <script> (app/layout.tsx) are injected
+// inline, so a strict nonce-based CSP would need per-request middleware —
+// out of scope here. 'unsafe-inline' keeps those working; frame-ancestors,
+// object-src, and base-uri still meaningfully narrow what an injected
+// script could do, and this is paired with escaping the JSON-LD/theme
+// output itself (the actual fix for that injection vector) rather than
+// relying on CSP alone.
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  `img-src 'self' data: ${strapiUrl.origin}`,
+  "font-src 'self' data:",
+  `connect-src 'self' ${apiUrl}`,
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "object-src 'none'",
+].join("; ");
+
+const securityHeaders = [
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
+  { key: "Content-Security-Policy", value: csp },
+];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -13,6 +42,14 @@ const nextConfig = {
         port: strapiUrl.port,
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
+    ];
   },
 };
 

@@ -67,9 +67,11 @@ export function StatsCounter({ stats }: { stats: Stat[] }) {
   return (
     <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 sm:py-16">
       <Container>
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+        <div className="flex flex-wrap justify-center gap-x-10 gap-y-8 sm:gap-x-16">
           {stats.map((stat) => (
-            <Counter key={stat.label} stat={stat} />
+            <div key={stat.label} className="w-28 shrink-0 sm:w-36">
+              <Counter stat={stat} />
+            </div>
           ))}
         </div>
       </Container>

@@ -21,6 +21,12 @@ export const contactFormSchema = z.object({
     .trim()
     .min(10, "Message must be at least 10 characters.")
     .max(2000, "Message must be under 2000 characters."),
+  // Honeypot — real visitors never see or fill this (kept visually hidden
+  // in ContactForm.tsx). The backend silently accepts but discards
+  // submissions where it's filled, rather than showing a validation error,
+  // so scripted bots get no signal they were caught. Deliberately not
+  // constrained here — the backend is the enforcement point.
+  website: z.string().optional(),
 });
 
 export type ContactFormValues = z.infer<typeof contactFormSchema>;

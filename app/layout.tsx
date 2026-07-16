@@ -3,6 +3,7 @@ import { Outfit, Rubik, Playfair_Display, Source_Sans_3, Space_Grotesk, Inter, M
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SocialSidebar } from "@/components/layout/SocialSidebar";
 import { SITE_CONFIG } from "@/lib/env";
 import {
   getProductCategories,
@@ -149,8 +150,12 @@ export default async function RootLayout({
       <body className={`${fontVariables} font-sans flex min-h-screen flex-col bg-background text-foreground antialiased`}>
         <script
           type="application/ld+json"
+          // JSON.stringify doesn't escape "<", so a CMS text field
+          // containing "</script>" could break out of this tag — replace
+          // it with a JSON-safe unicode escape (Next.js's own recommended
+          // fix) rather than relying on CSP alone.
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
         <Header
           company={company}
@@ -161,6 +166,7 @@ export default async function RootLayout({
         />
         <main className="flex-1">{children}</main>
         <Footer company={company} productCategories={productCategories} logo={themeSettings.logo} />
+        <SocialSidebar company={company} />
       </body>
     </html>
   );

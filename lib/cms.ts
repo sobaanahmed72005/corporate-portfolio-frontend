@@ -70,7 +70,7 @@ type RawCompanyInfo = {
 };
 
 export async function getCompanyInfo(): Promise<CompanyInfo> {
-  try {
+  return withFallback("getCompanyInfo", DEFAULT_COMPANY, async () => {
     const { data } = await cmsFetch<StrapiSingleResponse<RawCompanyInfo>>("/company-info");
     if (!data) return DEFAULT_COMPANY;
     return {
@@ -94,9 +94,14 @@ export async function getCompanyInfo(): Promise<CompanyInfo> {
       },
       foundingYear: data.foundingYear || DEFAULT_COMPANY.foundingYear,
     };
-  } catch {
-    return DEFAULT_COMPANY;
-  }
+  });
+}
+
+// wa.me click-to-chat links break if the number contains spaces, dashes, or
+// a leading "+", so every call site should build the link through here
+// rather than interpolating company.whatsapp directly.
+export function getWhatsAppLink(company: CompanyInfo): string {
+  return `https://wa.me/${company.whatsapp.replace(/\D/g, "")}`;
 }
 
 export type Product = {
@@ -222,6 +227,20 @@ async function cmsFetch<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
+// If the CMS is briefly unreachable, a key gets narrowed, or any single
+// section's request fails, this logs the failure server-side (so it's
+// visible instead of silent) and returns a safe fallback instead of
+// throwing — one broken section shouldn't take down every page that
+// happens to render it (most of these are awaited in the root layout).
+async function withFallback<T>(label: string, fallback: T, fn: () => Promise<T>): Promise<T> {
+  try {
+    return await fn();
+  } catch (err) {
+    console.error(`[cms] ${label} failed, using fallback:`, err);
+    return fallback;
+  }
+}
+
 type RawProduct = {
   slug: string;
   name: string;
@@ -242,72 +261,84 @@ type RawProductCategory = {
 };
 
 export async function getProductCategories(): Promise<ProductCategory[]> {
-  const { data } = await cmsFetch<StrapiListResponse<RawProductCategory>>(
-    "/product-categories?populate[products][populate]=image&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
-  );
-  return data.map((category) => ({
-    slug: category.slug,
-    name: category.name,
-    shortName: category.shortName,
-    description: category.description,
-    icon: category.icon,
-    iconColor: category.iconColor,
-    image: mediaUrl(category.image),
-    products: category.products.map((product) => ({
-      slug: product.slug,
-      name: product.name,
-      description: product.description,
-      icon: product.icon,
-      image: mediaUrl(product.image),
-    })),
-  }));
+  return withFallback("getProductCategories", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<RawProductCategory>>(
+      "/product-categories?populate[products][populate]=image&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
+    );
+    return data.map((category) => ({
+      slug: category.slug,
+      name: category.name,
+      shortName: category.shortName,
+      description: category.description,
+      icon: category.icon,
+      iconColor: category.iconColor,
+      image: mediaUrl(category.image),
+      products: category.products.map((product) => ({
+        slug: product.slug,
+        name: product.name,
+        description: product.description,
+        icon: product.icon,
+        image: mediaUrl(product.image),
+      })),
+    }));
+  });
 }
 
 export async function getServices(): Promise<Service[]> {
-  const { data } = await cmsFetch<StrapiListResponse<Service>>(
-    "/services?sort=id:asc&pagination[pageSize]=100",
-  );
-  return data;
+  return withFallback("getServices", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<Service>>(
+      "/services?sort=id:asc&pagination[pageSize]=100",
+    );
+    return data;
+  });
 }
 
 type RawBlogPost = BlogPost;
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  const { data } = await cmsFetch<StrapiListResponse<RawBlogPost>>(
-    "/blog-posts?sort=id:asc&pagination[pageSize]=100",
-  );
-  return data;
+  return withFallback("getBlogPosts", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<RawBlogPost>>(
+      "/blog-posts?sort=id:asc&pagination[pageSize]=100",
+    );
+    return data;
+  });
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | undefined> {
-  const { data } = await cmsFetch<StrapiListResponse<RawBlogPost>>(
-    `/blog-posts?filters[slug][$eq]=${encodeURIComponent(slug)}`,
-  );
-  return data[0];
+  return withFallback("getBlogPost", undefined, async () => {
+    const { data } = await cmsFetch<StrapiListResponse<RawBlogPost>>(
+      `/blog-posts?filters[slug][$eq]=${encodeURIComponent(slug)}`,
+    );
+    return data[0];
+  });
 }
 
 type RawTestimonial = Omit<Testimonial, "photo"> & { photo: StrapiMedia };
 
 export async function getTestimonials(): Promise<Testimonial[]> {
-  const { data } = await cmsFetch<StrapiListResponse<RawTestimonial>>(
-    "/testimonials?populate=photo&sort=id:asc&pagination[pageSize]=100",
-  );
-  return data.map((testimonial) => ({
-    ...testimonial,
-    photo: mediaUrl(testimonial.photo),
-  }));
+  return withFallback("getTestimonials", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<RawTestimonial>>(
+      "/testimonials?populate=photo&sort=id:asc&pagination[pageSize]=100",
+    );
+    return data.map((testimonial) => ({
+      ...testimonial,
+      photo: mediaUrl(testimonial.photo),
+    }));
+  });
 }
 
 type RawOffice = Omit<Office, "photo"> & { photo: StrapiMedia };
 
 export async function getOffices(): Promise<Office[]> {
-  const { data } = await cmsFetch<StrapiListResponse<RawOffice>>(
-    "/offices?populate=photo&sort=id:asc&pagination[pageSize]=100",
-  );
-  return data.map((office) => ({
-    ...office,
-    photo: mediaUrl(office.photo),
-  }));
+  return withFallback("getOffices", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<RawOffice>>(
+      "/offices?populate=photo&sort=displayOrder:asc&pagination[pageSize]=100",
+    );
+    return data.map((office) => ({
+      ...office,
+      photo: mediaUrl(office.photo),
+    }));
+  });
 }
 
 type RawPortfolioProject = {
@@ -331,48 +362,56 @@ type RawPortfolioCategory = {
 };
 
 export async function getPortfolioCategories(): Promise<PortfolioCategory[]> {
-  const { data } = await cmsFetch<StrapiListResponse<RawPortfolioCategory>>(
-    "/portfolio-categories?populate[projects][populate][0]=image&populate[projects][populate][1]=video&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
-  );
-  return data.map((category) => ({
-    slug: category.slug,
-    name: category.name,
-    description: category.description,
-    icon: category.icon,
-    iconColor: category.iconColor,
-    image: mediaUrl(category.image),
-    projects: category.projects.map((project) => ({
-      slug: project.slug,
-      title: project.title,
-      summary: project.summary,
-      highlight: project.highlight,
-      icon: project.icon,
-      image: mediaUrl(project.image),
-      video: mediaUrl(project.video),
-    })),
-  }));
+  return withFallback("getPortfolioCategories", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<RawPortfolioCategory>>(
+      "/portfolio-categories?populate[projects][populate][0]=image&populate[projects][populate][1]=video&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
+    );
+    return data.map((category) => ({
+      slug: category.slug,
+      name: category.name,
+      description: category.description,
+      icon: category.icon,
+      iconColor: category.iconColor,
+      image: mediaUrl(category.image),
+      projects: category.projects.map((project) => ({
+        slug: project.slug,
+        title: project.title,
+        summary: project.summary,
+        highlight: project.highlight,
+        icon: project.icon,
+        image: mediaUrl(project.image),
+        video: mediaUrl(project.video),
+      })),
+    }));
+  });
 }
 
 export async function getStats(): Promise<Stat[]> {
-  const { data } = await cmsFetch<StrapiListResponse<Stat>>("/stats?sort=id:asc&pagination[pageSize]=100");
-  return data;
+  return withFallback("getStats", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<Stat>>("/stats?sort=id:asc&pagination[pageSize]=100");
+    return data;
+  });
 }
 
 export async function getReasons(): Promise<Reason[]> {
-  const { data } = await cmsFetch<StrapiListResponse<Reason>>("/reasons?sort=id:asc&pagination[pageSize]=100");
-  return data;
+  return withFallback("getReasons", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<Reason>>("/reasons?sort=id:asc&pagination[pageSize]=100");
+    return data;
+  });
 }
 
 type RawClientLogo = { alt: string; logo: StrapiMedia };
 
 export async function getClientLogos(): Promise<ClientLogo[]> {
-  const { data } = await cmsFetch<StrapiListResponse<RawClientLogo>>(
-    "/client-logos?populate=logo&sort=id:asc&pagination[pageSize]=100",
-  );
-  return data.map((entry) => ({
-    alt: entry.alt,
-    src: mediaUrl(entry.logo),
-  }));
+  return withFallback("getClientLogos", [], async () => {
+    const { data } = await cmsFetch<StrapiListResponse<RawClientLogo>>(
+      "/client-logos?populate=logo&sort=id:asc&pagination[pageSize]=100",
+    );
+    return data.map((entry) => ({
+      alt: entry.alt,
+      src: mediaUrl(entry.logo),
+    }));
+  });
 }
 
 export type ThemeSettings = {
@@ -457,7 +496,7 @@ type RawThemeSettings = {
 type StrapiSingleResponse<T> = { data: T | null };
 
 export async function getThemeSettings(): Promise<ThemeSettings> {
-  try {
+  return withFallback("getThemeSettings", DEFAULT_THEME, async () => {
     const { data } = await cmsFetch<StrapiSingleResponse<RawThemeSettings>>(
       "/theme-setting?populate[0]=logo&populate[1]=favicon",
     );
@@ -487,7 +526,5 @@ export async function getThemeSettings(): Promise<ThemeSettings> {
       showTrustedByLogos: data.showTrustedByLogos ?? DEFAULT_THEME.showTrustedByLogos,
       showEventsSection: data.showEventsSection ?? DEFAULT_THEME.showEventsSection,
     };
-  } catch {
-    return DEFAULT_THEME;
-  }
+  });
 }

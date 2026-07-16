@@ -7,6 +7,8 @@ import { z } from "zod";
  */
 export const newsletterFormSchema = z.object({
   email: z.string().trim().email("Please enter a valid email address."),
+  // Honeypot — see lib/validations/contact.ts for the full explanation.
+  website: z.string().optional(),
 });
 
 export type NewsletterFormValues = z.infer<typeof newsletterFormSchema>;

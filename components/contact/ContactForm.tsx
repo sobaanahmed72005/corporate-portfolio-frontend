@@ -36,6 +36,16 @@ export function ContactForm({ services }: { services: Service[] }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+      {/* Honeypot: hidden from real visitors (off-screen, not display:none,
+          since some bots specifically skip display:none/type=hidden fields
+          but still fill anything off-screen). Bots that fill every field
+          trip this; the backend accepts the request but silently discards
+          it instead of showing an error, so scrapers get no signal. */}
+      <div className="absolute left-[-9999px] top-auto h-0 w-0 overflow-hidden" aria-hidden="true">
+        <label htmlFor="website">Leave this field empty</label>
+        <input id="website" type="text" tabIndex={-1} autoComplete="off" {...register("website")} />
+      </div>
+
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-contentCardText-700">
           Name

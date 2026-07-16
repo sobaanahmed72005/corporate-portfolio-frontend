@@ -4,7 +4,6 @@ import { TrustTicker } from "@/components/home/TrustTicker";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { EventsTeaser } from "@/components/home/EventsTeaser";
 import { LogoWall } from "@/components/home/LogoWall";
-import { ProductDeepDive } from "@/components/home/ProductDeepDive";
 import { ServicesOverview } from "@/components/home/ServicesOverview";
 import { PortfolioPreview } from "@/components/home/PortfolioPreview";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
@@ -30,7 +29,6 @@ export default async function Home() {
       <ProductShowcase productCategories={productCategories} company={company} />
       {themeSettings.showEventsSection && <EventsTeaser />}
       {themeSettings.showTrustedByLogos && <LogoWall />}
-      <ProductDeepDive />
       <ServicesOverview />
       <PortfolioPreview />
       <WhyChooseUs />

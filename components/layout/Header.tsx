@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ShoppingBag, Phone, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu";
 import type { ProductCategory, Service, PortfolioCategory, CompanyInfo } from "@/lib/cms";
 import { cn } from "@/lib/cn";
@@ -64,34 +63,21 @@ export function Header({
   return (
     <>
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
-        <Container className="flex h-9 items-center justify-between text-xs">
-          <div className="flex items-center gap-5">
-            <a
-              href={`mailto:${company.email}`}
-              className="flex items-center gap-1.5 hover:text-cardText-950"
-            >
-              <Mail className="h-3.5 w-3.5" aria-hidden />
-              {company.email}
-            </a>
-            <a
-              href={`tel:${company.phone}`}
-              className="flex items-center gap-1.5 hover:text-cardText-950"
-            >
-              <Phone className="h-3.5 w-3.5" aria-hidden />
-              {company.phone}
-            </a>
-          </div>
-          <div className="flex items-center gap-3">
-            <a href={company.social.facebook} aria-label="Facebook" className="hover:text-cardText-950">
-              <FacebookIcon className="h-3.5 w-3.5" />
-            </a>
-            <a href={company.social.instagram} aria-label="Instagram" className="hover:text-cardText-950">
-              <InstagramIcon className="h-3.5 w-3.5" />
-            </a>
-            <a href={company.social.linkedin} aria-label="LinkedIn" className="hover:text-cardText-950">
-              <LinkedinIcon className="h-3.5 w-3.5" />
-            </a>
-          </div>
+        <Container className="flex h-9 items-center gap-5 text-xs">
+          <a
+            href={`mailto:${company.email}`}
+            className="flex items-center gap-1.5 hover:text-cardText-950"
+          >
+            <Mail className="h-3.5 w-3.5" aria-hidden />
+            {company.email}
+          </a>
+          <a
+            href={`tel:${company.phone}`}
+            className="flex items-center gap-1.5 hover:text-cardText-950"
+          >
+            <Phone className="h-3.5 w-3.5" aria-hidden />
+            {company.phone}
+          </a>
         </Container>
       </div>
 
