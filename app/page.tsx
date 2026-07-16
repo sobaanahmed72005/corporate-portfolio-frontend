@@ -10,14 +10,17 @@ import { ServicesOverview } from "@/components/home/ServicesOverview";
 import { PortfolioPreview } from "@/components/home/PortfolioPreview";
 import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { LatestUpdates } from "@/components/home/LatestUpdates";
-import { TrainingAcademy } from "@/components/home/TrainingAcademy";
 import { TestimonialsPreview } from "@/components/home/TestimonialsPreview";
 import { OfficesSection } from "@/components/home/OfficesSection";
 import { CtaBanner } from "@/components/home/CtaBanner";
-import { getProductCategories, getStats } from "@/lib/cms";
+import { getProductCategories, getStats, getThemeSettings } from "@/lib/cms";
 
 export default async function Home() {
-  const [productCategories, stats] = await Promise.all([getProductCategories(), getStats()]);
+  const [productCategories, stats, themeSettings] = await Promise.all([
+    getProductCategories(),
+    getStats(),
+    getThemeSettings(),
+  ]);
 
   return (
     <>
@@ -27,13 +30,12 @@ export default async function Home() {
       <TrustTicker />
       <ProductShowcase productCategories={productCategories} />
       <EventsTeaser />
-      <LogoWall />
+      {themeSettings.showTrustedByLogos && <LogoWall />}
       <ProductDeepDive />
       <ServicesOverview />
       <PortfolioPreview />
       <WhyChooseUs />
       <LatestUpdates />
-      <TrainingAcademy />
       <TestimonialsPreview />
       <OfficesSection />
       <CtaBanner />

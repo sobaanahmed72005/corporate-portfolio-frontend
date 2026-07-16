@@ -104,14 +104,6 @@ export type Stat = {
   suffix: string;
 };
 
-export type Course = {
-  slug: string;
-  name: string;
-  description: string;
-  icon: IconName;
-  iconColor: string;
-};
-
 export type ClientLogo = {
   alt: string;
   src?: string;
@@ -274,11 +266,6 @@ export async function getStats(): Promise<Stat[]> {
   return data;
 }
 
-export async function getCourses(): Promise<Course[]> {
-  const { data } = await cmsFetch<StrapiListResponse<Course>>("/courses?sort=id:asc&pagination[pageSize]=100");
-  return data;
-}
-
 export async function getReasons(): Promise<Reason[]> {
   const { data } = await cmsFetch<StrapiListResponse<Reason>>("/reasons?sort=id:asc&pagination[pageSize]=100");
   return data;
@@ -318,6 +305,7 @@ export type ThemeSettings = {
   shadowStyle: ShadowStyleName;
   logo?: string;
   favicon?: string;
+  showTrustedByLogos: boolean;
 };
 
 // Matches the site's actual current look — used if Strapi has no
@@ -343,6 +331,7 @@ const DEFAULT_THEME: ThemeSettings = {
   fontPairing: "Modern Sans (Outfit + Rubik)",
   radiusStyle: "Soft (current default)",
   shadowStyle: "Subtle (current default)",
+  showTrustedByLogos: true,
 };
 
 type RawThemeSettings = {
@@ -367,6 +356,7 @@ type RawThemeSettings = {
   shadowStyle: ShadowStyleName;
   logo: StrapiMedia;
   favicon: StrapiMedia;
+  showTrustedByLogos: boolean | null;
 };
 
 type StrapiSingleResponse<T> = { data: T | null };
@@ -399,6 +389,7 @@ export async function getThemeSettings(): Promise<ThemeSettings> {
       shadowStyle: data.shadowStyle || DEFAULT_THEME.shadowStyle,
       logo: mediaUrl(data.logo),
       favicon: mediaUrl(data.favicon),
+      showTrustedByLogos: data.showTrustedByLogos ?? DEFAULT_THEME.showTrustedByLogos,
     };
   } catch {
     return DEFAULT_THEME;
