@@ -24,5 +24,5 @@ export const company = {
     instagram: "https://instagram.com/",
     linkedin: "https://linkedin.com/",
   },
-  foundingYear: 2024,
+  foundingYear: 2016,
 } as const;

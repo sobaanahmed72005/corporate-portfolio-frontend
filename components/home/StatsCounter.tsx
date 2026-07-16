@@ -47,7 +47,10 @@ function Counter({ stat }: { stat: Stat }) {
     return () => observer.disconnect();
   }, []);
 
-  const value = useCountUp(stat.value, active);
+  const target = stat.foundingYearForAutoCount
+    ? new Date().getFullYear() - stat.foundingYearForAutoCount
+    : stat.value ?? 0;
+  const value = useCountUp(target, active);
 
   return (
     <div ref={ref} className="text-center">
