@@ -7,7 +7,7 @@ export async function OfficesSection() {
   const offices = await getOffices();
 
   return (
-    <section className="border-t-2 border-pageText-950/15 bg-page-950 py-20 text-pageText-950 sm:py-32">
+    <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 text-pageText-950 sm:py-20">
       <Container>
         <div className="max-w-2xl">
           <p className="mb-2 font-display text-sm font-semibold uppercase tracking-[0.15em] text-accent-400">

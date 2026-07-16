@@ -59,7 +59,7 @@ export async function TestimonialsPreview() {
   const track = [...testimonials, ...testimonials];
 
   return (
-    <section className="overflow-hidden border-t-2 border-pageText-950/15 bg-page-900 py-20 sm:py-32">
+    <section className="overflow-hidden border-t-2 border-pageText-950/15 bg-page-900 py-14 sm:py-20">
       <Container>
         <SectionHeading
           eyebrow="Feedback That Matters"

@@ -12,7 +12,7 @@ export async function LatestUpdates() {
   if (!featured) return null;
 
   return (
-    <section className="border-t-2 border-pageText-950/15 bg-page-950 py-20 sm:py-32">
+    <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 sm:py-20">
       <Container>
         <SectionHeading eyebrow="From the Blog" eyebrowColor="text-amber-500" title="Latest Updates" onDark />
 

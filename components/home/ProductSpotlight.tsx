@@ -14,7 +14,7 @@ export async function ProductSpotlight() {
     }));
 
   return (
-    <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 sm:py-20">
+    <section className="border-t-2 border-pageText-950/15 bg-page-950 py-10 sm:py-14">
       <Container>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {spotlight.map(({ category, product }) => (

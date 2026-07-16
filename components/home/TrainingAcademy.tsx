@@ -8,7 +8,7 @@ export async function TrainingAcademy() {
   const courses = await getCourses();
 
   return (
-    <section className="border-t-2 border-pageText-950/15 bg-page-900 py-20 sm:py-32">
+    <section className="border-t-2 border-pageText-950/15 bg-page-900 py-14 sm:py-20">
       <Container>
         <SectionHeading
           eyebrow="Training"
