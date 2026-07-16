@@ -233,11 +233,11 @@ it's needed.
 
 - **Real product/testimonial/office photos** — see §4 and §7. Upload in the
   Strapi media library; no code change needed.
-- **A newsletter backend** — `NewsletterForm.tsx` posts to
-  `ENDPOINTS.NEWSLETTER` (`/api/newsletter`), but corporate-portfolio-api
-  currently only implements `/api/contact` — this endpoint doesn't exist yet.
-  Add it there following the same pattern as the contact route (rate limit,
-  honeypot, body-size guard) before this form goes live.
+- **A real newsletter subscriber list** — `POST /api/newsletter` in
+  corporate-portfolio-api currently just emails the site owner a "new
+  subscriber" notification per signup (no storage). Fine at low volume; swap
+  for a real list provider (Resend Audiences, Mailchimp, etc.) once signups
+  grow enough that manual notifications aren't practical.
 - **On-demand revalidation** — currently ISR (60s) per §7. A Strapi webhook
   calling a Next.js Route Handler that runs `revalidatePath`/`revalidateTag`
   would make edits appear instantly instead of within 60s.
