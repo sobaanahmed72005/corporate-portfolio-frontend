@@ -1,10 +1,8 @@
 import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { company } from "@/lib/data/company";
-import { getProductCategories } from "@/lib/cms";
 
 /**
  * Both optional and unset by default — this site doesn't have a hero video
@@ -16,8 +14,6 @@ const videoSrc: string | undefined = undefined;
 const heroImageSrc: string | undefined = undefined;
 
 export async function Hero() {
-  const productCategories = await getProductCategories();
-
   return (
     <section className="relative overflow-hidden bg-page-950">
       {videoSrc ? (
@@ -77,17 +73,6 @@ export async function Hero() {
             aspect="square"
             className="rounded-3xl border-cardText-950/15"
           />
-          <div className="mt-4 grid grid-cols-4 gap-3">
-            {productCategories.map((cat) => (
-              <div
-                key={cat.slug}
-                className="flex flex-col items-center gap-1.5 rounded-xl border border-cardText-950/15 bg-card-950 p-3 text-center backdrop-blur-sm"
-              >
-                <GradientIconBadge icon={cat.icon} color={cat.iconColor} size="sm" className="rounded-full" />
-                <span className="text-[11px] font-medium text-cardText-950">{cat.shortName}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </Container>
     </section>

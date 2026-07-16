@@ -1,6 +1,5 @@
 import { Hero } from "@/components/home/Hero";
 import { StatsCounter } from "@/components/home/StatsCounter";
-import { ProductSpotlight } from "@/components/home/ProductSpotlight";
 import { TrustTicker } from "@/components/home/TrustTicker";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
 import { EventsTeaser } from "@/components/home/EventsTeaser";
@@ -26,7 +25,6 @@ export default async function Home() {
     <>
       <Hero />
       <StatsCounter stats={stats} />
-      <ProductSpotlight />
       <TrustTicker />
       <ProductShowcase productCategories={productCategories} />
       <EventsTeaser />
