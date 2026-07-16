@@ -309,6 +309,7 @@ export type ThemeSettings = {
   logo?: string;
   favicon?: string;
   showTrustedByLogos: boolean;
+  showEventsSection: boolean;
 };
 
 // Matches the site's actual current look — used if Strapi has no
@@ -335,6 +336,7 @@ const DEFAULT_THEME: ThemeSettings = {
   radiusStyle: "Soft (current default)",
   shadowStyle: "Subtle (current default)",
   showTrustedByLogos: true,
+  showEventsSection: false,
 };
 
 type RawThemeSettings = {
@@ -360,6 +362,7 @@ type RawThemeSettings = {
   logo: StrapiMedia;
   favicon: StrapiMedia;
   showTrustedByLogos: boolean | null;
+  showEventsSection: boolean | null;
 };
 
 type StrapiSingleResponse<T> = { data: T | null };
@@ -393,6 +396,7 @@ export async function getThemeSettings(): Promise<ThemeSettings> {
       logo: mediaUrl(data.logo),
       favicon: mediaUrl(data.favicon),
       showTrustedByLogos: data.showTrustedByLogos ?? DEFAULT_THEME.showTrustedByLogos,
+      showEventsSection: data.showEventsSection ?? DEFAULT_THEME.showEventsSection,
     };
   } catch {
     return DEFAULT_THEME;

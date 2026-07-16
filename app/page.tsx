@@ -27,7 +27,7 @@ export default async function Home() {
       <StatsCounter stats={stats} />
       <TrustTicker />
       <ProductShowcase productCategories={productCategories} />
-      <EventsTeaser />
+      {themeSettings.showEventsSection && <EventsTeaser />}
       {themeSettings.showTrustedByLogos && <LogoWall />}
       <ProductDeepDive />
       <ServicesOverview />
