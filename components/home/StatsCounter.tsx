@@ -62,7 +62,7 @@ function Counter({ stat }: { stat: Stat }) {
 
 export function StatsCounter({ stats }: { stats: Stat[] }) {
   return (
-    <section className="border-t border-pageText-950/10 bg-page-950 py-20 sm:py-24">
+    <section className="border-t-2 border-pageText-950/15 bg-page-950 py-20 sm:py-24">
       <Container>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
           {stats.map((stat) => (

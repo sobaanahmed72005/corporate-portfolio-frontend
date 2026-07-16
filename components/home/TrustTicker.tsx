@@ -54,7 +54,7 @@ function Row({ items, animation }: { items: string[]; animation: string }) {
 
 export function TrustTicker() {
   return (
-    <div className="overflow-hidden border-t border-pageText-950/10 bg-page-900 py-14">
+    <div className="overflow-hidden border-t-2 border-pageText-950/15 bg-page-900 py-14">
       <Container>
         <p className="mb-6 text-center font-display text-sm font-semibold uppercase tracking-[0.15em] text-pageText-600">
           Trusted by Homes and Businesses Across Pakistan

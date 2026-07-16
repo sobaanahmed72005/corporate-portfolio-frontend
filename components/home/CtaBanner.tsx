@@ -22,7 +22,7 @@ export function CtaBanner({
   const secondaryIsExternal = secondaryHref.startsWith("http");
 
   return (
-    <section className="border-t border-pageText-950/10 py-20 sm:py-32">
+    <section className="border-t-2 border-pageText-950/15 py-20 sm:py-32">
       <Container>
         <div className="relative overflow-hidden rounded-3xl bg-rose-600 px-8 py-14 text-center shadow-xl sm:px-14 sm:text-left">
           <div

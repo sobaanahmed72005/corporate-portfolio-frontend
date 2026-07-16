@@ -17,7 +17,7 @@ export async function PortfolioPreview() {
     }));
 
   return (
-    <section className="border-t border-pageText-950/10 bg-page-950 py-20 sm:py-32">
+    <section className="border-t-2 border-pageText-950/15 bg-page-950 py-20 sm:py-32">
       <Container>
         <SectionHeading
           eyebrow="Our Work"
