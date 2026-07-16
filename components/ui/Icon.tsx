@@ -32,6 +32,10 @@ import {
   MonitorCog,
   Truck,
   BadgeCheck,
+  Smartphone,
+  Laptop,
+  Mouse,
+  Briefcase,
   type LucideProps,
 } from "lucide-react";
 
@@ -69,6 +73,10 @@ const iconMap = {
   "monitor-cog": MonitorCog,
   truck: Truck,
   "badge-check": BadgeCheck,
+  smartphone: Smartphone,
+  laptop: Laptop,
+  mouse: Mouse,
+  briefcase: Briefcase,
 } as const;
 
 export type IconName = keyof typeof iconMap;
