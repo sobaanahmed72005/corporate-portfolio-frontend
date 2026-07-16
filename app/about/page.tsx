@@ -3,12 +3,15 @@ import { ShieldCheck, Target, Users } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CtaBanner } from "@/components/home/CtaBanner";
-import { company } from "@/lib/data/company";
+import { getCompanyInfo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description: `Learn about ${company.name} — supplier and installer of IT accessories, CCTV, solar, and networking solutions.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const company = await getCompanyInfo();
+  return {
+    title: "About Us",
+    description: `Learn about ${company.name} — supplier and installer of IT accessories, CCTV, solar, and networking solutions.`,
+  };
+}
 
 const values = [
   {
@@ -31,7 +34,9 @@ const values = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const company = await getCompanyInfo();
+
   return (
     <div className="bg-contentCard-50">
       <section className="border-b border-section-200 bg-section-50 py-16">

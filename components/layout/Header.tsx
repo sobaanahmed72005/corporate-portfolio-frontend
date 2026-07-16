@@ -8,8 +8,7 @@ import { Menu, X, ShoppingBag, Phone, Mail } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu";
-import { company } from "@/lib/data/company";
-import type { ProductCategory, Service, PortfolioCategory } from "@/lib/cms";
+import type { ProductCategory, Service, PortfolioCategory, CompanyInfo } from "@/lib/cms";
 import { cn } from "@/lib/cn";
 
 const navLinks = [
@@ -23,11 +22,13 @@ const navLinks = [
 ];
 
 export function Header({
+  company,
   productCategories,
   services,
   portfolioCategories,
   logo,
 }: {
+  company: CompanyInfo;
   productCategories: ProductCategory[];
   services: Service[];
   portfolioCategories: PortfolioCategory[];

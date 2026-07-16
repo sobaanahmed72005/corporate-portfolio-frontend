@@ -103,8 +103,9 @@ Strapi admin panel (corporate-portfolio-cms, §7) — Content Manager → pick
 the type → create or edit an entry. Changes appear on the site within the
 `fetch` revalidation window (60s) used by `lib/cms.ts`.
 
-**Update contact info, store link, or socials:** edit `lib/data/company.ts`.
-Every page (header, footer, contact page) pulls from this one file.
+**Update contact info, store link, or socials:** edit the "Company Info"
+single type in the Strapi admin. Every page (header, footer, contact page)
+pulls from this one CMS entry via `getCompanyInfo()` in `lib/cms.ts`.
 
 ## 6. Running, building, deploying
 
@@ -235,8 +236,8 @@ it's needed.
   calling a Next.js Route Handler that runs `revalidatePath`/`revalidateTag`
   would make edits appear instantly instead of within 60s.
 - **Domain** — connect via Vercel's Domains tab once the site is live (see §6).
-- **Linking the real online store** — update `storeUrl` in
-  `lib/data/company.ts`; every "Visit Our Store" / "Shop on our Store" link
+- **Linking the real online store** — update `storeUrl` on the "Company Info"
+  single type in Strapi; every "Visit Our Store" / "Shop on our Store" link
   across the site reads from this single value.
 - **Analytics** — add Vercel Analytics or a privacy-respecting alternative in
   `app/layout.tsx` once the domain is live, to see which product categories

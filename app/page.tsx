@@ -12,13 +12,14 @@ import { LatestUpdates } from "@/components/home/LatestUpdates";
 import { TestimonialsPreview } from "@/components/home/TestimonialsPreview";
 import { OfficesSection } from "@/components/home/OfficesSection";
 import { CtaBanner } from "@/components/home/CtaBanner";
-import { getProductCategories, getStats, getThemeSettings } from "@/lib/cms";
+import { getProductCategories, getStats, getThemeSettings, getCompanyInfo } from "@/lib/cms";
 
 export default async function Home() {
-  const [productCategories, stats, themeSettings] = await Promise.all([
+  const [productCategories, stats, themeSettings, company] = await Promise.all([
     getProductCategories(),
     getStats(),
     getThemeSettings(),
+    getCompanyInfo(),
   ]);
 
   return (
@@ -26,7 +27,7 @@ export default async function Home() {
       <Hero />
       <StatsCounter stats={stats} />
       <TrustTicker />
-      <ProductShowcase productCategories={productCategories} />
+      <ProductShowcase productCategories={productCategories} company={company} />
       {themeSettings.showEventsSection && <EventsTeaser />}
       {themeSettings.showTrustedByLogos && <LogoWall />}
       <ProductDeepDive />

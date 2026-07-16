@@ -1,14 +1,15 @@
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { GradientPillLink } from "@/components/ui/GradientPillLink";
-import type { Product } from "@/lib/cms";
-import { company } from "@/lib/data/company";
+import type { Product, CompanyInfo } from "@/lib/cms";
 
 export function ProductCard({
   product,
   color,
+  company,
 }: {
   product: Product;
   color: string;
+  company: CompanyInfo;
 }) {
   return (
     <div className="flex flex-col rounded-3xl border border-contentCard-200 bg-contentCard-50 p-5 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">

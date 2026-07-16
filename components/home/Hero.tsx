@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ImageSlot } from "@/components/ui/ImageSlot";
-import { company } from "@/lib/data/company";
+import { getCompanyInfo } from "@/lib/cms";
 
 /**
  * Both optional and unset by default — this site doesn't have a hero video
@@ -14,6 +14,8 @@ const videoSrc: string | undefined = undefined;
 const heroImageSrc: string | undefined = undefined;
 
 export async function Hero() {
+  const company = await getCompanyInfo();
+
   return (
     <section className="relative overflow-hidden bg-page-950">
       {videoSrc ? (

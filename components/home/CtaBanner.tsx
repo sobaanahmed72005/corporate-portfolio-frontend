@@ -1,6 +1,6 @@
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { company } from "@/lib/data/company";
+import { getCompanyInfo } from "@/lib/cms";
 
 type CtaBannerProps = {
   title?: string;
@@ -11,15 +11,17 @@ type CtaBannerProps = {
   secondaryHref?: string;
 };
 
-export function CtaBanner({
+export async function CtaBanner({
   title = "Ready to get started?",
   description = "Talk to us about products, installation, or a bulk order quote.",
   primaryLabel = "Contact Us",
   primaryHref = "/contact",
   secondaryLabel = "Visit Our Store",
-  secondaryHref = company.storeUrl,
+  secondaryHref,
 }: CtaBannerProps) {
-  const secondaryIsExternal = secondaryHref.startsWith("http");
+  const company = await getCompanyInfo();
+  const resolvedSecondaryHref = secondaryHref ?? company.storeUrl;
+  const secondaryIsExternal = resolvedSecondaryHref.startsWith("http");
 
   return (
     <section className="border-t-2 border-pageText-950/15 py-14 sm:py-20">
@@ -43,7 +45,7 @@ export function CtaBanner({
                 {primaryLabel}
               </LinkButton>
               <LinkButton
-                href={secondaryHref}
+                href={resolvedSecondaryHref}
                 target={secondaryIsExternal ? "_blank" : undefined}
                 rel={secondaryIsExternal ? "noopener noreferrer" : undefined}
                 size="lg"

@@ -4,13 +4,15 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { CtaBanner } from "@/components/home/CtaBanner";
-import { company } from "@/lib/data/company";
-import { getPortfolioCategories } from "@/lib/cms";
+import { getPortfolioCategories, getCompanyInfo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Portfolio",
-  description: `A look at recent CCTV, solar, networking, and bulk supply projects completed by ${company.name}.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const company = await getCompanyInfo();
+  return {
+    title: "Portfolio",
+    description: `A look at recent CCTV, solar, networking, and bulk supply projects completed by ${company.name}.`,
+  };
+}
 
 export default async function PortfolioPage() {
   const portfolioCategories = await getPortfolioCategories();

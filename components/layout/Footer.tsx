@@ -4,13 +4,14 @@ import { Phone, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { FacebookIcon, InstagramIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
-import { company } from "@/lib/data/company";
-import type { ProductCategory } from "@/lib/cms";
+import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 
 export function Footer({
+  company,
   productCategories,
   logo,
 }: {
+  company: CompanyInfo;
   productCategories: ProductCategory[];
   logo?: string;
 }) {

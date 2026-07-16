@@ -10,6 +10,95 @@ import { CMS_CONFIG } from "@/lib/env";
 import type { IconName } from "@/components/ui/Icon";
 import type { FontPairingName, RadiusStyleName, ShadowStyleName } from "@/lib/theme";
 
+// Nested address/social objects so call sites can use
+// `company.address.line1` / `company.social.facebook`.
+export type CompanyInfo = {
+  name: string;
+  shortName: string;
+  tagline: string;
+  description: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  address: { line1: string; city: string; country: string };
+  storeUrl: string;
+  social: { facebook: string; instagram: string; linkedin: string };
+  foundingYear: number;
+};
+
+// Matches the site's actual current placeholder values — used if Strapi
+// has no company-info entry yet, or is unreachable.
+const DEFAULT_COMPANY: CompanyInfo = {
+  name: "IT Solutions Trade & Service",
+  shortName: "IT Solutions",
+  tagline: "Your Trusted Partner for IT Accessories, Security & Solar Solutions",
+  description:
+    "IT Solutions Trade & Service supplies and installs IT accessories, CCTV security systems, solar power solutions, and networking equipment for homes and businesses across Pakistan.",
+  phone: "+92 300 0000000",
+  whatsapp: "+923000000000",
+  email: "info@example.com",
+  address: {
+    line1: "Shop/Office Address Line 1",
+    city: "City",
+    country: "Pakistan",
+  },
+  storeUrl: "https://store.example.com",
+  social: {
+    facebook: "https://facebook.com/",
+    instagram: "https://instagram.com/",
+    linkedin: "https://linkedin.com/",
+  },
+  foundingYear: 2016,
+};
+
+type RawCompanyInfo = {
+  name: string;
+  shortName: string;
+  tagline: string;
+  description: string;
+  phone: string;
+  whatsapp: string;
+  email: string;
+  addressLine1: string;
+  addressCity: string;
+  addressCountry: string;
+  storeUrl: string;
+  facebookUrl: string | null;
+  instagramUrl: string | null;
+  linkedinUrl: string | null;
+  foundingYear: number;
+};
+
+export async function getCompanyInfo(): Promise<CompanyInfo> {
+  try {
+    const { data } = await cmsFetch<StrapiSingleResponse<RawCompanyInfo>>("/company-info");
+    if (!data) return DEFAULT_COMPANY;
+    return {
+      name: data.name || DEFAULT_COMPANY.name,
+      shortName: data.shortName || DEFAULT_COMPANY.shortName,
+      tagline: data.tagline || DEFAULT_COMPANY.tagline,
+      description: data.description || DEFAULT_COMPANY.description,
+      phone: data.phone || DEFAULT_COMPANY.phone,
+      whatsapp: data.whatsapp || DEFAULT_COMPANY.whatsapp,
+      email: data.email || DEFAULT_COMPANY.email,
+      address: {
+        line1: data.addressLine1 || DEFAULT_COMPANY.address.line1,
+        city: data.addressCity || DEFAULT_COMPANY.address.city,
+        country: data.addressCountry || DEFAULT_COMPANY.address.country,
+      },
+      storeUrl: data.storeUrl || DEFAULT_COMPANY.storeUrl,
+      social: {
+        facebook: data.facebookUrl || DEFAULT_COMPANY.social.facebook,
+        instagram: data.instagramUrl || DEFAULT_COMPANY.social.instagram,
+        linkedin: data.linkedinUrl || DEFAULT_COMPANY.social.linkedin,
+      },
+      foundingYear: data.foundingYear || DEFAULT_COMPANY.foundingYear,
+    };
+  } catch {
+    return DEFAULT_COMPANY;
+  }
+}
+
 export type Product = {
   slug: string;
   name: string;

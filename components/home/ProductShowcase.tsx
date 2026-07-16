@@ -8,12 +8,17 @@ import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { LinkButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { ImageSlot } from "@/components/ui/ImageSlot";
-import { company } from "@/lib/data/company";
 import { cn } from "@/lib/cn";
 import { deriveGradientStops } from "@/lib/theme";
-import type { ProductCategory } from "@/lib/cms";
+import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 
-export function ProductShowcase({ productCategories }: { productCategories: ProductCategory[] }) {
+export function ProductShowcase({
+  productCategories,
+  company,
+}: {
+  productCategories: ProductCategory[];
+  company: CompanyInfo;
+}) {
   const [activeSlug, setActiveSlug] = useState(productCategories[0]?.slug);
   const active = productCategories.find((c) => c.slug === activeSlug) ?? productCategories[0];
   const [featured, ...rest] = active?.products ?? [];

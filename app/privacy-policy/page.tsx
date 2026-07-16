@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
-import { company } from "@/lib/data/company";
+import { getCompanyInfo, type CompanyInfo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: `How ${company.name} collects, uses, and protects your information.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const company = await getCompanyInfo();
+  return {
+    title: "Privacy Policy",
+    description: `How ${company.name} collects, uses, and protects your information.`,
+  };
+}
 
-const sections: { heading: string; paragraphs: string[]; list?: string[] }[] = [
+function getSections(company: CompanyInfo): { heading: string; paragraphs: string[]; list?: string[] }[] {
+  return [
   {
     heading: "1. Overview",
     paragraphs: [
@@ -76,9 +80,13 @@ const sections: { heading: string; paragraphs: string[]; list?: string[] }[] = [
       `Questions about this Privacy Policy can be sent to ${company.email} or ${company.phone}.`,
     ],
   },
-];
+  ];
+}
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  const company = await getCompanyInfo();
+  const sections = getSections(company);
+
   return (
     <div className="bg-contentCard-50">
       <section className="border-b border-section-200 bg-section-50 py-14">

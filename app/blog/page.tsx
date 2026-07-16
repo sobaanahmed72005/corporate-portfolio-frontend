@@ -2,13 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, User } from "lucide-react";
 import { Container } from "@/components/ui/Container";
-import { company } from "@/lib/data/company";
-import { getBlogPosts } from "@/lib/cms";
+import { getBlogPosts, getCompanyInfo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: `Practical guides on CCTV, solar, networking, and IT accessories from ${company.name}.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const company = await getCompanyInfo();
+  return {
+    title: "Blog",
+    description: `Practical guides on CCTV, solar, networking, and IT accessories from ${company.name}.`,
+  };
+}
 
 export default async function BlogPage() {
   const blogPosts = await getBlogPosts();

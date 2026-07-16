@@ -3,9 +3,14 @@ import { Outfit, Rubik, Playfair_Display, Source_Sans_3, Space_Grotesk, Inter, M
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { company } from "@/lib/data/company";
 import { SITE_CONFIG } from "@/lib/env";
-import { getProductCategories, getServices, getPortfolioCategories, getThemeSettings } from "@/lib/cms";
+import {
+  getProductCategories,
+  getServices,
+  getPortfolioCategories,
+  getThemeSettings,
+  getCompanyInfo,
+} from "@/lib/cms";
 import { buildThemeCssVars, buildFontCssVars, buildShapeCssVars } from "@/lib/theme";
 
 // All 4 font pairings (lib/theme.ts's FONT_PAIRINGS) are statically imported
@@ -41,7 +46,7 @@ const merriweather = Merriweather({
 export async function generateMetadata(): Promise<Metadata> {
   // Next dedupes identical fetch() calls within a request, so this doesn't
   // cost a second network round-trip beyond the one RootLayout already makes.
-  const themeSettings = await getThemeSettings();
+  const [themeSettings, company] = await Promise.all([getThemeSettings(), getCompanyInfo()]);
 
   return {
     metadataBase: new URL(SITE_CONFIG.URL),
@@ -73,11 +78,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [productCategories, services, portfolioCategories, themeSettings] = await Promise.all([
+  const [productCategories, services, portfolioCategories, themeSettings, company] = await Promise.all([
     getProductCategories(),
     getServices(),
     getPortfolioCategories(),
     getThemeSettings(),
+    getCompanyInfo(),
   ]);
   const themeCssVars =
     buildThemeCssVars({
@@ -147,13 +153,14 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Header
+          company={company}
           productCategories={productCategories}
           services={services}
           portfolioCategories={portfolioCategories}
           logo={themeSettings.logo}
         />
         <main className="flex-1">{children}</main>
-        <Footer productCategories={productCategories} logo={themeSettings.logo} />
+        <Footer company={company} productCategories={productCategories} logo={themeSettings.logo} />
       </body>
     </html>
   );

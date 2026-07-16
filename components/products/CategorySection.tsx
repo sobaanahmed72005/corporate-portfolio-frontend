@@ -1,8 +1,14 @@
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { ProductCard } from "@/components/products/ProductCard";
-import type { ProductCategory } from "@/lib/cms";
+import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 
-export function CategorySection({ category }: { category: ProductCategory }) {
+export function CategorySection({
+  category,
+  company,
+}: {
+  category: ProductCategory;
+  company: CompanyInfo;
+}) {
   return (
     <section id={category.slug} className="scroll-mt-24 py-10">
       <div className="flex items-start gap-4">
@@ -17,7 +23,7 @@ export function CategorySection({ category }: { category: ProductCategory }) {
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {category.products.map((product) => (
-          <ProductCard key={product.slug} product={product} color={category.iconColor} />
+          <ProductCard key={product.slug} product={product} color={category.iconColor} company={company} />
         ))}
       </div>
     </section>

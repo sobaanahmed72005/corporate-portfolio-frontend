@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { LinkButton } from "@/components/ui/Button";
 import { CategorySection } from "@/components/products/CategorySection";
-import { getProductCategories } from "@/lib/cms";
-import { company } from "@/lib/data/company";
+import { getProductCategories, getCompanyInfo } from "@/lib/cms";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProductsPage() {
-  const productCategories = await getProductCategories();
+  const [productCategories, company] = await Promise.all([getProductCategories(), getCompanyInfo()]);
 
   return (
     <div className="bg-contentCard-50">
@@ -39,7 +38,7 @@ export default async function ProductsPage() {
 
       <Container className="divide-y divide-contentCard-200">
         {productCategories.map((category) => (
-          <CategorySection key={category.slug} category={category} />
+          <CategorySection key={category.slug} category={category} company={company} />
         ))}
       </Container>
     </div>

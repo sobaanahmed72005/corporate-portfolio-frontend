@@ -4,13 +4,15 @@ import { Container } from "@/components/ui/Container";
 import { CtaBanner } from "@/components/home/CtaBanner";
 import { deriveGradientStops } from "@/lib/theme";
 import { cn } from "@/lib/cn";
-import { company } from "@/lib/data/company";
-import { getTestimonials } from "@/lib/cms";
+import { getTestimonials, getCompanyInfo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Testimonials & Reviews",
-  description: `What clients say about working with ${company.name} on CCTV, solar, networking, and supply projects.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const company = await getCompanyInfo();
+  return {
+    title: "Testimonials & Reviews",
+    description: `What clients say about working with ${company.name} on CCTV, solar, networking, and supply projects.`,
+  };
+}
 
 export default async function TestimonialsPage() {
   const testimonials = await getTestimonials();

@@ -4,44 +4,49 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { company } from "@/lib/data/company";
-import { getServices } from "@/lib/cms";
+import { getServices, getCompanyInfo, type CompanyInfo } from "@/lib/cms";
 
-export const metadata: Metadata = {
-  title: "Contact Us",
-  description: `Get in touch with ${company.name} for products, installation services, or bulk orders.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const company = await getCompanyInfo();
+  return {
+    title: "Contact Us",
+    description: `Get in touch with ${company.name} for products, installation services, or bulk orders.`,
+  };
+}
 
-const reachChannels = [
-  {
-    icon: Phone,
-    title: "Call Our Support Team",
-    description:
-      "Have questions or need immediate assistance? Call us directly to speak with our team about products or installation needs.",
-    ctaLabel: "Start Your Call Now",
-    href: `tel:${company.phone}`,
-  },
-  {
-    icon: MessageCircle,
-    title: "Chat With Us on WhatsApp",
-    description:
-      "Have a quick question? Message us on WhatsApp for fast answers about products, quotes, or scheduling an installation.",
-    ctaLabel: "Live WhatsApp Chat",
-    href: `https://wa.me/${company.whatsapp.replace("+", "")}`,
-    external: true,
-  },
-  {
-    icon: Mail,
-    title: "Email Our Team",
-    description:
-      "Prefer email? Reach us anytime for product questions, bulk order inquiries, or general support.",
-    ctaLabel: "Send an Email",
-    href: `mailto:${company.email}`,
-  },
-];
+function getReachChannels(company: CompanyInfo) {
+  return [
+    {
+      icon: Phone,
+      title: "Call Our Support Team",
+      description:
+        "Have questions or need immediate assistance? Call us directly to speak with our team about products or installation needs.",
+      ctaLabel: "Start Your Call Now",
+      href: `tel:${company.phone}`,
+    },
+    {
+      icon: MessageCircle,
+      title: "Chat With Us on WhatsApp",
+      description:
+        "Have a quick question? Message us on WhatsApp for fast answers about products, quotes, or scheduling an installation.",
+      ctaLabel: "Live WhatsApp Chat",
+      href: `https://wa.me/${company.whatsapp.replace("+", "")}`,
+      external: true,
+    },
+    {
+      icon: Mail,
+      title: "Email Our Team",
+      description:
+        "Prefer email? Reach us anytime for product questions, bulk order inquiries, or general support.",
+      ctaLabel: "Send an Email",
+      href: `mailto:${company.email}`,
+    },
+  ];
+}
 
 export default async function ContactPage() {
-  const services = await getServices();
+  const [services, company] = await Promise.all([getServices(), getCompanyInfo()]);
+  const reachChannels = getReachChannels(company);
 
   return (
     <div className="bg-contentCard-50">
