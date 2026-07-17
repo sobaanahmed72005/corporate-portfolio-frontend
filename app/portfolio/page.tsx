@@ -48,7 +48,6 @@ export default async function PortfolioPage() {
                   className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
                 >
                   {project.video ? (
-                    // eslint-disable-next-line jsx-a11y/media-has-caption
                     <video src={project.video} controls className="aspect-video w-full bg-black" />
                   ) : project.image ? (
                     <ImageSlot src={project.image} alt={project.title} aspect="video" />

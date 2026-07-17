@@ -142,10 +142,7 @@ export default async function RootLayout({
             radius/shadow style all resolve to CSS custom properties that
             tailwind.config.ts's var() references read, so editing any of
             them in Strapi updates the whole site without a code change. */}
-        <style
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: `:root{${themeCssVars}}` }}
-        />
+        <style dangerouslySetInnerHTML={{ __html: `:root{${themeCssVars}}` }} />
       </head>
       <body className={`${fontVariables} font-sans flex min-h-screen flex-col bg-background text-foreground antialiased`}>
         <script
@@ -154,7 +151,6 @@ export default async function RootLayout({
           // containing "</script>" could break out of this tag — replace
           // it with a JSON-safe unicode escape (Next.js's own recommended
           // fix) rather than relying on CSP alone.
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
         />
         <Header

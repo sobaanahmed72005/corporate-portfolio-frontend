@@ -35,15 +35,12 @@ export function NavMegaMenu({
   // timer has elapsed, AND the cursor has actually left the trigger at least
   // once. Without the second condition, a cursor that never moves (e.g. the
   // page navigated but the mouse stayed put) would let group-hover show the
-  // dropdown again the instant the timer alone ran out.
-  const [suppressHover, setSuppressHover] = useState(false);
+  // dropdown again the instant the timer alone ran out. suppressHover is
+  // fully derived from the other two — no separate state/effect needed.
   const [timerElapsed, setTimerElapsed] = useState(true);
   const [hasLeftSinceClick, setHasLeftSinceClick] = useState(true);
+  const suppressHover = !timerElapsed || !hasLeftSinceClick;
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    if (timerElapsed && hasLeftSinceClick) setSuppressHover(false);
-  }, [timerElapsed, hasLeftSinceClick]);
 
   useEffect(() => {
     return () => {
@@ -52,7 +49,6 @@ export function NavMegaMenu({
   }, []);
 
   const handleClick = () => {
-    setSuppressHover(true);
     setTimerElapsed(false);
     setHasLeftSinceClick(false);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
