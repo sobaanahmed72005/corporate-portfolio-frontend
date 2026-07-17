@@ -232,7 +232,7 @@ async function cmsFetch<T>(path: string): Promise<T> {
 // visible instead of silent) and returns a safe fallback instead of
 // throwing — one broken section shouldn't take down every page that
 // happens to render it (most of these are awaited in the root layout).
-async function withFallback<T>(label: string, fallback: T, fn: () => Promise<T>): Promise<T> {
+export async function withFallback<T>(label: string, fallback: T, fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (err) {

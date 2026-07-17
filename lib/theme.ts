@@ -127,7 +127,7 @@ const FALLBACK_HEX = "#888888";
 // with a neutral fallback instead of being trusted — a malformed or
 // malicious value in Strapi's theme-setting could otherwise break out of
 // the style block.
-function sanitizeHex(hex: string): string {
+export function sanitizeHex(hex: string): string {
   if (HEX_COLOR_RE.test(hex)) return hex;
   console.error(`[theme] invalid color value ignored: ${JSON.stringify(hex)}`);
   return FALLBACK_HEX;
