@@ -211,7 +211,13 @@ type StrapiListResponse<T> = { data: T[] };
 
 function mediaUrl(media: StrapiMedia): string | undefined {
   if (!media?.url) return undefined;
-  return media.url.startsWith("http") ? media.url : `${CMS_CONFIG.URL}${media.url}`;
+  if (media.url.startsWith("/")) return `${CMS_CONFIG.URL}${media.url}`;
+  try {
+    const parsed = new URL(media.url);
+    const cmsHost = new URL(CMS_CONFIG.URL).host;
+    if (parsed.host === cmsHost) return media.url;
+  } catch {}
+  return undefined;
 }
 
 async function cmsFetch<T>(path: string): Promise<T> {
@@ -293,14 +299,20 @@ export async function getServices(): Promise<Service[]> {
   });
 }
 
-type RawBlogPost = BlogPost;
+type RawBlogPost = Omit<BlogPost, "date"> & { date: string };
+
+function formatDate(isoDate: string): string {
+  const d = new Date(isoDate + "T00:00:00");
+  if (isNaN(d.getTime())) return isoDate;
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+}
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
   return withFallback("getBlogPosts", [], async () => {
     const { data } = await cmsFetch<StrapiListResponse<RawBlogPost>>(
       "/blog-posts?sort=id:asc&pagination[pageSize]=100",
     );
-    return data;
+    return data.map((post) => ({ ...post, date: formatDate(post.date) }));
   });
 }
 
@@ -309,7 +321,8 @@ export async function getBlogPost(slug: string): Promise<BlogPost | undefined> {
     const { data } = await cmsFetch<StrapiListResponse<RawBlogPost>>(
       `/blog-posts?filters[slug][$eq]=${encodeURIComponent(slug)}`,
     );
-    return data[0];
+    if (!data[0]) return undefined;
+    return { ...data[0], date: formatDate(data[0].date) };
   });
 }
 

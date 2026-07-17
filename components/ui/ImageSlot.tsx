@@ -9,18 +9,14 @@ const aspectClasses = {
   wide: "aspect-[21/9]",
 };
 
-/**
- * A real media slot: renders `src` when given one, otherwise a deliberate
- * "add a photo here" empty state (dashed border + icon) instead of a broken
- * <img> tag. Swap in a real path once you have the actual photo/logo — no
- * other code needs to change.
- */
 export function ImageSlot({
   src,
   alt,
   icon,
   aspect = "square",
   onDark = false,
+  sizes = "(max-width: 768px) 100vw, 50vw",
+  priority = false,
   className,
 }: {
   src?: string;
@@ -28,12 +24,14 @@ export function ImageSlot({
   icon?: React.ReactNode;
   aspect?: keyof typeof aspectClasses;
   onDark?: boolean;
+  sizes?: string;
+  priority?: boolean;
   className?: string;
 }) {
   if (src) {
     return (
       <div className={cn("relative overflow-hidden", aspectClasses[aspect], className)}>
-        <Image src={src} alt={alt} fill className="object-cover" />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
       </div>
     );
   }
