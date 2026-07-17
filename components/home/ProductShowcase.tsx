@@ -11,6 +11,7 @@ import { ImageSlot } from "@/components/ui/ImageSlot";
 import { cn } from "@/lib/cn";
 import { deriveGradientStops } from "@/lib/theme";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
+import { safeHref } from "@/lib/safe-url";
 
 export function ProductShowcase({
   productCategories,
@@ -85,7 +86,7 @@ export function ProductShowcase({
                 <h3 className="mt-1 font-display text-2xl font-extrabold text-white">{featured.name}</h3>
                 <p className="mt-2 max-w-xl text-sm text-white">{featured.description}</p>
                 <a
-                  href={company.storeUrl}
+                  href={safeHref(company.storeUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2 text-sm font-sans font-semibold text-slate-900 transition-all duration-300 ease-out hover:-translate-y-0.5"
@@ -99,7 +100,7 @@ export function ProductShowcase({
               {rest.map((product) => (
                 <a
                   key={product.slug}
-                  href={company.storeUrl}
+                  href={safeHref(company.storeUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 rounded-xl border border-cardText-950/10 bg-card-950 p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:border-cardText-950/25 hover:shadow-md"

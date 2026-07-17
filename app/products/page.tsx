@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { LinkButton } from "@/components/ui/Button";
 import { CategorySection } from "@/components/products/CategorySection";
 import { getProductCategories, getCompanyInfo } from "@/lib/cms";
+import { safeHref } from "@/lib/safe-url";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -25,7 +26,7 @@ export default async function ProductsPage() {
             </p>
           </div>
           <LinkButton
-            href={company.storeUrl}
+            href={safeHref(company.storeUrl)}
             target="_blank"
             rel="noopener noreferrer"
             variant="accent"

@@ -5,6 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { getServices, getCompanyInfo, getWhatsAppLink, type CompanyInfo } from "@/lib/cms";
+import { safeHref } from "@/lib/safe-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   const company = await getCompanyInfo();
@@ -22,7 +23,7 @@ function getReachChannels(company: CompanyInfo) {
       description:
         "Have questions or need immediate assistance? Call us directly to speak with our team about products or installation needs.",
       ctaLabel: "Start Your Call Now",
-      href: `tel:${company.phone}`,
+      href: safeHref(`tel:${company.phone}`),
     },
     {
       icon: MessageCircle,
@@ -39,7 +40,7 @@ function getReachChannels(company: CompanyInfo) {
       description:
         "Prefer email? Reach us anytime for product questions, bulk order inquiries, or general support.",
       ctaLabel: "Send an Email",
-      href: `mailto:${company.email}`,
+      href: safeHref(`mailto:${company.email}`),
     },
   ];
 }

@@ -1,6 +1,7 @@
 import { FacebookIcon, InstagramIcon, LinkedinIcon, WhatsAppIcon } from "@/components/ui/SocialIcons";
 import { cn } from "@/lib/cn";
 import { getWhatsAppLink, type CompanyInfo } from "@/lib/cms";
+import { safeHref } from "@/lib/safe-url";
 
 export function SocialSidebar({ company }: { company: CompanyInfo }) {
   const links = [
@@ -35,7 +36,7 @@ export function SocialSidebar({ company }: { company: CompanyInfo }) {
       {links.map(({ href, label, Icon, className }) => (
         <a
           key={label}
-          href={href}
+          href={safeHref(href)}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
