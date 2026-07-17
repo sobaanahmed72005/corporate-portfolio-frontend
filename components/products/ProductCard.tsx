@@ -1,6 +1,7 @@
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { GradientPillLink } from "@/components/ui/GradientPillLink";
 import type { Product, CompanyInfo } from "@/lib/cms";
+import { safeHref } from "@/lib/safe-url";
 
 export function ProductCard({
   product,
@@ -17,7 +18,7 @@ export function ProductCard({
       <h3 className="mt-3 text-base font-semibold text-contentCardText-950">{product.name}</h3>
       <p className="mt-1 flex-1 text-sm text-contentCardText-600">{product.description}</p>
       <GradientPillLink
-        href={company.storeUrl}
+        href={safeHref(company.storeUrl)}
         target="_blank"
         rel="noopener noreferrer"
         color={color}

@@ -9,6 +9,7 @@ import { Container } from "@/components/ui/Container";
 import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu";
 import type { ProductCategory, Service, PortfolioCategory, CompanyInfo } from "@/lib/cms";
 import { cn } from "@/lib/cn";
+import { safeHref } from "@/lib/safe-url";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -65,14 +66,14 @@ export function Header({
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
         <Container className="flex h-9 items-center gap-5 text-xs">
           <a
-            href={`mailto:${company.email}`}
+            href={safeHref(`mailto:${company.email}`)}
             className="flex items-center gap-1.5 hover:text-cardText-950"
           >
             <Mail className="h-3.5 w-3.5" aria-hidden />
             {company.email}
           </a>
           <a
-            href={`tel:${company.phone}`}
+            href={safeHref(`tel:${company.phone}`)}
             className="flex items-center gap-1.5 hover:text-cardText-950"
           >
             <Phone className="h-3.5 w-3.5" aria-hidden />
@@ -177,7 +178,7 @@ export function Header({
 
           <div className="hidden md:block">
             <a
-              href={company.storeUrl}
+              href={safeHref(company.storeUrl)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl bg-accent-400 px-4 py-2.5 text-sm font-sans font-semibold text-white shadow-md shadow-accent-400/25 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-500"
@@ -212,7 +213,7 @@ export function Header({
                 </Link>
               ))}
               <a
-                href={company.storeUrl}
+                href={safeHref(company.storeUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-accent-400 px-4 py-2.5 text-sm font-sans font-semibold text-white transition-all duration-300 ease-out hover:bg-accent-500"

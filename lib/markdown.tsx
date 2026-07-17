@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-
-const SAFE_URL_RE = /^(https?:|mailto:|tel:|\/)/i;
+import { safeHref } from "@/lib/safe-url";
 
 /**
  * Small dependency-free renderer for the CMS richtext field — covers what
@@ -27,7 +26,7 @@ function renderInline(text: string, keyPrefix: string): ReactNode[] {
     const linkMatch = /^\[([^\]]+)\]\(([^)]+)\)/.exec(rest);
     if (linkMatch) {
       flushBuffer();
-      const href = SAFE_URL_RE.test(linkMatch[2]) ? linkMatch[2] : "#";
+      const href = safeHref(linkMatch[2]);
       nodes.push(
         <a
           key={`${keyPrefix}-${key++}`}

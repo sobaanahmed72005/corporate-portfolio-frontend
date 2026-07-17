@@ -6,9 +6,25 @@
  * contact-form backend.
  */
 
+import type { ZodType } from "zod";
 import { CMS_CONFIG } from "@/lib/cms-env";
 import type { IconName } from "@/components/ui/Icon";
 import type { FontPairingName, RadiusStyleName, ShadowStyleName } from "@/lib/theme";
+import {
+  strapiList,
+  strapiSingle,
+  companyInfoSchema,
+  productCategorySchema,
+  serviceSchema,
+  blogPostSchema,
+  testimonialSchema,
+  officeSchema,
+  portfolioCategorySchema,
+  statSchema,
+  reasonSchema,
+  clientLogoSchema,
+  themeSettingsSchema,
+} from "@/lib/cms-schemas";
 
 // Nested address/social objects so call sites can use
 // `company.address.line1` / `company.social.facebook`.
@@ -51,27 +67,9 @@ const DEFAULT_COMPANY: CompanyInfo = {
   foundingYear: 2016,
 };
 
-type RawCompanyInfo = {
-  name: string;
-  shortName: string;
-  tagline: string;
-  description: string;
-  phone: string;
-  whatsapp: string;
-  email: string;
-  addressLine1: string;
-  addressCity: string;
-  addressCountry: string;
-  storeUrl: string;
-  facebookUrl: string | null;
-  instagramUrl: string | null;
-  linkedinUrl: string | null;
-  foundingYear: number;
-};
-
 export async function getCompanyInfo(): Promise<CompanyInfo> {
   return withFallback("getCompanyInfo", DEFAULT_COMPANY, async () => {
-    const { data } = await cmsFetch<StrapiSingleResponse<RawCompanyInfo>>("/company-info");
+    const { data } = await cmsFetch("/company-info", strapiSingle(companyInfoSchema));
     if (!data) return DEFAULT_COMPANY;
     return {
       name: data.name || DEFAULT_COMPANY.name,
@@ -207,7 +205,6 @@ export type ClientLogo = {
 };
 
 type StrapiMedia = { url: string } | null;
-type StrapiListResponse<T> = { data: T[] };
 
 function mediaUrl(media: StrapiMedia): string | undefined {
   if (!media?.url) return undefined;
@@ -220,7 +217,12 @@ function mediaUrl(media: StrapiMedia): string | undefined {
   return undefined;
 }
 
-async function cmsFetch<T>(path: string): Promise<T> {
+// Validates the response against `schema` rather than trusting a TypeScript
+// cast — a schema drift, null field, or misconfigured/compromised CMS
+// response is caught here instead of propagating malformed data into
+// rendering. Treated the same as a network failure: withFallback (below)
+// catches the thrown error, logs it, and returns the caller's safe default.
+async function cmsFetch<T>(path: string, schema: ZodType<T>): Promise<T> {
   const res = await fetch(`${CMS_CONFIG.URL}/api${path}`, {
     headers: { Authorization: `Bearer ${CMS_CONFIG.API_TOKEN}` },
     next: { revalidate: 60 },
@@ -230,7 +232,12 @@ async function cmsFetch<T>(path: string): Promise<T> {
     throw new Error(`CMS request to ${path} failed with status ${res.status}`);
   }
 
-  return res.json() as Promise<T>;
+  const json = await res.json();
+  const parsed = schema.safeParse(json);
+  if (!parsed.success) {
+    throw new Error(`CMS response for ${path} did not match the expected shape: ${parsed.error.message}`);
+  }
+  return parsed.data;
 }
 
 // If the CMS is briefly unreachable, a key gets narrowed, or any single
@@ -247,43 +254,25 @@ export async function withFallback<T>(label: string, fallback: T, fn: () => Prom
   }
 }
 
-type RawProduct = {
-  slug: string;
-  name: string;
-  description: string;
-  icon: IconName;
-  image: StrapiMedia;
-};
-
-type RawProductCategory = {
-  slug: string;
-  name: string;
-  shortName: string;
-  description: string;
-  icon: IconName;
-  iconColor: string;
-  image: StrapiMedia;
-  products: RawProduct[];
-};
-
 export async function getProductCategories(): Promise<ProductCategory[]> {
   return withFallback("getProductCategories", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<RawProductCategory>>(
+    const { data } = await cmsFetch(
       "/product-categories?populate[products][populate]=image&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
+      strapiList(productCategorySchema),
     );
     return data.map((category) => ({
       slug: category.slug,
       name: category.name,
       shortName: category.shortName,
       description: category.description,
-      icon: category.icon,
+      icon: category.icon as IconName,
       iconColor: category.iconColor,
       image: mediaUrl(category.image),
       products: category.products.map((product) => ({
         slug: product.slug,
         name: product.name,
         description: product.description,
-        icon: product.icon,
+        icon: product.icon as IconName,
         image: mediaUrl(product.image),
       })),
     }));
@@ -292,14 +281,13 @@ export async function getProductCategories(): Promise<ProductCategory[]> {
 
 export async function getServices(): Promise<Service[]> {
   return withFallback("getServices", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<Service>>(
+    const { data } = await cmsFetch(
       "/services?sort=id:asc&pagination[pageSize]=100",
+      strapiList(serviceSchema),
     );
-    return data;
+    return data.map((service) => ({ ...service, icon: service.icon as IconName }));
   });
 }
-
-type RawBlogPost = Omit<BlogPost, "date"> & { date: string };
 
 function formatDate(isoDate: string): string {
   const d = new Date(isoDate + "T00:00:00");
@@ -309,8 +297,9 @@ function formatDate(isoDate: string): string {
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
   return withFallback("getBlogPosts", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<RawBlogPost>>(
+    const { data } = await cmsFetch(
       "/blog-posts?sort=id:asc&pagination[pageSize]=100",
+      strapiList(blogPostSchema),
     );
     return data.map((post) => ({ ...post, date: formatDate(post.date) }));
   });
@@ -318,20 +307,20 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 
 export async function getBlogPost(slug: string): Promise<BlogPost | undefined> {
   return withFallback("getBlogPost", undefined, async () => {
-    const { data } = await cmsFetch<StrapiListResponse<RawBlogPost>>(
+    const { data } = await cmsFetch(
       `/blog-posts?filters[slug][$eq]=${encodeURIComponent(slug)}`,
+      strapiList(blogPostSchema),
     );
     if (!data[0]) return undefined;
     return { ...data[0], date: formatDate(data[0].date) };
   });
 }
 
-type RawTestimonial = Omit<Testimonial, "photo"> & { photo: StrapiMedia };
-
 export async function getTestimonials(): Promise<Testimonial[]> {
   return withFallback("getTestimonials", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<RawTestimonial>>(
+    const { data } = await cmsFetch(
       "/testimonials?populate=photo&sort=id:asc&pagination[pageSize]=100",
+      strapiList(testimonialSchema),
     );
     return data.map((testimonial) => ({
       ...testimonial,
@@ -340,50 +329,31 @@ export async function getTestimonials(): Promise<Testimonial[]> {
   });
 }
 
-type RawOffice = Omit<Office, "photo"> & { photo: StrapiMedia };
-
 export async function getOffices(): Promise<Office[]> {
   return withFallback("getOffices", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<RawOffice>>(
+    const { data } = await cmsFetch(
       "/offices?populate=photo&sort=displayOrder:asc&pagination[pageSize]=100",
+      strapiList(officeSchema),
     );
     return data.map((office) => ({
       ...office,
+      icon: office.icon as IconName,
       photo: mediaUrl(office.photo),
     }));
   });
 }
 
-type RawPortfolioProject = {
-  slug: string;
-  title: string;
-  summary: string;
-  highlight: string;
-  icon: IconName;
-  image: StrapiMedia;
-  video: StrapiMedia;
-};
-
-type RawPortfolioCategory = {
-  slug: string;
-  name: string;
-  description: string;
-  icon: IconName;
-  iconColor: string;
-  image: StrapiMedia;
-  projects: RawPortfolioProject[];
-};
-
 export async function getPortfolioCategories(): Promise<PortfolioCategory[]> {
   return withFallback("getPortfolioCategories", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<RawPortfolioCategory>>(
+    const { data } = await cmsFetch(
       "/portfolio-categories?populate[projects][populate][0]=image&populate[projects][populate][1]=video&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
+      strapiList(portfolioCategorySchema),
     );
     return data.map((category) => ({
       slug: category.slug,
       name: category.name,
       description: category.description,
-      icon: category.icon,
+      icon: category.icon as IconName,
       iconColor: category.iconColor,
       image: mediaUrl(category.image),
       projects: category.projects.map((project) => ({
@@ -391,7 +361,7 @@ export async function getPortfolioCategories(): Promise<PortfolioCategory[]> {
         title: project.title,
         summary: project.summary,
         highlight: project.highlight,
-        icon: project.icon,
+        icon: project.icon as IconName,
         image: mediaUrl(project.image),
         video: mediaUrl(project.video),
       })),
@@ -401,24 +371,26 @@ export async function getPortfolioCategories(): Promise<PortfolioCategory[]> {
 
 export async function getStats(): Promise<Stat[]> {
   return withFallback("getStats", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<Stat>>("/stats?sort=id:asc&pagination[pageSize]=100");
+    const { data } = await cmsFetch("/stats?sort=id:asc&pagination[pageSize]=100", strapiList(statSchema));
     return data;
   });
 }
 
 export async function getReasons(): Promise<Reason[]> {
   return withFallback("getReasons", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<Reason>>("/reasons?sort=id:asc&pagination[pageSize]=100");
-    return data;
+    const { data } = await cmsFetch(
+      "/reasons?sort=id:asc&pagination[pageSize]=100",
+      strapiList(reasonSchema),
+    );
+    return data.map((reason) => ({ ...reason, icon: reason.icon as IconName }));
   });
 }
 
-type RawClientLogo = { alt: string; logo: StrapiMedia };
-
 export async function getClientLogos(): Promise<ClientLogo[]> {
   return withFallback("getClientLogos", [], async () => {
-    const { data } = await cmsFetch<StrapiListResponse<RawClientLogo>>(
+    const { data } = await cmsFetch(
       "/client-logos?populate=logo&sort=id:asc&pagination[pageSize]=100",
+      strapiList(clientLogoSchema),
     );
     return data.map((entry) => ({
       alt: entry.alt,
@@ -480,38 +452,11 @@ const DEFAULT_THEME: ThemeSettings = {
   showEventsSection: false,
 };
 
-type RawThemeSettings = {
-  brandColor: string;
-  accentColor: string;
-  headerColor: string;
-  footerColor: string;
-  pageBackgroundColor: string;
-  cardColor: string;
-  buttonColor: string;
-  navHighlightColor: string;
-  headerTextColor: string;
-  footerTextColor: string;
-  pageTextColor: string;
-  cardTextColor: string;
-  sectionColor: string;
-  sectionTextColor: string;
-  contentCardColor: string;
-  contentCardTextColor: string;
-  fontPairing: FontPairingName;
-  radiusStyle: RadiusStyleName;
-  shadowStyle: ShadowStyleName;
-  logo: StrapiMedia;
-  favicon: StrapiMedia;
-  showTrustedByLogos: boolean | null;
-  showEventsSection: boolean | null;
-};
-
-type StrapiSingleResponse<T> = { data: T | null };
-
 export async function getThemeSettings(): Promise<ThemeSettings> {
   return withFallback("getThemeSettings", DEFAULT_THEME, async () => {
-    const { data } = await cmsFetch<StrapiSingleResponse<RawThemeSettings>>(
+    const { data } = await cmsFetch(
       "/theme-setting?populate[0]=logo&populate[1]=favicon",
+      strapiSingle(themeSettingsSchema),
     );
     if (!data) return DEFAULT_THEME;
     return {
@@ -531,9 +476,9 @@ export async function getThemeSettings(): Promise<ThemeSettings> {
       sectionTextColor: data.sectionTextColor || DEFAULT_THEME.sectionTextColor,
       contentCardColor: data.contentCardColor || DEFAULT_THEME.contentCardColor,
       contentCardTextColor: data.contentCardTextColor || DEFAULT_THEME.contentCardTextColor,
-      fontPairing: data.fontPairing || DEFAULT_THEME.fontPairing,
-      radiusStyle: data.radiusStyle || DEFAULT_THEME.radiusStyle,
-      shadowStyle: data.shadowStyle || DEFAULT_THEME.shadowStyle,
+      fontPairing: (data.fontPairing || DEFAULT_THEME.fontPairing) as FontPairingName,
+      radiusStyle: (data.radiusStyle || DEFAULT_THEME.radiusStyle) as RadiusStyleName,
+      shadowStyle: (data.shadowStyle || DEFAULT_THEME.shadowStyle) as ShadowStyleName,
       logo: mediaUrl(data.logo),
       favicon: mediaUrl(data.favicon),
       showTrustedByLogos: data.showTrustedByLogos ?? DEFAULT_THEME.showTrustedByLogos,

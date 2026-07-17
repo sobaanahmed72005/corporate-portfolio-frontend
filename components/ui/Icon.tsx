@@ -36,6 +36,7 @@ import {
   Laptop,
   Mouse,
   Briefcase,
+  CircleHelp,
   type LucideProps,
 } from "lucide-react";
 
@@ -81,7 +82,14 @@ const iconMap = {
 
 export type IconName = keyof typeof iconMap;
 
+// `name` is typed as IconName, but values that ultimately come from the CMS
+// only carry that type by assertion (see lib/cms.ts) — an editor picking an
+// icon slug that isn't in iconMap yet (e.g. a field added before the
+// matching frontend deploy) must not crash the page it renders on.
 export function Icon({ name, ...props }: { name: IconName } & LucideProps) {
-  const Component = iconMap[name];
+  const Component = iconMap[name] ?? CircleHelp;
+  if (process.env.NODE_ENV !== "production" && !iconMap[name]) {
+    console.warn(`[Icon] Unknown icon name "${name}" — falling back to a placeholder icon.`);
+  }
   return <Component {...props} />;
 }

@@ -1,6 +1,7 @@
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { getCompanyInfo } from "@/lib/cms";
+import { safeHref } from "@/lib/safe-url";
 
 type CtaBannerProps = {
   title?: string;
@@ -20,7 +21,7 @@ export async function CtaBanner({
   secondaryHref,
 }: CtaBannerProps) {
   const company = await getCompanyInfo();
-  const resolvedSecondaryHref = secondaryHref ?? company.storeUrl;
+  const resolvedSecondaryHref = secondaryHref ?? safeHref(company.storeUrl);
   const secondaryIsExternal = resolvedSecondaryHref.startsWith("http");
 
   return (
