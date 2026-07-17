@@ -21,44 +21,56 @@ two can be built, deployed, and scaled independently — see §8.
 
 | Choice | Why |
 |---|---|
-| **Next.js 14 (App Router) + TypeScript** | Pages are server-rendered (SSR/SSG), so search engines get full HTML immediately — important for local searches like "CCTV installation Pakistan." TypeScript catches mistakes (wrong prop, typo'd field) at compile time instead of in production. |
+| **Next.js 16 (App Router) + TypeScript** | Pages are server-rendered (SSR/SSG), so search engines get full HTML immediately — important for local searches like "CCTV installation Pakistan." TypeScript catches mistakes (wrong prop, typo'd field) at compile time instead of in production. |
 | **Tailwind CSS** | Keeps spacing, color, and typography consistent across every page without hand-rolled CSS files drifting out of sync. |
-| **Strapi CMS** for all editorial content and site config | Products/services/blog/testimonials/offices, company info, theme, portfolio, stats, and client logos are all Strapi content types — the whole site is admin-editable with no code change or redeploy needed (see §7). |
-| **react-hook-form + Zod** | The one real interactive feature is the contact form. Zod defines the validation rules once client-side for instant feedback; corporate-portfolio-api re-validates with its own copy of the same schema server-side (never trust the client). |
-| **Vitest** | Fast unit tests for the one piece of logic worth testing (form validation rules). |
-| **Vercel** (recommended host) | Zero-config deploys for Next.js, free tier, automatic HTTPS, easy custom domain hookup later. |
+| **Strapi CMS** for all editorial content and site config | Products/services/blog/testimonials/offices, company info, theme, portfolio, stats, client logos, and newsletter subscribers are all Strapi content types — the whole site is admin-editable with no code change or redeploy needed (see §7). |
+| **react-hook-form + Zod** | The two real interactive features are the contact form and newsletter signup. Zod defines the validation rules once client-side for instant feedback; corporate-portfolio-api re-validates with its own copy of the same schema server-side (never trust the client). |
+| **Vitest** | Fast unit tests for the pieces of logic worth testing (form validation rules). |
+| **Security headers + CSP** (`next.config.mjs`) | X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, HSTS, and a Content-Security-Policy are set on every response. |
+| **Railway** (planned host) | Runs all three repos (this one, the CMS, the contact-form API) as persistent services under one account/billing, which a serverless platform like Vercel doesn't suit for the Strapi CMS specifically. |
 
 ## 3. Folder structure
 
 ```
 app/
-  layout.tsx          Root layout: <Header>, <Footer>, global metadata, JSON-LD
+  layout.tsx          Root layout: <Header>, <Footer>, <SocialSidebar>, global metadata, JSON-LD
+  error.tsx            Page-level error boundary (CMS hiccup, etc. — Header/Footer still render)
+  global-error.tsx      Root-layout-level error boundary (self-contained, inline-styled fallback)
+  not-found.tsx         Custom 404 page
   page.tsx             Home page
   products/page.tsx     Products page (all categories + items)
   services/page.tsx     Services page
+  portfolio/page.tsx    Portfolio page
+  blog/page.tsx         Blog index
+  blog/[slug]/page.tsx   Individual blog post (Markdown rendering via lib/markdown.tsx)
+  testimonials/page.tsx  Testimonials page
   about/page.tsx        About page
   contact/page.tsx       Contact page
+  privacy-policy/page.tsx, terms-and-conditions/page.tsx
   sitemap.ts            Generates /sitemap.xml
   robots.ts             Generates /robots.txt
 components/
   ui/                  Generic building blocks: Button, Container, SectionHeading, Icon
-  layout/               Header, Footer
-  home/                 Homepage sections: Hero, ProductSpotlight, TrustTicker, ProductShowcase,
-                        ServicesOverview, WhyChooseUs, LatestUpdates, TestimonialsPreview,
-                        OfficesSection, CtaBanner
+  layout/               Header, Footer, SocialSidebar (floating WhatsApp/Facebook/Instagram/LinkedIn),
+                        NavMegaMenu, NewsletterForm (client component)
+  home/                 Homepage sections: Hero, TrustTicker, ProductShowcase, ServicesOverview,
+                        WhyChooseUs, LatestUpdates, TestimonialsPreview, OfficesSection, CtaBanner,
+                        StatsCounter, LogoWall, EventsTeaser
   products/             ProductCard, CategorySection
   services/             ServiceCard
   contact/              ContactForm (client component)
-  layout/               (cont.) NewsletterForm (client component, used in Footer)
 lib/
   cms.ts                 Strapi client + types (CompanyInfo, ThemeSettings, Product, ProductCategory,
                         Service, BlogPost, Testimonial, Office, PortfolioCategory, Stat, ClientLogo, ...)
                         — every fetcher falls back to safe placeholder data via withFallback() if the
                         CMS is unreachable, instead of throwing
-  theme.ts               Derives the Strapi-picked color palette into CSS custom properties
+  theme.ts               Derives the Strapi-picked color palette into CSS custom properties; validates
+                        colors are real #RRGGBB hex before they're written into a <style> tag
   markdown.tsx            Small dependency-free renderer for the blog post richtext field
   validations/          Zod schemas (contact.ts, newsletter.ts) + tests
-  env.ts                Single source of truth for env vars (SITE_CONFIG, API_CONFIG, CMS_CONFIG)
+  env.ts                Client-safe env vars only (SITE_CONFIG, API_CONFIG) — no secrets
+  cms-env.ts             Server-only (guarded by the "server-only" package): CMS_CONFIG, holding the
+                        Strapi API token. Never import this from a "use client" component.
   endpoints.ts          Single source of truth for backend API route paths (ENDPOINTS)
   api-client.ts         Shared fetch client (apiClient) — base URL, headers, error handling in one place
   cn.ts                 Tiny classnames helper
@@ -129,31 +141,34 @@ npm run build                # production build
 - `STRAPI_URL` — base URL of the corporate-portfolio-cms Strapi instance.
 - `STRAPI_API_TOKEN` — read-only Strapi API token (§7).
 
-These are read in exactly one place, `lib/env.ts`, which groups them into
-`SITE_CONFIG` (`SITE_CONFIG.URL`), `API_CONFIG` (`API_CONFIG.URL`), and
-`CMS_CONFIG` (`CMS_CONFIG.URL`, `CMS_CONFIG.API_TOKEN`) — the
-rest of the app imports these config objects instead of touching
-`process.env` directly. Related env vars go in the same config object (e.g.
-an SMTP config would be `SMTP_CONFIG = { HOST, PORT }`, not separate
-`SMTP_HOST`/`SMTP_PORT` exports), so adding or renaming a var only means
-editing that one file.
+These are read in exactly two places: `lib/env.ts`, which groups the
+client-safe ones into `SITE_CONFIG` (`SITE_CONFIG.URL`) and `API_CONFIG`
+(`API_CONFIG.URL`); and `lib/cms-env.ts`, which holds `CMS_CONFIG`
+(`CMS_CONFIG.URL`, `CMS_CONFIG.API_TOKEN`) behind the `server-only`
+package, since that one holds a secret and must never end up in a
+browser-shipped bundle. The rest of the app imports these config objects
+instead of touching `process.env` directly. Related env vars go in the
+same config object (e.g. an SMTP config would be `SMTP_CONFIG = { HOST,
+PORT }`, not separate `SMTP_HOST`/`SMTP_PORT` exports), so adding or
+renaming a var only means editing the relevant one of those two files.
 
-**Required in production, defaulted in dev:** `lib/env.ts` checks
-`NODE_ENV`. In development (`npm run dev`), a missing var falls back to a
-hardcoded `localhost` default so the app runs without a `.env.local`. When
-`NODE_ENV=production` (`npm run build` / `npm start`, and on Vercel), a
-missing var throws immediately instead of silently falling back — a
-misconfigured deploy fails loudly rather than quietly pointing at
-`localhost`, which would be a real security/correctness risk (SEO metadata,
-CORS, and the contact form all derive from these URLs). Still copy
-`.env.example` to `.env.local` for local dev so you're testing against the
-real values, not the defaults.
+**Required in production, defaulted in dev:** both files check `NODE_ENV`.
+In development (`npm run dev`), a missing var falls back to a hardcoded
+`localhost` default so the app runs without a `.env.local`. When
+`NODE_ENV=production` (`npm run build` / `npm start`), a missing var throws
+immediately instead of silently falling back — a misconfigured deploy
+fails loudly rather than quietly pointing at `localhost`, which would be a
+real security/correctness risk (SEO metadata, CORS, and the contact form
+all derive from these URLs). Still copy `.env.example` to `.env.local` for
+local dev so you're testing against the real values, not the defaults.
 
-**Deployment:** push to a GitHub repo and import it into
-[Vercel](https://vercel.com/new) — it detects Next.js automatically. Set
-`NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_API_URL` in the Vercel project
-settings. Domain hookup (pointing the registered domain at Vercel) is a DNS
-step done after the first deploy, from the Vercel project's "Domains" tab.
+**Deployment:** Railway (see the CMS repo's deploy notes) — runs this
+alongside the CMS and the contact-form API as persistent services under one
+account. Push to the connected GitHub repo and Railway picks up the
+Next.js app automatically. Set `NEXT_PUBLIC_SITE_URL` and
+`NEXT_PUBLIC_API_URL` in the Railway service's environment settings. Domain
+hookup is a DNS step done after the first deploy, from the service's
+Settings → Domains tab.
 
 ## 7. How the CMS works
 
@@ -241,11 +256,11 @@ it's needed.
 - **On-demand revalidation** — currently ISR (60s) per §7. A Strapi webhook
   calling a Next.js Route Handler that runs `revalidatePath`/`revalidateTag`
   would make edits appear instantly instead of within 60s.
-- **Domain** — connect via Vercel's Domains tab once the site is live (see §6).
+- **Domain** — connect via the Railway service's Settings → Domains tab once the site is live (see §6).
 - **Linking the real online store** — update `storeUrl` on the "Company Info"
   single type in Strapi; every "Visit Our Store" / "Shop on our Store" link
   across the site reads from this single value.
-- **Analytics** — add Vercel Analytics or a privacy-respecting alternative in
+- **Analytics** — add a privacy-respecting analytics provider in
   `app/layout.tsx` once the domain is live, to see which product categories
   and services get the most interest.
 

@@ -6,7 +6,7 @@
  * contact-form backend.
  */
 
-import { CMS_CONFIG } from "@/lib/env";
+import { CMS_CONFIG } from "@/lib/cms-env";
 import type { IconName } from "@/components/ui/Icon";
 import type { FontPairingName, RadiusStyleName, ShadowStyleName } from "@/lib/theme";
 

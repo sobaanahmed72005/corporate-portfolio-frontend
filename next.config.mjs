@@ -31,6 +31,9 @@ const securityHeaders = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Don't advertise the framework in every response — minor recon info an
+  // attacker doesn't need handed to them for free.
+  poweredByHeader: false,
   images: {
     // Every CMS media field (logo, product/testimonial/office photos, etc.)
     // resolves to a URL on the Strapi host — next/image refuses external
