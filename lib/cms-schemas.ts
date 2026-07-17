@@ -117,9 +117,9 @@ export const portfolioCategorySchema = z.object({
 
 export const statSchema = z.object({
   label: z.string(),
-  value: z.number().optional(),
+  value: z.number().nullable(),
   suffix: z.string(),
-  foundingYearForAutoCount: z.number().optional(),
+  foundingYearForAutoCount: z.number().nullable(),
 });
 
 export const reasonSchema = z.object({

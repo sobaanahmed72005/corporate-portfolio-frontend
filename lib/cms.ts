@@ -192,11 +192,11 @@ export type PortfolioCategory = {
 
 export type Stat = {
   label: string;
-  value?: number;
+  value: number | null;
   suffix: string;
   /** When set, the displayed number is (current year - this year) instead
    * of `value`, recomputed on every render so it advances on its own. */
-  foundingYearForAutoCount?: number;
+  foundingYearForAutoCount: number | null;
 };
 
 export type ClientLogo = {
