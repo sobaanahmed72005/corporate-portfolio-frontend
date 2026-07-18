@@ -5,13 +5,12 @@ import { ImageSlot } from "@/components/ui/ImageSlot";
 import { getCompanyInfo } from "@/lib/cms";
 
 /**
- * Both optional and unset by default — this site doesn't have a hero video
- * or flagship product photo yet. Drop the file in /public and point these
- * at it to get the real look; without them, the section falls back cleanly
- * to the gradient background / empty image slot below.
+ * heroImageSrc is unset by default — this site doesn't have a hero video
+ * yet, and without an image the section falls back cleanly to the gradient
+ * background / empty image slot below.
  */
 const videoSrc: string | undefined = undefined;
-const heroImageSrc: string | undefined = undefined;
+const heroImageSrc: string | undefined = "/product-collage.jpg";
 
 export async function Hero() {
   const company = await getCompanyInfo();
@@ -71,7 +70,7 @@ export async function Hero() {
           />
           <ImageSlot
             src={heroImageSrc}
-            alt="Flagship product"
+            alt="CCTV, networking, laptop, mobile, and solar products"
             aspect="square"
             className="rounded-3xl border-cardText-950/15"
           />
