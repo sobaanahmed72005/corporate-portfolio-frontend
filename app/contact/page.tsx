@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
+import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { getServices, getCompanyInfo, getWhatsAppLink, type CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
@@ -18,7 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
 function getReachChannels(company: CompanyInfo) {
   return [
     {
-      icon: Phone,
+      icon: "phone" as const,
+      iconColor: "#1E40AF",
       title: "Call Our Support Team",
       description:
         "Have questions or need immediate assistance? Call us directly to speak with our team about products or installation needs.",
@@ -26,7 +29,8 @@ function getReachChannels(company: CompanyInfo) {
       href: safeHref(`tel:${company.phone}`),
     },
     {
-      icon: MessageCircle,
+      icon: "message-circle" as const,
+      iconColor: "#10B981",
       title: "Chat With Us on WhatsApp",
       description:
         "Have a quick question? Message us on WhatsApp for fast answers about products, quotes, or scheduling an installation.",
@@ -35,7 +39,8 @@ function getReachChannels(company: CompanyInfo) {
       external: true,
     },
     {
-      icon: Mail,
+      icon: "mail" as const,
+      iconColor: "#F97316",
       title: "Email Our Team",
       description:
         "Prefer email? Reach us anytime for product questions, bulk order inquiries, or general support.",
@@ -51,15 +56,10 @@ export default async function ContactPage() {
 
   return (
     <div className="bg-contentCard-50">
-      <section className="border-b border-section-200 bg-section-50 py-14">
-        <Container>
-          <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">Contact Us</h1>
-          <p className="mt-2 max-w-xl text-sectionText-600">
-            Have a question about a product, need an installation quote, or want
-            to place a bulk order? Send us a message.
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        title="Contact Us"
+        description="Have a question about a product, need an installation quote, or want to place a bulk order? Send us a message."
+      />
 
       <Container className="py-16">
         <SectionHeading
@@ -74,9 +74,7 @@ export default async function ContactPage() {
               key={channel.title}
               className="flex flex-col rounded-3xl border border-contentCard-200 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
-                <channel.icon className="h-6 w-6" aria-hidden />
-              </span>
+              <GradientIconBadge icon={channel.icon} color={channel.iconColor} />
               <h3 className="mt-4 text-lg font-semibold text-contentCardText-950">
                 {channel.title}
               </h3>
@@ -99,7 +97,7 @@ export default async function ContactPage() {
 
       <Container className="grid grid-cols-1 gap-12 pb-16 lg:grid-cols-5">
         <div className="lg:col-span-3">
-          <h2 className="text-lg font-semibold text-contentCardText-950">
+          <h2 className="text-lg font-bold text-contentCardText-950">
             Send Us a Message
           </h2>
           <p className="mt-1 text-sm text-contentCardText-600">
@@ -112,7 +110,7 @@ export default async function ContactPage() {
 
         <div className="lg:col-span-2">
           <div className="rounded-xl border border-contentCard-200 p-6">
-            <h2 className="text-lg font-semibold text-contentCardText-950">Our Address</h2>
+            <h2 className="text-lg font-bold text-contentCardText-950">Our Address</h2>
             <div className="mt-4 flex items-start gap-3 text-sm text-contentCardText-700">
               <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-700" />
               <p>

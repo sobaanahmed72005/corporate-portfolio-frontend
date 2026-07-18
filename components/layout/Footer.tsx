@@ -33,7 +33,7 @@ export function Footer({
         </div>
 
         <div>
-          <p className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-footerText-950">
+          <p className="font-display text-sm font-bold uppercase tracking-[0.15em] text-footerText-950">
             Quick Links
           </p>
           <ul className="mt-4 space-y-2 text-sm">
@@ -49,7 +49,7 @@ export function Footer({
         </div>
 
         <div>
-          <p className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-footerText-950">
+          <p className="font-display text-sm font-bold uppercase tracking-[0.15em] text-footerText-950">
             Product Categories
           </p>
           <ul className="mt-4 space-y-2 text-sm">
@@ -64,7 +64,7 @@ export function Footer({
         </div>
 
         <div>
-          <p className="font-display text-sm font-semibold uppercase tracking-[0.15em] text-footerText-950">
+          <p className="font-display text-sm font-bold uppercase tracking-[0.15em] text-footerText-950">
             Get in Touch
           </p>
           <ul className="mt-4 space-y-3 text-sm">

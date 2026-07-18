@@ -37,6 +37,10 @@ import {
   Mouse,
   Briefcase,
   CircleHelp,
+  Phone,
+  Mail,
+  MessageCircle,
+  Target,
   type LucideProps,
 } from "lucide-react";
 
@@ -78,6 +82,10 @@ const iconMap = {
   laptop: Laptop,
   mouse: Mouse,
   briefcase: Briefcase,
+  phone: Phone,
+  mail: Mail,
+  "message-circle": MessageCircle,
+  target: Target,
 } as const;
 
 export type IconName = keyof typeof iconMap;

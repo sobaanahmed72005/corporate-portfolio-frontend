@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Star } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/components/ui/PageHero";
 import { CtaBanner } from "@/components/home/CtaBanner";
 import { deriveGradientStops } from "@/lib/theme";
 import { cn } from "@/lib/cn";
@@ -19,15 +20,10 @@ export default async function TestimonialsPage() {
 
   return (
     <div className="bg-contentCard-50">
-      <section className="border-b border-section-200 bg-section-50 py-14">
-        <Container>
-          <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">Testimonials &amp; Reviews</h1>
-          <p className="mt-2 max-w-2xl text-sectionText-600">
-            What clients say about their CCTV, solar, networking, and supply
-            projects with us.
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        title="Testimonials & Reviews"
+        description="What clients say about their CCTV, solar, networking, and supply projects with us."
+      />
 
       <Container className="py-16">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
