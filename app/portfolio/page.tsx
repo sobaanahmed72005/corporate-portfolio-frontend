@@ -33,7 +33,7 @@ export default async function PortfolioPage() {
         <section
           key={category.slug}
           id={category.slug}
-          className={index % 2 === 1 ? "bg-section-50 py-16 sm:py-20" : "py-16 sm:py-20"}
+          className={index % 2 === 1 ? "bg-card-50 py-16 sm:py-20" : "py-16 sm:py-20"}
         >
           <Container>
             <div className="flex items-center gap-4">
@@ -54,7 +54,7 @@ export default async function PortfolioPage() {
                   ) : null}
                   <div className="flex flex-1 flex-col p-6">
                     <GradientIconBadge icon={project.icon} color={category.iconColor} size="sm" />
-                    <h3 className="mt-4 text-base font-semibold text-contentCardText-950">
+                    <h3 className="mt-4 text-base font-bold text-contentCardText-950">
                       {project.title}
                     </h3>
                     <p className="mt-2 flex-1 text-sm text-contentCardText-600">{project.summary}</p>

@@ -12,6 +12,20 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+// Fixed palette keyed by category name — mirrors the colors already used for
+// the matching Portfolio categories (Security~CCTV, Solar Energy~Solar,
+// Networking, Corporate Supply~Bulk & Corporate Supply) so the same theme
+// reads consistently across pages. Falls back to the brand color for any
+// category not in this list (e.g. a new one added later in the CMS).
+const CATEGORY_COLORS: Record<string, string> = {
+  Security: "#F43F5E",
+  "Solar Energy": "#F97316",
+  Networking: "#8B5CF6",
+  "Corporate Supply": "#10B981",
+  "IT Accessories": "#1E40AF",
+};
+const DEFAULT_CATEGORY_COLOR = "#1E40AF";
+
 export default async function BlogPage() {
   const blogPosts = await getBlogPosts();
 
@@ -29,15 +43,20 @@ export default async function BlogPage() {
 
       <Container className="py-16">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {blogPosts.map((post) => (
+          {blogPosts.map((post) => {
+            const categoryColor = CATEGORY_COLORS[post.category] ?? DEFAULT_CATEGORY_COLOR;
+            return (
             <article
               key={post.slug}
               className="flex flex-col rounded-3xl border border-contentCard-200 bg-contentCard-50 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
             >
-              <span className="w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-brand-700">
+              <span
+                className="w-fit rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]"
+                style={{ backgroundColor: `${categoryColor}1A`, color: categoryColor }}
+              >
                 {post.category}
               </span>
-              <h2 className="mt-4 text-lg font-semibold text-contentCardText-950">
+              <h2 className="mt-4 text-lg font-bold text-contentCardText-950">
                 <Link href={`/blog/${post.slug}`} className="hover:text-brand-700">
                   {post.title}
                 </Link>
@@ -60,7 +79,8 @@ export default async function BlogPage() {
                 Continue Reading <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </article>
-          ))}
+            );
+          })}
         </div>
       </Container>
     </div>
