@@ -37,6 +37,15 @@ export function Header({
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  // Next.js's <Link> skips navigation (and the scroll-to-top that comes
+  // with it) when the href matches the current URL, so clicking Home/the
+  // logo while already on "/" did nothing visible if you'd scrolled down.
+  const scrollToTopIfAlreadyHome = () => {
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const productMenuItems: MegaMenuItem[] = productCategories.map((cat) => ({
     href: `/products#${cat.slug}`,
     title: cat.name,
@@ -84,7 +93,11 @@ export function Header({
 
       <header className="sticky top-0 z-50 border-b border-headerText-950/10 bg-header-950">
         <Container className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-display font-bold text-headerText-950">
+          <Link
+            href="/"
+            onClick={scrollToTopIfAlreadyHome}
+            className="flex items-center gap-2 font-display font-bold text-headerText-950"
+          >
             {logo ? (
               <Image
                 src={logo}
@@ -104,6 +117,7 @@ export function Header({
           <nav className="hidden items-center gap-1 md:flex">
             <Link
               href="/"
+              onClick={scrollToTopIfAlreadyHome}
               className={cn(
                 "rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10",
                 pathname === "/" && "bg-headerText-950/10 text-navHighlight-600",
@@ -206,7 +220,10 @@ export function Header({
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    if (link.href === "/") scrollToTopIfAlreadyHome();
+                  }}
                   className="rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10"
                 >
                   {link.label}
