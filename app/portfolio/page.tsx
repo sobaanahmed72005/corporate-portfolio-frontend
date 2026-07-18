@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { ImageSlot } from "@/components/ui/ImageSlot";
+import { PageHero } from "@/components/ui/PageHero";
 import { CtaBanner } from "@/components/home/CtaBanner";
 import { getPortfolioCategories, getCompanyInfo } from "@/lib/cms";
 
@@ -19,15 +20,10 @@ export default async function PortfolioPage() {
 
   return (
     <div className="bg-contentCard-50">
-      <section className="border-b border-section-200 bg-section-50 py-14">
-        <Container>
-          <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">Our Portfolio</h1>
-          <p className="mt-2 max-w-2xl text-sectionText-600">
-            A look at the CCTV, solar, networking, and bulk supply projects
-            we&apos;ve delivered for homes, offices, and corporate clients.
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        title="Our Portfolio"
+        description="A look at the CCTV, solar, networking, and bulk supply projects we've delivered for homes, offices, and corporate clients."
+      />
 
       {portfolioCategories.map((category, index) => (
         <section

@@ -82,7 +82,7 @@ export function Header({
         </Container>
       </div>
 
-      <header className="sticky top-0 z-50 border-b border-headerText-950/10 bg-header-950/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-headerText-950/10 bg-header-950">
         <Container className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center gap-2 font-display font-bold text-headerText-950">
             {logo ? (

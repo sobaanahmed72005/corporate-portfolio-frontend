@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, User } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { PageHero } from "@/components/ui/PageHero";
 import { getBlogPosts, getCompanyInfo } from "@/lib/cms";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -31,15 +32,10 @@ export default async function BlogPage() {
 
   return (
     <div className="bg-contentCard-50">
-      <section className="border-b border-section-200 bg-section-50 py-14">
-        <Container>
-          <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">Our Blog</h1>
-          <p className="mt-2 max-w-2xl text-sectionText-600">
-            Practical guides on CCTV, solar power, networking, and IT
-            accessories — written from what we see on real installations.
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        title="Our Blog"
+        description="Practical guides on CCTV, solar power, networking, and IT accessories — written from what we see on real installations."
+      />
 
       <Container className="py-16">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

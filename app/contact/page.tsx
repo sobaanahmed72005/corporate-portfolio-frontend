@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { getServices, getCompanyInfo, getWhatsAppLink, type CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
@@ -55,15 +56,10 @@ export default async function ContactPage() {
 
   return (
     <div className="bg-contentCard-50">
-      <section className="border-b border-section-200 bg-section-50 py-14">
-        <Container>
-          <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">Contact Us</h1>
-          <p className="mt-2 max-w-xl text-sectionText-600">
-            Have a question about a product, need an installation quote, or want
-            to place a bulk order? Send us a message.
-          </p>
-        </Container>
-      </section>
+      <PageHero
+        title="Contact Us"
+        description="Have a question about a product, need an installation quote, or want to place a bulk order? Send us a message."
+      />
 
       <Container className="py-16">
         <SectionHeading

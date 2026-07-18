@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { PageHero } from "@/components/ui/PageHero";
 import { CtaBanner } from "@/components/home/CtaBanner";
 import { getCompanyInfo } from "@/lib/cms";
 
@@ -42,12 +43,7 @@ export default async function AboutPage() {
 
   return (
     <div className="bg-contentCard-50">
-      <section className="border-b border-section-200 bg-section-50 py-16">
-        <Container>
-          <h1 className="font-display text-3xl font-extrabold text-sectionText-950 sm:text-4xl">About {company.name}</h1>
-          <p className="mt-4 max-w-2xl text-sectionText-600">{company.description}</p>
-        </Container>
-      </section>
+      <PageHero title={`About ${company.name}`} description={company.description} />
 
       <Container className="py-16">
         <SectionHeading
