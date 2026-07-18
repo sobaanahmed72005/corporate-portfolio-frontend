@@ -51,8 +51,8 @@ export default async function BlogPage() {
               className="flex flex-col rounded-3xl border border-contentCard-200 bg-contentCard-50 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
             >
               <span
-                className="w-fit rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]"
-                style={{ backgroundColor: `${categoryColor}1A`, color: categoryColor }}
+                className="w-fit rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-white"
+                style={{ backgroundColor: categoryColor }}
               >
                 {post.category}
               </span>
