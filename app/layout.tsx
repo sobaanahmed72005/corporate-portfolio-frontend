@@ -14,6 +14,13 @@ import {
 } from "@/lib/cms";
 import { buildThemeCssVars, buildFontCssVars, buildShapeCssVars } from "@/lib/theme";
 
+// Hardcoded rather than CMS-driven (theme-setting.logo) — the logo doesn't
+// change, and fetching it through next/image's remote-image proxy meant
+// every page load depended on the CMS's custom domain resolving through
+// Cloudflare's proxy, which intermittently failed. A static local asset
+// has no such failure mode.
+const LOGO_SRC = "/logo.png";
+
 // All 4 font pairings (lib/theme.ts's FONT_PAIRINGS) are statically imported
 // here — next/font/google requires a static import per font, so Strapi's
 // fontPairing enum can only pick among fonts already loaded, not an
@@ -158,7 +165,7 @@ export default async function RootLayout({
           productCategories={productCategories}
           services={services}
           portfolioCategories={portfolioCategories}
-          logo={themeSettings.logo}
+          logo={LOGO_SRC}
         />
         <main className="flex-1">{children}</main>
         <Footer company={company} productCategories={productCategories} logo={themeSettings.logo} />
