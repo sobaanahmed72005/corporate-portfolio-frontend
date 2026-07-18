@@ -118,7 +118,11 @@ export const portfolioCategorySchema = z.object({
 export const statSchema = z.object({
   label: z.string(),
   value: z.number().nullable(),
-  suffix: z.string(),
+  // Optional in Strapi — a stat like "Brands & Manufacturers" legitimately
+  // has no suffix. Was non-nullable here, which meant one stat with an
+  // empty suffix failed validation for the whole list (all stats are
+  // fetched as a single array), silently blanking the entire section.
+  suffix: z.string().nullable(),
   foundingYearForAutoCount: z.number().nullable(),
 });
 
