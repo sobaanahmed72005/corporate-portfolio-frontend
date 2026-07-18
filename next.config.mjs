@@ -10,11 +10,15 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 // relying on CSP alone.
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  // static.cloudflareinsights.com is Cloudflare's own Web Analytics beacon,
+  // auto-injected now that this site is proxied through Cloudflare — not
+  // something this app adds itself, but CSP still has to allow it or the
+  // browser silently blocks it (harmless when blocked, just console noise).
+  "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: ${strapiUrl.origin}`,
   "font-src 'self' data:",
-  `connect-src 'self' ${apiUrl}`,
+  `connect-src 'self' ${apiUrl} https://cloudflareinsights.com`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "object-src 'none'",
