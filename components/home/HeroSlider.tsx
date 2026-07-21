@@ -38,7 +38,7 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
   return (
     <div className="relative w-full">
       <div
-        className="group relative aspect-video w-full overflow-hidden rounded-3xl border border-cardText-950/15"
+        className="group relative aspect-[21/9] max-h-[320px] w-full overflow-hidden rounded-3xl border border-cardText-950/15 sm:max-h-[380px] lg:max-h-[440px]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
