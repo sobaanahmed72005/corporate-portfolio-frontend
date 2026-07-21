@@ -44,7 +44,7 @@ export async function OfficesSection() {
                 </li>
                 <li className="flex items-start gap-2">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-                  <span>{office.address}</span>
+                  <span className="font-bold">{office.address}</span>
                 </li>
               </ul>
             </div>

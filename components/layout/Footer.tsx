@@ -3,16 +3,18 @@ import Link from "next/link";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
-import type { ProductCategory, CompanyInfo } from "@/lib/cms";
+import type { ProductCategory, CompanyInfo, Office } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
 export function Footer({
   company,
   productCategories,
+  offices,
   logo,
 }: {
   company: CompanyInfo;
   productCategories: ProductCategory[];
+  offices: Office[];
   logo?: string;
 }) {
   const year = new Date().getFullYear();
@@ -80,13 +82,24 @@ export function Footer({
                 {company.email}
               </a>
             </li>
-            <li className="flex items-start gap-2">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
-              <span>
-                {company.address.line1}, {company.address.city},{" "}
-                {company.address.country}
-              </span>
-            </li>
+            {offices.length > 0 ? (
+              offices.map((office) => (
+                <li key={office.slug} className="flex items-start gap-2">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                  <span>
+                    {office.name}: <span className="font-bold">{office.address}</span>
+                  </span>
+                </li>
+              ))
+            ) : (
+              <li className="flex items-start gap-2">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                <span className="font-bold">
+                  {company.address.line1}, {company.address.city},{" "}
+                  {company.address.country}
+                </span>
+              </li>
+            )}
           </ul>
         </div>
 

@@ -11,6 +11,7 @@ import {
   getPortfolioCategories,
   getThemeSettings,
   getCompanyInfo,
+  getOffices,
 } from "@/lib/cms";
 import { buildThemeCssVars, buildFontCssVars, buildShapeCssVars } from "@/lib/theme";
 
@@ -86,12 +87,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [productCategories, services, portfolioCategories, themeSettings, company] = await Promise.all([
+  const [productCategories, services, portfolioCategories, themeSettings, company, offices] = await Promise.all([
     getProductCategories(),
     getServices(),
     getPortfolioCategories(),
     getThemeSettings(),
     getCompanyInfo(),
+    getOffices(),
   ]);
   const themeCssVars =
     buildThemeCssVars({
@@ -168,7 +170,7 @@ export default async function RootLayout({
           logo={LOGO_SRC}
         />
         <main className="flex-1">{children}</main>
-        <Footer company={company} productCategories={productCategories} logo={themeSettings.logo} />
+        <Footer company={company} productCategories={productCategories} offices={offices} logo={themeSettings.logo} />
         <SocialSidebar company={company} />
       </body>
     </html>

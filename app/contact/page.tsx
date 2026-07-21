@@ -6,7 +6,7 @@ import { LinkButton } from "@/components/ui/Button";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { getServices, getCompanyInfo, getWhatsAppLink, type CompanyInfo } from "@/lib/cms";
+import { getServices, getCompanyInfo, getOffices, getWhatsAppLink, type CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -51,7 +51,7 @@ function getReachChannels(company: CompanyInfo) {
 }
 
 export default async function ContactPage() {
-  const [services, company] = await Promise.all([getServices(), getCompanyInfo()]);
+  const [services, company, offices] = await Promise.all([getServices(), getCompanyInfo(), getOffices()]);
   const reachChannels = getReachChannels(company);
 
   return (
@@ -110,14 +110,27 @@ export default async function ContactPage() {
 
         <div className="lg:col-span-2">
           <div className="rounded-xl border border-contentCard-200 p-6">
-            <h2 className="text-lg font-bold text-contentCardText-950">Our Address</h2>
-            <div className="mt-4 flex items-start gap-3 text-sm text-contentCardText-700">
-              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-700" />
-              <p>
-                {company.address.line1}, {company.address.city},{" "}
-                {company.address.country}
-              </p>
-            </div>
+            <h2 className="text-lg font-bold text-contentCardText-950">Our Address{offices.length > 1 ? "es" : ""}</h2>
+            {offices.length > 0 ? (
+              <div className="mt-4 space-y-4">
+                {offices.map((office) => (
+                  <div key={office.slug} className="flex items-start gap-3 text-sm text-contentCardText-700">
+                    <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-700" />
+                    <p>
+                      {office.name}: <span className="font-bold">{office.address}</span>
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-4 flex items-start gap-3 text-sm text-contentCardText-700">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-700" />
+                <p className="font-bold">
+                  {company.address.line1}, {company.address.city},{" "}
+                  {company.address.country}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </Container>
