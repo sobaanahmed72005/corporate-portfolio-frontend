@@ -27,8 +27,8 @@ export default async function Home() {
       <Hero />
       <StatsCounter stats={stats} />
       <TrustTicker />
-      <ProductShowcase productCategories={productCategories} company={company} />
       <BrandsWeCarry />
+      <ProductShowcase productCategories={productCategories} company={company} />
       {themeSettings.showEventsSection && <EventsTeaser />}
       {themeSettings.showTrustedByLogos && <LogoWall />}
       <ServicesOverview />
