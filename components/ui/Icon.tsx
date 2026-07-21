@@ -41,6 +41,11 @@ import {
   Mail,
   MessageCircle,
   Target,
+  Cpu,
+  Monitor,
+  MemoryStick,
+  Projector,
+  CircuitBoard,
   type LucideProps,
 } from "lucide-react";
 
@@ -86,6 +91,11 @@ const iconMap = {
   mail: Mail,
   "message-circle": MessageCircle,
   target: Target,
+  cpu: Cpu,
+  monitor: Monitor,
+  "memory-stick": MemoryStick,
+  projector: Projector,
+  "circuit-board": CircuitBoard,
 } as const;
 
 export type IconName = keyof typeof iconMap;

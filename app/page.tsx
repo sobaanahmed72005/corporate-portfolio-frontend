@@ -2,6 +2,7 @@ import { Hero } from "@/components/home/Hero";
 import { StatsCounter } from "@/components/home/StatsCounter";
 import { TrustTicker } from "@/components/home/TrustTicker";
 import { ProductShowcase } from "@/components/home/ProductShowcase";
+import { BrandsWeCarry } from "@/components/home/BrandsWeCarry";
 import { EventsTeaser } from "@/components/home/EventsTeaser";
 import { LogoWall } from "@/components/home/LogoWall";
 import { ServicesOverview } from "@/components/home/ServicesOverview";
@@ -27,6 +28,7 @@ export default async function Home() {
       <StatsCounter stats={stats} />
       <TrustTicker />
       <ProductShowcase productCategories={productCategories} company={company} />
+      <BrandsWeCarry />
       {themeSettings.showEventsSection && <EventsTeaser />}
       {themeSettings.showTrustedByLogos && <LogoWall />}
       <ServicesOverview />
