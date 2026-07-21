@@ -37,8 +37,10 @@ export async function Hero() {
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-page-950/60 via-page-950/70 to-page-950" aria-hidden />
 
-      <Container className="relative grid grid-cols-1 items-center gap-12 py-20 lg:grid-cols-[1.1fr_0.9fr] sm:py-28">
-        <div>
+      <Container className="relative py-20 sm:py-28">
+        <HeroSlider storeUrl={company.storeUrl} />
+
+        <div className="mt-12 max-w-3xl">
           <p className="mb-4 font-display text-[13px] font-medium uppercase tracking-[0.15em] text-accent-500">
             IT Accessories &middot; Security &middot; Solar &middot; Networking
           </p>
@@ -60,8 +62,6 @@ export async function Hero() {
             </LinkButton>
           </div>
         </div>
-
-        <HeroSlider storeUrl={company.storeUrl} />
       </Container>
     </section>
   );

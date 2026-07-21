@@ -36,15 +36,9 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
   const goTo = (i: number) => setIndex((i + SLIDES.length) % SLIDES.length);
 
   return (
-    <div className="relative mx-auto w-full max-w-md">
+    <div className="relative w-full">
       <div
-        className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-30 blur-3xl"
-        style={{ background: "radial-gradient(circle, var(--brand-600) 0%, transparent 70%)" }}
-        aria-hidden
-      />
-
-      <div
-        className="group relative aspect-square overflow-hidden rounded-3xl border border-cardText-950/15"
+        className="group relative aspect-video w-full overflow-hidden rounded-3xl border border-cardText-950/15"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -54,7 +48,7 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
             src={slide.src}
             alt={slide.alt}
             fill
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="100vw"
             // Every slide loads eagerly, not just the first — otherwise the
             // first time the carousel reaches an unseen slide, the browser
             // fetches and decodes it right as it's meant to fade in, which
@@ -84,31 +78,32 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
         </button>
       </div>
 
-      <div className="mt-4 flex items-center justify-center gap-2">
-        {SLIDES.map((slide, i) => (
-          <button
-            key={slide.src}
-            type="button"
-            onClick={() => setIndex(i)}
-            aria-label={`Show slide ${i + 1} of ${SLIDES.length}`}
-            aria-current={i === index}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              i === index ? "w-6 bg-accent-500" : "w-2 bg-pageText-950/20"
-            }`}
-          />
-        ))}
-      </div>
+      <div className="mt-4 flex flex-col items-center justify-between gap-4 sm:flex-row">
+        <div className="flex items-center gap-2">
+          {SLIDES.map((slide, i) => (
+            <button
+              key={slide.src}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`Show slide ${i + 1} of ${SLIDES.length}`}
+              aria-current={i === index}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === index ? "w-6 bg-accent-500" : "w-2 bg-pageText-950/20"
+              }`}
+            />
+          ))}
+        </div>
 
-      <LinkButton
-        href={safeHref(storeUrl)}
-        target="_blank"
-        rel="noopener noreferrer"
-        variant="brand"
-        size="lg"
-        className="mt-4 w-full"
-      >
-        Visit Our Store <ArrowRight className="h-4 w-4" aria-hidden />
-      </LinkButton>
+        <LinkButton
+          href={safeHref(storeUrl)}
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="brand"
+          size="lg"
+        >
+          Visit Our Store <ArrowRight className="h-4 w-4" aria-hidden />
+        </LinkButton>
+      </div>
     </div>
   );
 }
