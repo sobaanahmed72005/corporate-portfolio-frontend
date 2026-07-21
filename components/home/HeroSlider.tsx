@@ -42,23 +42,27 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {SLIDES.map((slide, i) => (
-          <Image
-            key={slide.src}
-            src={slide.src}
-            alt={slide.alt}
-            fill
-            sizes="100vw"
-            // Every slide loads eagerly, not just the first — otherwise the
-            // first time the carousel reaches an unseen slide, the browser
-            // fetches and decodes it right as it's meant to fade in, which
-            // shows up as a stutter/pop instead of a smooth crossfade.
-            {...(i === 0 ? { priority: true } : { loading: "eager" as const })}
-            className={`object-cover transition-[opacity,transform] duration-700 ease-out ${
-              i === index ? "scale-100 opacity-100" : "scale-105 opacity-0"
-            }`}
-          />
-        ))}
+        <div
+          className="flex h-full w-full transition-transform duration-700 ease-out"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {SLIDES.map((slide, i) => (
+            <div key={slide.src} className="relative h-full w-full shrink-0">
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                sizes="100vw"
+                // Every slide loads eagerly, not just the first — otherwise
+                // the first time the carousel reaches an unseen slide, the
+                // browser fetches and decodes it right as it's meant to
+                // slide into view, which shows up as a stutter/pop.
+                {...(i === 0 ? { priority: true } : { loading: "eager" as const })}
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
 
         <button
           type="button"
