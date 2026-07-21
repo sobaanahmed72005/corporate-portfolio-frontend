@@ -154,15 +154,21 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={fontVariables}>
       <head>
         {/* Theme from Strapi (theme-setting): colors, font pairing, and
             radius/shadow style all resolve to CSS custom properties that
             tailwind.config.ts's var() references read, so editing any of
-            them in Strapi updates the whole site without a code change. */}
+            them in Strapi updates the whole site without a code change.
+            The --font-outfit/--font-rubik/etc. variables that --font-heading
+            and --font-body reference below only exist on elements carrying
+            next/font's `.variable` classes (fontVariables) — CSS custom
+            properties resolve from the same element or an ancestor, never a
+            descendant, so those classes must live on <html> itself (the
+            :root this style block targets), not further down on <body>. */}
         <style dangerouslySetInnerHTML={{ __html: `:root{${themeCssVars}}` }} />
       </head>
-      <body className={`${fontVariables} font-sans flex min-h-screen flex-col bg-background text-foreground antialiased`}>
+      <body className="font-sans flex min-h-screen flex-col bg-background text-foreground antialiased">
         <script
           type="application/ld+json"
           // JSON.stringify doesn't escape "<", so a CMS text field
