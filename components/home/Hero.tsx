@@ -40,7 +40,7 @@ export async function Hero() {
       <Container className="relative pb-16 pt-6 sm:pb-20 sm:pt-8">
         <HeroSlider storeUrl={company.storeUrl} />
 
-        <div className="mt-8 max-w-3xl">
+        <div className="mx-auto mt-8 max-w-3xl text-center">
           <p className="mb-4 font-display text-[13px] font-medium uppercase tracking-[0.15em] text-accent-500">
             IT Accessories &middot; Security &middot; Solar &middot; Networking
           </p>
@@ -50,10 +50,10 @@ export async function Hero() {
           <h2 className="mt-4 font-display text-xl font-semibold leading-snug text-pageText-700 sm:text-2xl">
             {company.tagline}
           </h2>
-          <p className="mt-6 max-w-xl text-lg leading-[1.8] text-pageText-800">
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-[1.8] text-pageText-800">
             {company.description}
           </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:items-stretch sm:justify-between">
             <LinkButton href="/products" size="lg" variant="brand">
               Browse Products <ArrowRight className="h-4 w-4" aria-hidden />
             </LinkButton>
