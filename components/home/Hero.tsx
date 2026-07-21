@@ -1,17 +1,15 @@
 import { ArrowRight } from "lucide-react";
+import { HeroSlider } from "@/components/home/HeroSlider";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { ImageSlot } from "@/components/ui/ImageSlot";
 import { TypewriterText } from "@/components/ui/TypewriterText";
 import { getCompanyInfo } from "@/lib/cms";
 
 /**
- * heroImageSrc is unset by default — this site doesn't have a hero video
- * yet, and without an image the section falls back cleanly to the gradient
- * background / empty image slot below.
+ * videoSrc is unset by default — this site doesn't have a hero video yet,
+ * and without one the section falls back cleanly to the gradient background.
  */
 const videoSrc: string | undefined = undefined;
-const heroImageSrc: string | undefined = "/product-collage.jpg";
 
 export async function Hero() {
   const company = await getCompanyInfo();
@@ -63,19 +61,7 @@ export async function Hero() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-md">
-          <div
-            className="pointer-events-none absolute -inset-10 -z-10 rounded-full opacity-30 blur-3xl"
-            style={{ background: "radial-gradient(circle, var(--brand-600) 0%, transparent 70%)" }}
-            aria-hidden
-          />
-          <ImageSlot
-            src={heroImageSrc}
-            alt="CCTV, networking, laptop, mobile, and solar products"
-            aspect="square"
-            className="rounded-3xl border-cardText-950/15"
-          />
-        </div>
+        <HeroSlider storeUrl={company.storeUrl} />
       </Container>
     </section>
   );
