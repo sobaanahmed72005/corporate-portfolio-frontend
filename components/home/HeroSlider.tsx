@@ -76,33 +76,35 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
         >
           <ChevronRight className="h-5 w-5" aria-hidden />
         </button>
-      </div>
 
-      <div className="mt-4 flex flex-col items-center justify-between gap-4 sm:flex-row">
-        <div className="flex items-center gap-2">
-          {SLIDES.map((slide, i) => (
-            <button
-              key={slide.src}
-              type="button"
-              onClick={() => setIndex(i)}
-              aria-label={`Show slide ${i + 1} of ${SLIDES.length}`}
-              aria-current={i === index}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === index ? "w-6 bg-accent-500" : "w-2 bg-pageText-950/20"
-              }`}
-            />
-          ))}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/60 to-transparent" aria-hidden />
+
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-between gap-4 p-4 sm:flex-row sm:p-6">
+          <div className="flex items-center gap-2">
+            {SLIDES.map((slide, i) => (
+              <button
+                key={slide.src}
+                type="button"
+                onClick={() => setIndex(i)}
+                aria-label={`Show slide ${i + 1} of ${SLIDES.length}`}
+                aria-current={i === index}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  i === index ? "w-6 bg-accent-500" : "w-2 bg-white/40"
+                }`}
+              />
+            ))}
+          </div>
+
+          <LinkButton
+            href={safeHref(storeUrl)}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="brand"
+            size="lg"
+          >
+            Visit Our Store <ArrowRight className="h-4 w-4" aria-hidden />
+          </LinkButton>
         </div>
-
-        <LinkButton
-          href={safeHref(storeUrl)}
-          target="_blank"
-          rel="noopener noreferrer"
-          variant="brand"
-          size="lg"
-        >
-          Visit Our Store <ArrowRight className="h-4 w-4" aria-hidden />
-        </LinkButton>
       </div>
     </div>
   );
