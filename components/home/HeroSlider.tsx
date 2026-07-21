@@ -102,7 +102,7 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
             variant="brand"
             size="lg"
           >
-            Visit Our Store <ArrowRight className="h-4 w-4" aria-hidden />
+            Shop Now <ArrowRight className="h-4 w-4" aria-hidden />
           </LinkButton>
         </div>
       </div>
