@@ -27,7 +27,7 @@ export function Footer({
             {logo && (
               <Image src={logo} alt={company.name} width={28} height={28} className="h-7 w-7 shrink-0 object-contain" />
             )}
-            <p className="font-display text-lg font-bold text-footerText-950">{company.shortName}</p>
+            <p className="font-display text-lg font-bold text-footerText-950">{company.name}</p>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-footerText-600">
             {company.description}

@@ -111,7 +111,7 @@ export function Header({
                 IT
               </span>
             )}
-            <span className="hidden text-base sm:inline">{company.shortName}</span>
+            <span className="hidden text-base sm:inline">{company.name}</span>
           </Link>
 
           <nav className="hidden items-center gap-1 md:flex">
