@@ -445,7 +445,7 @@ const DEFAULT_THEME: ThemeSettings = {
   sectionTextColor: "#0F172A",
   contentCardColor: "#FFFFFF",
   contentCardTextColor: "#0F172A",
-  fontPairing: "Modern Sans (Outfit + Rubik)",
+  fontPairing: "Single Family — Poppins",
   radiusStyle: "Soft (current default)",
   shadowStyle: "Subtle (current default)",
   showTrustedByLogos: true,

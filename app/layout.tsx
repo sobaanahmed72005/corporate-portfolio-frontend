@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Rubik, Playfair_Display, Source_Sans_3, Space_Grotesk, Inter, Merriweather } from "next/font/google";
+import { Outfit, Rubik, Playfair_Display, Source_Sans_3, Space_Grotesk, Inter, Merriweather, Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -50,6 +50,14 @@ const merriweather = Merriweather({
   subsets: ["latin"],
   weight: ["700", "900"],
   variable: "--font-merriweather",
+});
+// Matches NETSOL's body font exactly (Poppins) — used for both heading and
+// body under the "Single Family — Poppins" pairing since NETSOL's actual
+// heading font ("Qualy") is a proprietary file we don't have.
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-poppins",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -125,6 +133,7 @@ export default async function RootLayout({
     spaceGrotesk.variable,
     inter.variable,
     merriweather.variable,
+    poppins.variable,
   ].join(" ");
 
   const jsonLd = {

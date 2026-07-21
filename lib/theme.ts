@@ -189,6 +189,7 @@ export const FONT_PAIRINGS = {
   "Classic Corporate (Merriweather + Inter)": { heading: "--font-merriweather", body: "--font-inter" },
   "Single Family — Inter": { heading: "--font-inter", body: "--font-inter" },
   "Single Family — Outfit": { heading: "--font-outfit", body: "--font-outfit" },
+  "Single Family — Poppins": { heading: "--font-poppins", body: "--font-poppins" },
 } as const;
 
 export type FontPairingName = keyof typeof FONT_PAIRINGS;
