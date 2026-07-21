@@ -55,8 +55,12 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
             alt={slide.alt}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            priority={i === 0}
-            className={`object-cover transition-all duration-700 ease-out ${
+            // Every slide loads eagerly, not just the first — otherwise the
+            // first time the carousel reaches an unseen slide, the browser
+            // fetches and decodes it right as it's meant to fade in, which
+            // shows up as a stutter/pop instead of a smooth crossfade.
+            {...(i === 0 ? { priority: true } : { loading: "eager" as const })}
+            className={`object-cover transition-[opacity,transform] duration-700 ease-out ${
               i === index ? "scale-100 opacity-100" : "scale-105 opacity-0"
             }`}
           />
