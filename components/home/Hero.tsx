@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { ImageSlot } from "@/components/ui/ImageSlot";
+import { TypewriterText } from "@/components/ui/TypewriterText";
 import { getCompanyInfo } from "@/lib/cms";
 
 /**
@@ -44,7 +45,7 @@ export async function Hero() {
             IT Accessories &middot; Security &middot; Solar &middot; Networking
           </p>
           <h1 className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-pageText-950 sm:text-5xl lg:text-6xl">
-            {company.shortName}&rsquo;s Trusted Partner for Smart, Secure Infrastructure
+            <TypewriterText text={`${company.shortName}’s Trusted Partner for Smart, Secure Infrastructure`} />
           </h1>
           <h2 className="mt-4 font-display text-xl font-semibold leading-snug text-pageText-700 sm:text-2xl">
             {company.tagline}

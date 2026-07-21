@@ -266,12 +266,17 @@ const config: Config = {
           "0%": { transform: "translateX(-50%)" },
           "100%": { transform: "translateX(0%)" },
         },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
       },
       animation: {
         // Duration scales with TrustTicker's 4x content block so the
         // on-screen pixel speed matches what it was before that change.
         marquee: "marquee 112s linear infinite",
         "marquee-reverse": "marquee-reverse 128s linear infinite",
+        blink: "blink 1s step-end infinite",
       },
     },
   },
