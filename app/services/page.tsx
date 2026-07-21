@@ -8,7 +8,7 @@ import { getServices } from "@/lib/cms";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "CCTV installation, solar panel setup, networking, bulk supply, and maintenance services from IT Solutions Trade & Service.",
+    "CCTV installation, solar panel setup, networking, bulk supply, and maintenance services from IT Solutions Trade & Service Pvt. Ltd.",
 };
 
 export default async function ServicesPage() {
