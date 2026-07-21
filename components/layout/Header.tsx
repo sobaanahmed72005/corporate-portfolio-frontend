@@ -195,7 +195,7 @@ export function Header({
               href={safeHref(company.storeUrl)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-sans font-semibold text-slate-900 shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-400 hover:text-white hover:shadow-accent-400/25"
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-sans font-semibold text-slate-900 shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-500 hover:text-white hover:shadow-accent-500/25"
             >
               <ShoppingBag className="h-4 w-4" aria-hidden />
               Visit Our Store
@@ -233,7 +233,7 @@ export function Header({
                 href={safeHref(company.storeUrl)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-sans font-semibold text-slate-900 shadow-md transition-all duration-300 ease-out hover:bg-accent-400 hover:text-white"
+                className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-sans font-semibold text-slate-900 shadow-md transition-all duration-300 ease-out hover:bg-accent-500 hover:text-white"
               >
                 <ShoppingBag className="h-4 w-4" aria-hidden />
                 Visit Our Store
