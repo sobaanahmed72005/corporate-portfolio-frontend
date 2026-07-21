@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { LinkButton } from "@/components/ui/Button";
@@ -33,6 +33,8 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
     return () => clearInterval(interval);
   }, [paused]);
 
+  const goTo = (i: number) => setIndex((i + SLIDES.length) % SLIDES.length);
+
   return (
     <div className="relative mx-auto w-full max-w-md">
       <div
@@ -42,7 +44,7 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
       />
 
       <div
-        className="relative aspect-square overflow-hidden rounded-3xl border border-cardText-950/15"
+        className="group relative aspect-square overflow-hidden rounded-3xl border border-cardText-950/15"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -54,11 +56,28 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             priority={i === 0}
-            className={`object-cover transition-opacity duration-1000 ease-in-out ${
-              i === index ? "opacity-100" : "opacity-0"
+            className={`object-cover transition-all duration-700 ease-out ${
+              i === index ? "scale-100 opacity-100" : "scale-105 opacity-0"
             }`}
           />
         ))}
+
+        <button
+          type="button"
+          onClick={() => goTo(index - 1)}
+          aria-label="Previous slide"
+          className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-pageText-950/40 text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 ease-out hover:bg-pageText-950/60 group-hover:opacity-100 focus-visible:opacity-100"
+        >
+          <ChevronLeft className="h-5 w-5" aria-hidden />
+        </button>
+        <button
+          type="button"
+          onClick={() => goTo(index + 1)}
+          aria-label="Next slide"
+          className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-pageText-950/40 text-white opacity-0 backdrop-blur-sm transition-opacity duration-300 ease-out hover:bg-pageText-950/60 group-hover:opacity-100 focus-visible:opacity-100"
+        >
+          <ChevronRight className="h-5 w-5" aria-hidden />
+        </button>
       </div>
 
       <div className="mt-4 flex items-center justify-center gap-2">
