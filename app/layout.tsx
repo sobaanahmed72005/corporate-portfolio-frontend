@@ -185,7 +185,7 @@ export default async function RootLayout({
           logo={LOGO_SRC}
         />
         <main className="flex-1">{children}</main>
-        <Footer company={company} productCategories={productCategories} offices={offices} logo={themeSettings.logo} />
+        <Footer company={company} productCategories={productCategories} offices={offices} logo={LOGO_SRC} />
         <SocialSidebar company={company} />
       </body>
     </html>
