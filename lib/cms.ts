@@ -257,7 +257,7 @@ export async function withFallback<T>(label: string, fallback: T, fn: () => Prom
 export async function getProductCategories(): Promise<ProductCategory[]> {
   return withFallback("getProductCategories", [], async () => {
     const { data } = await cmsFetch(
-      "/product-categories?populate[products][populate]=image&populate[image]=true&sort=id:asc&pagination[pageSize]=100",
+      "/product-categories?populate[products][populate]=image&populate[image]=true&sort=order:asc&pagination[pageSize]=100",
       strapiList(productCategorySchema),
     );
     return data.map((category) => ({
