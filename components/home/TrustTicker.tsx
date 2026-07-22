@@ -7,7 +7,7 @@ const rowOne = [
   "Bulk Order Ready",
   "Nationwide Delivery",
   "Quality Checked Gear",
-  "5+ Years Experience",
+  "10+ Years Experience",
   "Professional Installation",
 ];
 
