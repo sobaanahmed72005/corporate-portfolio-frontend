@@ -116,7 +116,15 @@ export function Header({
                 IT
               </span>
             )}
-            <span className="hidden text-xs leading-tight sm:inline">{company.name}</span>
+            {/* shortName, not the full legal name — this column has very
+                little width to work with, and the full name (however long
+                it grows) would wrap onto several lines and collide with the
+                nav links beside it. shortName is the field meant for tight
+                UI spots like this one (see Hero.tsx), so it stays a safe fit
+                on its own without needing this component touched again. */}
+            <span className="hidden max-w-[8rem] truncate text-xs leading-tight sm:inline">
+              {company.shortName}
+            </span>
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
