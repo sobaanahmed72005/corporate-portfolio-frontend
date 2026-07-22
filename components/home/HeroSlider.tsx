@@ -10,13 +10,31 @@ const SLIDE_INTERVAL_MS = 4000;
 
 // Order matches the product category order on the homepage (CCTV & Security,
 // Networking, Laptop Hardware, Multimedia Projectors, Mobile Accessories, Solar).
+// `headline`/`subtext` are only set for slides whose source image is plain
+// (no text baked into the photo itself) — the others already carry their own
+// marketing copy in the image, so overlaying more text would double up.
 const SLIDES = [
   { src: "/hero-slides/cctv-security.jpg", alt: "Full range of CCTV security camera products" },
-  { src: "/hero-slides/networking.jpg", alt: "Wireless router connecting devices around a smart home" },
-  { src: "/hero-slides/laptop-hardware.jpg", alt: "Laptop hardware and accessories flat lay" },
+  {
+    src: "/hero-slides/networking.jpg",
+    alt: "Wireless router connecting devices around a smart home",
+    headline: "Seamless Connectivity",
+    subtext: "Enterprise-grade networking gear for homes, offices, and businesses.",
+  },
+  {
+    src: "/hero-slides/laptop-hardware.jpg",
+    alt: "Laptop hardware and accessories flat lay",
+    headline: "Upgrade Your Setup",
+    subtext: "Genuine laptop hardware and accessories to keep you running strong.",
+  },
   { src: "/hero-slides/multimedia-projectors.jpg", alt: "Multimedia projector in a corporate meeting room" },
   { src: "/hero-slides/mobile-accessories.jpg", alt: "Smart mobile accessories built for your lifestyle" },
-  { src: "/hero-slides/solar-panels.jpg", alt: "Solar panel field with a city skyline" },
+  {
+    src: "/hero-slides/solar-panels.jpg",
+    alt: "Solar panel field with a city skyline",
+    headline: "Power Your Future",
+    subtext: "Reliable solar panels and inverters for homes and businesses across Pakistan.",
+  },
 ];
 
 /**
@@ -63,6 +81,22 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
                 {...(i === 0 ? { priority: true } : { loading: "eager" as const })}
                 className="object-cover"
               />
+              {slide.headline && (
+                <>
+                  <div
+                    className="pointer-events-none absolute inset-y-0 left-0 w-full bg-gradient-to-r from-black/60 via-black/25 to-transparent sm:w-3/4"
+                    aria-hidden
+                  />
+                  <div className="absolute inset-y-0 left-0 flex max-w-[85%] flex-col justify-center gap-1.5 p-4 sm:max-w-md sm:gap-2 sm:p-8">
+                    <h3 className="font-display text-lg font-extrabold leading-tight text-white drop-shadow-sm sm:text-2xl lg:text-3xl">
+                      {slide.headline}
+                    </h3>
+                    <p className="max-w-xs text-xs leading-snug text-white/85 drop-shadow-sm sm:text-sm lg:text-base">
+                      {slide.subtext}
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>
