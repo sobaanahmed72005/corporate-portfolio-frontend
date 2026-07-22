@@ -74,7 +74,13 @@ export function NavMegaMenu({
 
       <div
         className={cn(
-          "invisible absolute left-1/2 top-full z-50 w-[560px] -translate-x-1/2 translate-y-2 rounded-2xl border border-contentCard-200 bg-contentCard-50 p-5 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:translate-y-1 group-hover:opacity-100",
+          // The header is sticky, so the trigger (and this panel, anchored to
+          // it) never moves as the page scrolls — at high browser zoom, or on
+          // short viewports, the panel can be taller than the space below the
+          // header, and without its own scroll the bottom content (the CTA
+          // row) was simply unreachable. max-height + overflow-y-auto lets the
+          // panel itself scroll instead of relying on page scroll to reach it.
+          "invisible absolute left-1/2 top-full z-50 max-h-[calc(100vh-8rem)] w-[560px] -translate-x-1/2 translate-y-2 overflow-y-auto rounded-2xl border border-contentCard-200 bg-contentCard-50 p-5 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:translate-y-1 group-hover:opacity-100",
           suppressHover && "!invisible !opacity-0",
         )}
       >
