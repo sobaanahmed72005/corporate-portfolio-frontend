@@ -74,7 +74,7 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
   return (
     <div className="relative w-full">
       <div
-        className="group relative aspect-[21/9] max-h-[320px] w-full overflow-hidden rounded-3xl border border-cardText-950/15 sm:max-h-[380px] lg:max-h-[440px]"
+        className="group relative aspect-[21/9] max-h-[200px] w-full overflow-hidden rounded-3xl border border-cardText-950/15 sm:max-h-[260px] lg:max-h-[300px]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -100,11 +100,11 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
                 className="pointer-events-none absolute inset-y-0 left-0 w-full bg-gradient-to-r from-black/60 via-black/25 to-transparent sm:w-3/4"
                 aria-hidden
               />
-              <div className="absolute inset-y-0 left-0 flex max-w-[85%] flex-col justify-center gap-1.5 p-4 sm:max-w-md sm:gap-2 sm:p-8">
-                <h3 className="font-display text-lg font-extrabold leading-tight text-white drop-shadow-sm sm:text-2xl lg:text-3xl">
+              <div className="absolute inset-y-0 left-0 flex max-w-[85%] flex-col justify-center gap-1 p-3 sm:max-w-sm sm:gap-1.5 sm:p-6">
+                <h3 className="font-display text-base font-extrabold leading-tight text-white drop-shadow-sm sm:text-xl lg:text-2xl">
                   {slide.headline}
                 </h3>
-                <p className="max-w-xs text-xs leading-snug text-white/85 drop-shadow-sm sm:text-sm lg:text-base">
+                <p className="max-w-xs text-xs leading-snug text-white/85 drop-shadow-sm sm:text-sm">
                   {slide.subtext}
                 </p>
               </div>
