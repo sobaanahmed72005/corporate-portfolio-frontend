@@ -88,6 +88,7 @@ export function Header({
             <Phone className="h-3.5 w-3.5" aria-hidden />
             {company.phone}
           </a>
+          <span className="ml-auto">NTN No. 0236537</span>
         </Container>
       </div>
 
