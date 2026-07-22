@@ -8,12 +8,15 @@ import { safeHref } from "@/lib/safe-url";
 
 const SLIDE_INTERVAL_MS = 4000;
 
+// Order matches the product category order on the homepage (CCTV & Security,
+// Networking, Laptop Hardware, Multimedia Projectors, Mobile Accessories, Solar).
 const SLIDES = [
-  { src: "/hero-slides/cctv.jpg", alt: "CCTV security cameras" },
-  { src: "/hero-slides/networking.jpg", alt: "Networking switch with ethernet cables" },
-  { src: "/hero-slides/accessories.jpg", alt: "Keyboard, mouse, and IT accessories" },
-  { src: "/hero-slides/cables.jpg", alt: "USB cable" },
-  { src: "/hero-slides/solar.jpg", alt: "Solar panel field" },
+  { src: "/hero-slides/cctv-security.jpg", alt: "Full range of CCTV security camera products" },
+  { src: "/hero-slides/networking.jpg", alt: "Wireless router connecting devices around a smart home" },
+  { src: "/hero-slides/laptop-hardware.jpg", alt: "Laptop hardware and accessories flat lay" },
+  { src: "/hero-slides/multimedia-projectors.jpg", alt: "Multimedia projector in a corporate meeting room" },
+  { src: "/hero-slides/mobile-accessories.jpg", alt: "Smart mobile accessories built for your lifestyle" },
+  { src: "/hero-slides/solar-panels.jpg", alt: "Solar panel field with a city skyline" },
 ];
 
 /**
