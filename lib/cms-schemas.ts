@@ -17,7 +17,9 @@ export function strapiSingle<T extends ZodType>(item: T) {
   return z.object({ data: item.nullable() });
 }
 
-export const mediaSchema = z.object({ url: z.string() }).nullable();
+export const mediaSchema = z
+  .object({ url: z.string(), width: z.number().nullable().optional(), height: z.number().nullable().optional() })
+  .nullable();
 
 export const companyInfoSchema = z.object({
   name: z.string(),

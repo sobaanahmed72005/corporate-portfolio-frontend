@@ -4,6 +4,19 @@ import { GradientPillLink } from "@/components/ui/GradientPillLink";
 import type { Product, CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
+// Card image frame is 16:9. An image whose own aspect ratio is far from that
+// would lose a large chunk of itself (a logo's edge, an inverter's plug, etc)
+// if cropped to fill — so only images close enough to 16:9 get object-cover;
+// the rest are shown in full with object-contain instead of being cut into.
+const CARD_ASPECT = 16 / 9;
+const MIN_COVER_FIT = 0.8; // kept fraction below this crops too much to use cover
+
+function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
+  if (!imageAspect) return false;
+  const kept = Math.min(imageAspect, CARD_ASPECT) / Math.max(imageAspect, CARD_ASPECT);
+  return kept >= MIN_COVER_FIT;
+}
+
 export function ProductCard({
   product,
   color,
@@ -13,16 +26,18 @@ export function ProductCard({
   color: string;
   company: CompanyInfo;
 }) {
+  const canCover = fitsFrameWithoutCropping(product.imageAspect);
+
   return (
     <div className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">
-      <div className="relative aspect-video w-full shrink-0 bg-contentCard-100">
+      <div className="relative aspect-video w-full shrink-0 bg-white">
         {product.image ? (
           <Image
             src={product.image}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-contain p-4"
+            className={canCover ? "object-cover" : "object-contain p-4"}
           />
         ) : (
           <div className="flex h-full items-center justify-center">

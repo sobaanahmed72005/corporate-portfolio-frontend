@@ -108,6 +108,8 @@ export type Product = {
   description: string;
   icon: IconName;
   image?: string;
+  /** width/height of `image`, when known — see mediaAspect in cms.ts. */
+  imageAspect?: number;
 };
 
 export type ProductCategory = {
@@ -204,7 +206,7 @@ export type ClientLogo = {
   src?: string;
 };
 
-type StrapiMedia = { url: string } | null;
+type StrapiMedia = { url: string; width?: number | null; height?: number | null } | null;
 
 function mediaUrl(media: StrapiMedia): string | undefined {
   if (!media?.url) return undefined;
@@ -215,6 +217,15 @@ function mediaUrl(media: StrapiMedia): string | undefined {
     if (parsed.host === cmsHost) return media.url;
   } catch {}
   return undefined;
+}
+
+// width/height ratio, used to decide whether a product image can fill its
+// card's frame (object-cover) without cropping into the subject, or needs to
+// be shown in full (object-contain) because its proportions are too far off
+// the card's aspect ratio — e.g. a tall inverter photo or a wide logo.
+function mediaAspect(media: StrapiMedia): number | undefined {
+  if (!media?.width || !media?.height) return undefined;
+  return media.width / media.height;
 }
 
 // Validates the response against `schema` rather than trusting a TypeScript
@@ -274,6 +285,7 @@ export async function getProductCategories(): Promise<ProductCategory[]> {
         description: product.description,
         icon: product.icon as IconName,
         image: mediaUrl(product.image),
+        imageAspect: mediaAspect(product.image),
       })),
     }));
   });
