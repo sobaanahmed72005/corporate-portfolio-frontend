@@ -22,7 +22,7 @@ export function ProductCard({
             alt={product.name}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover"
+            className="object-contain p-4"
           />
         ) : (
           <div className="flex h-full items-center justify-center">
