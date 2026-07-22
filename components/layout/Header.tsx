@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ShoppingBag, Phone, Mail } from "lucide-react";
+import { Menu, X, ShoppingBag, Phone, Mail, BadgeCheck } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu";
 import type { ProductCategory, Service, PortfolioCategory, CompanyInfo } from "@/lib/cms";
@@ -88,7 +88,10 @@ export function Header({
             <Phone className="h-3.5 w-3.5" aria-hidden />
             {company.phone}
           </a>
-          <span className="ml-auto">NTN No. 0236537</span>
+          <span className="ml-auto flex items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm">
+            <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
+            NTN No. 0236537
+          </span>
         </Container>
       </div>
 
