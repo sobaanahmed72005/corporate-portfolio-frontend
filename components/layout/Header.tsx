@@ -75,18 +75,18 @@ export function Header({
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
         <Container className="flex h-9 items-center gap-5 text-xs">
           <a
-            href={safeHref(`mailto:${company.email}`)}
-            className="flex items-center gap-1.5 hover:text-cardText-950"
-          >
-            <Mail className="h-3.5 w-3.5" aria-hidden />
-            {company.email}
-          </a>
-          <a
             href={telHref(company.phone)}
             className="flex items-center gap-1.5 hover:text-cardText-950"
           >
             <Phone className="h-3.5 w-3.5" aria-hidden />
             {company.phone}
+          </a>
+          <a
+            href={safeHref(`mailto:${company.email}`)}
+            className="flex items-center gap-1.5 hover:text-cardText-950"
+          >
+            <Mail className="h-3.5 w-3.5" aria-hidden />
+            {company.email}
           </a>
           <span className="ml-auto flex items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm">
             <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
