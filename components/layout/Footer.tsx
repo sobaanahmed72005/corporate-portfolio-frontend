@@ -4,7 +4,7 @@ import { Phone, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import type { ProductCategory, CompanyInfo, Office } from "@/lib/cms";
-import { safeHref } from "@/lib/safe-url";
+import { safeHref, telHref } from "@/lib/safe-url";
 
 export function Footer({
   company,
@@ -72,7 +72,7 @@ export function Footer({
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex items-start gap-2">
               <Phone className="mt-0.5 h-4 w-4 shrink-0" />
-              <a href={safeHref(`tel:${company.phone}`)} className="hover:text-navHighlight-600">
+              <a href={telHref(company.phone)} className="hover:text-navHighlight-600">
                 {company.phone}
               </a>
             </li>

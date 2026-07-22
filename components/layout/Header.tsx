@@ -9,7 +9,7 @@ import { Container } from "@/components/ui/Container";
 import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu";
 import type { ProductCategory, Service, PortfolioCategory, CompanyInfo } from "@/lib/cms";
 import { cn } from "@/lib/cn";
-import { safeHref } from "@/lib/safe-url";
+import { safeHref, telHref } from "@/lib/safe-url";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -82,7 +82,7 @@ export function Header({
             {company.email}
           </a>
           <a
-            href={safeHref(`tel:${company.phone}`)}
+            href={telHref(company.phone)}
             className="flex items-center gap-1.5 hover:text-cardText-950"
           >
             <Phone className="h-3.5 w-3.5" aria-hidden />

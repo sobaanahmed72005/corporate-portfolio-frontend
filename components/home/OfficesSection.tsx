@@ -2,7 +2,7 @@ import { Phone, Mail, MapPin } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { getOffices } from "@/lib/cms";
-import { safeHref } from "@/lib/safe-url";
+import { safeHref, telHref } from "@/lib/safe-url";
 
 export async function OfficesSection() {
   const offices = await getOffices();
@@ -32,7 +32,7 @@ export async function OfficesSection() {
               <ul className="space-y-2 text-sm text-cardText-800">
                 <li className="flex items-start gap-2">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-                  <a href={safeHref(`tel:${office.phone}`)} className="hover:text-cardText-950">
+                  <a href={telHref(office.phone)} className="hover:text-cardText-950">
                     {office.phone}
                   </a>
                 </li>

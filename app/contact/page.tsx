@@ -7,7 +7,7 @@ import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { PageHero } from "@/components/ui/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { getServices, getCompanyInfo, getOffices, getWhatsAppLink, type CompanyInfo } from "@/lib/cms";
-import { safeHref } from "@/lib/safe-url";
+import { safeHref, telHref } from "@/lib/safe-url";
 
 export async function generateMetadata(): Promise<Metadata> {
   const company = await getCompanyInfo();
@@ -26,7 +26,7 @@ function getReachChannels(company: CompanyInfo) {
       description:
         "Have questions or need immediate assistance? Call us directly to speak with our team about products or installation needs.",
       ctaLabel: "Start Your Call Now",
-      href: safeHref(`tel:${company.phone}`),
+      href: telHref(company.phone),
     },
     {
       icon: "message-circle" as const,
