@@ -16,6 +16,7 @@ const navLinks = [
   { href: "/products", label: "Products" },
   { href: "/services", label: "Services" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/testimonials", label: "Testimonials" },
   { href: "/blog", label: "Blog" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -165,6 +166,15 @@ export function Header({
                 href: "/contact",
               }}
             />
+            <Link
+              href="/testimonials"
+              className={cn(
+                "rounded-md px-3 py-2 text-sm font-semibold text-headerText-950 hover:bg-headerText-950/10",
+                pathname.startsWith("/testimonials") && "bg-headerText-950/10 text-navHighlight-600",
+              )}
+            >
+              Testimonials
+            </Link>
             <Link
               href="/blog"
               className={cn(
