@@ -101,7 +101,7 @@ export function Header({
           <Link
             href="/"
             onClick={scrollToTopIfAlreadyHome}
-            className="flex flex-col items-center justify-center gap-0.5 font-display font-bold text-headerText-950"
+            className="flex shrink-0 flex-col items-center justify-center gap-0.5 font-display font-bold text-headerText-950"
           >
             {logo ? (
               <Image
@@ -116,14 +116,12 @@ export function Header({
                 IT
               </span>
             )}
-            {/* shortName, not the full legal name — this column has very
-                little width to work with, and the full name (however long
-                it grows) would wrap onto several lines and collide with the
-                nav links beside it. shortName is the field meant for tight
-                UI spots like this one (see Hero.tsx), so it stays a safe fit
-                on its own without needing this component touched again. */}
-            <span className="hidden max-w-[8rem] truncate text-xs leading-tight sm:inline">
-              {company.shortName}
+            {/* Full legal name, kept to one line — shrink-0 above means this
+                column takes whatever width the name needs rather than
+                wrapping or being squeezed, even if that pushes into the
+                nav/CTA space beside it. */}
+            <span className="hidden whitespace-nowrap text-xs leading-tight sm:inline">
+              {company.name}
             </span>
           </Link>
 
