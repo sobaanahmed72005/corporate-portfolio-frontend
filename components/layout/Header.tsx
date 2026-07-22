@@ -88,7 +88,7 @@ export function Header({
             <Mail className="h-3.5 w-3.5" aria-hidden />
             {company.email}
           </a>
-          <span className="ml-auto flex items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm">
+          <span className="ml-auto flex items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
             <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
             NTN No. 0236537
           </span>
