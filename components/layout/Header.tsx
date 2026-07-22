@@ -114,7 +114,7 @@ export function Header({
             <span className="hidden text-base sm:inline">{company.name}</span>
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-1 lg:flex">
             <Link
               href="/"
               onClick={scrollToTopIfAlreadyHome}
@@ -190,12 +190,12 @@ export function Header({
             </Link>
           </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden lg:block">
             <a
               href={safeHref(company.storeUrl)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-sans font-semibold text-slate-900 shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-500 hover:text-white hover:shadow-accent-500/25"
+              className="inline-flex items-center gap-2 whitespace-nowrap rounded-xl bg-white px-4 py-2.5 text-sm font-sans font-semibold text-slate-900 shadow-md transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-accent-500 hover:text-white hover:shadow-accent-500/25"
             >
               <ShoppingBag className="h-4 w-4" aria-hidden />
               Visit Our Store
@@ -204,7 +204,7 @@ export function Header({
 
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-md p-2 text-headerText-950 md:hidden"
+            className="inline-flex items-center justify-center rounded-md p-2 text-headerText-950 lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -214,7 +214,7 @@ export function Header({
         </Container>
 
         {open && (
-          <div className="border-t border-headerText-950/10 bg-header-950 md:hidden">
+          <div className="border-t border-headerText-950/10 bg-header-950 lg:hidden">
             <Container className="flex flex-col gap-1 py-3">
               {navLinks.map((link) => (
                 <Link

@@ -21,7 +21,7 @@ export function Footer({
 
   return (
     <footer className="bg-footer-950 text-footerText-950">
-      <Container className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
+      <Container className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <div>
           <div className="flex items-center gap-2">
             {logo && (
