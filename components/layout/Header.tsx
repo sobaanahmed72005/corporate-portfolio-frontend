@@ -92,11 +92,11 @@ export function Header({
       </div>
 
       <header className="sticky top-0 z-50 border-b border-headerText-950/10 bg-header-950">
-        <Container className="flex h-16 items-center justify-between">
+        <Container className="flex h-20 items-center justify-between">
           <Link
             href="/"
             onClick={scrollToTopIfAlreadyHome}
-            className="flex items-center gap-2 font-display font-bold text-headerText-950"
+            className="flex flex-col items-center justify-center gap-0.5 font-display font-bold text-headerText-950"
           >
             {logo ? (
               <Image
@@ -111,7 +111,7 @@ export function Header({
                 IT
               </span>
             )}
-            <span className="hidden text-base sm:inline">{company.name}</span>
+            <span className="hidden text-xs leading-tight sm:inline">{company.name}</span>
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
