@@ -42,6 +42,41 @@ export function NavMegaMenu({
   const suppressHover = !timerElapsed || !hasLeftSinceClick;
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // The panel is centered under whichever trigger renders it (Products,
+  // Services, Portfolio, ...) via left-1/2 + translateX(-50%). That's fine
+  // until the trigger sits close to a screen edge, or the viewport itself is
+  // narrow (a phone, or a zoomed-in desktop browser) — a fixed centered
+  // 560px panel then runs off-screen. Rather than special-case any one
+  // trigger or breakpoint, this measures the actual trigger position and
+  // viewport width and nudges the panel's horizontal offset just enough to
+  // keep it fully on-screen, however narrow the gap or wherever the trigger
+  // sits — so no future trigger/screen-size combination needs its own fix.
+  const groupRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [shiftPx, setShiftPx] = useState(0);
+
+  useEffect(() => {
+    const EDGE_MARGIN = 12;
+
+    function recalculate() {
+      const groupEl = groupRef.current;
+      const panelEl = panelRef.current;
+      if (!groupEl || !panelEl) return;
+
+      const groupRect = groupEl.getBoundingClientRect();
+      const panelWidth = panelEl.offsetWidth;
+      const idealLeft = groupRect.left + groupRect.width / 2 - panelWidth / 2;
+      const maxLeft = Math.max(EDGE_MARGIN, window.innerWidth - panelWidth - EDGE_MARGIN);
+      const clampedLeft = Math.min(Math.max(idealLeft, EDGE_MARGIN), maxLeft);
+
+      setShiftPx(clampedLeft - idealLeft);
+    }
+
+    recalculate();
+    window.addEventListener("resize", recalculate);
+    return () => window.removeEventListener("resize", recalculate);
+  }, []);
+
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -56,7 +91,7 @@ export function NavMegaMenu({
   };
 
   return (
-    <div className="group relative" onMouseLeave={() => setHasLeftSinceClick(true)}>
+    <div ref={groupRef} className="group relative" onMouseLeave={() => setHasLeftSinceClick(true)}>
       <Link
         href={href}
         onClick={handleClick}
@@ -73,6 +108,8 @@ export function NavMegaMenu({
       </Link>
 
       <div
+        ref={panelRef}
+        style={{ "--tw-translate-x": `calc(-50% + ${shiftPx}px)` } as React.CSSProperties}
         className={cn(
           // The header is sticky, so the trigger (and this panel, anchored to
           // it) never moves as the page scrolls — at high browser zoom, or on
@@ -80,7 +117,13 @@ export function NavMegaMenu({
           // header, and without its own scroll the bottom content (the CTA
           // row) was simply unreachable. max-height + overflow-y-auto lets the
           // panel itself scroll instead of relying on page scroll to reach it.
-          "invisible absolute left-1/2 top-full z-50 max-h-[calc(100vh-8rem)] w-[560px] -translate-x-1/2 translate-y-2 overflow-y-auto rounded-2xl border border-contentCard-200 bg-contentCard-50 p-5 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:translate-y-1 group-hover:opacity-100",
+          //
+          // Horizontal position is centered under the trigger by default
+          // (left-1/2 below), but the actual X offset comes from the
+          // --tw-translate-x inline style above (see the shiftPx effect) so
+          // it can be nudged back on-screen — translate-y is still driven by
+          // the ordinary Tailwind utilities/group-hover below.
+          "invisible absolute left-1/2 top-full z-50 max-h-[calc(100vh-8rem)] w-[560px] max-w-[calc(100vw-1.5rem)] translate-y-2 overflow-y-auto rounded-2xl border border-contentCard-200 bg-contentCard-50 p-5 opacity-0 shadow-xl transition-all duration-150 group-hover:visible group-hover:translate-y-1 group-hover:opacity-100",
           suppressHover && "!invisible !opacity-0",
         )}
       >
