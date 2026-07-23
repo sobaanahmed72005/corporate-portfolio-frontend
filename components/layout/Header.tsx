@@ -89,8 +89,14 @@ export function Header({
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
         <Container className="flex h-9 items-center gap-5 text-xs">
           <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
+            {/* h-5 here (matching the visible window, not the natural
+                two-row content height) is what makes translateY(-100%)
+                move by exactly one slide — percentage translate is based
+                on the transformed element's own box, so without this it
+                shifts by the full two-row height and the second slide
+                lands past the visible window instead of in it. */}
             <div
-              className="absolute inset-x-0 top-0 flex flex-col transition-transform duration-500 ease-out"
+              className="absolute inset-x-0 top-0 flex h-5 flex-col transition-transform duration-500 ease-out"
               style={{ transform: `translateY(-${topBarSlide * 100}%)` }}
             >
               <span className="flex h-5 items-center truncate font-semibold text-cardText-950">
