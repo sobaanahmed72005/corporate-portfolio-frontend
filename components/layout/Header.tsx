@@ -88,27 +88,30 @@ export function Header({
     <>
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
         <Container className="flex h-9 items-center gap-5 text-xs">
-          {/* Both rows sit in the exact same inset-0 box and crossfade via
-              opacity — a translateY slide needs the two rows' heights to
-              match exactly or it over/undershoots and either overlaps or
-              leaves a gap. Sharing one box makes that class of bug
-              structurally impossible: there is only ever one place either
-              row can render. */}
+          {/* Each row is translated relative to its OWN box (100% = that
+              row's own height), not a shared two-row wrapper — that's what
+              made the earlier version's math unreliable (a wrapper sized to
+              both rows together means 100% is twice one row's height). Each
+              row sliding independently between 0 and ±100% of itself always
+              lands exactly one-row-height away, however tall the row
+              actually renders. */}
           <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
             <span
               aria-hidden={topBarSlide !== 0}
+              style={{ transform: topBarSlide === 0 ? "translateY(0)" : "translateY(-100%)" }}
               className={cn(
-                "absolute inset-0 flex items-center truncate font-semibold text-cardText-950 transition-opacity duration-500",
-                topBarSlide === 0 ? "opacity-100" : "pointer-events-none opacity-0",
+                "absolute inset-x-0 top-0 flex items-center truncate font-semibold text-cardText-950 transition-transform duration-500 ease-out",
+                topBarSlide !== 0 && "pointer-events-none",
               )}
             >
               {company.name}
             </span>
             <div
               aria-hidden={topBarSlide !== 1}
+              style={{ transform: topBarSlide === 1 ? "translateY(0)" : "translateY(100%)" }}
               className={cn(
-                "absolute inset-0 flex items-center gap-5 transition-opacity duration-500",
-                topBarSlide === 1 ? "opacity-100" : "pointer-events-none opacity-0",
+                "absolute inset-x-0 top-0 flex items-center gap-5 transition-transform duration-500 ease-out",
+                topBarSlide !== 1 && "pointer-events-none",
               )}
             >
               <a
