@@ -17,6 +17,24 @@ function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
   return kept >= MIN_COVER_FIT;
 }
 
+// The aspect-ratio check above is a proxy for "is this a logo/product-on-white
+// shot" (usually square-ish, letterboxes cleanly on the card's white
+// background) vs "real environmental photography" (a lifestyle/context shot
+// with its own background, lighting, and props) — but it breaks down for a
+// SQUARE real photo, e.g. a charger plugged into a dark car interior. Those
+// have no white background to blend into, so letterboxing them shows ugly
+// white bars; cropping is the smaller visual sin. Confirmed real-photography
+// slugs during image sourcing — anything not listed here keeps the aspect-
+// ratio-driven default above.
+export const FORCE_COVER_SLUGS = new Set([
+  "car-chargers",
+  "laptop-chargers-power-adapters",
+  "laptop-bags-sleeves",
+  "wireless-mice-keyboards",
+  "laptop-ssd-storage",
+  "laptop-ram-memory",
+]);
+
 export function ProductCard({
   product,
   color,
@@ -26,7 +44,7 @@ export function ProductCard({
   color: string;
   company: CompanyInfo;
 }) {
-  const canCover = fitsFrameWithoutCropping(product.imageAspect);
+  const canCover = FORCE_COVER_SLUGS.has(product.slug) || fitsFrameWithoutCropping(product.imageAspect);
 
   return (
     <div className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">
