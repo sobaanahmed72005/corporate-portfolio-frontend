@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, PlayCircle } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -51,7 +52,20 @@ export async function PortfolioPreview() {
                   }}
                 >
                   {project.image && (
-                    <ImageSlot src={project.image} alt={project.title} aspect="video" className="absolute inset-0" />
+                    // Not ImageSlot here — its wrapper div always adds its own
+                    // "relative" class, which fights the "absolute inset-0"
+                    // needed to fill *this* div (the actual relative+aspect-video
+                    // box) since cn() is plain clsx with no class-conflict
+                    // resolution — the later "relative" rule in Tailwind's
+                    // stylesheet order wins, so the image never actually
+                    // covered this box and only the dark overlay showed.
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover"
+                    />
                   )}
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-black/35">
                     <PlayCircle className="h-9 w-9" aria-hidden />
