@@ -65,6 +65,7 @@ export const serviceSchema = z.object({
   features: z.array(z.string()),
   icon: z.string(),
   iconColor: z.string(),
+  image: mediaSchema,
 });
 
 export const blogPostSchema = z.object({

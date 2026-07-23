@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 import { getServices } from "@/lib/cms";
 
 export async function ServicesOverview() {
@@ -23,13 +24,16 @@ export async function ServicesOverview() {
           {services.map((service) => (
             <div
               key={service.slug}
-              className="rounded-3xl border border-cardText-950/10 bg-card-950 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
+              className="overflow-hidden rounded-3xl border border-cardText-950/10 bg-card-950 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
             >
-              <GradientIconBadge icon={service.icon} color={service.iconColor} />
-              <h3 className="mt-4 text-lg font-semibold text-cardText-950">
-                {service.name}
-              </h3>
-              <p className="mt-2 text-sm text-cardText-600">{service.description}</p>
+              {service.image && <ImageSlot src={service.image} alt={service.name} aspect="video" />}
+              <div className="p-8">
+                <GradientIconBadge icon={service.icon} color={service.iconColor} />
+                <h3 className="mt-4 text-lg font-semibold text-cardText-950">
+                  {service.name}
+                </h3>
+                <p className="mt-2 text-sm text-cardText-600">{service.description}</p>
+              </div>
             </div>
           ))}
         </div>

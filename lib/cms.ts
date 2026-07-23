@@ -130,6 +130,7 @@ export type Service = {
   features: string[];
   icon: IconName;
   iconColor: string;
+  image?: string;
 };
 
 export type BlogPost = {
@@ -294,10 +295,10 @@ export async function getProductCategories(): Promise<ProductCategory[]> {
 export async function getServices(): Promise<Service[]> {
   return withFallback("getServices", [], async () => {
     const { data } = await cmsFetch(
-      "/services?sort=id:asc&pagination[pageSize]=100",
+      "/services?populate=image&sort=id:asc&pagination[pageSize]=100",
       strapiList(serviceSchema),
     );
-    return data.map((service) => ({ ...service, icon: service.icon as IconName }));
+    return data.map((service) => ({ ...service, icon: service.icon as IconName, image: mediaUrl(service.image) }));
   });
 }
 
