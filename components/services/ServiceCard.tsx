@@ -15,7 +15,7 @@ export function ServiceCard({ service }: { service: Service }) {
       id={service.slug}
       className="scroll-mt-24 flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
     >
-      {service.image && <ImageSlot src={service.image} alt={service.name} aspect="video" />}
+      {service.image && <ImageSlot src={service.image} alt={service.name} aspect="banner" />}
       <div className="flex flex-1 flex-col p-8">
         <GradientIconBadge icon={service.icon} color={service.iconColor} />
         <h2 className="mt-4 text-lg font-semibold text-contentCardText-950">{service.name}</h2>

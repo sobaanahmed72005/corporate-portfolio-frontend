@@ -25,7 +25,7 @@ export async function WhyChooseUs() {
               key={reason.title}
               className="overflow-hidden rounded-3xl border border-cardText-950/10 bg-card-950 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
             >
-              {reason.image && <ImageSlot src={reason.image} alt={reason.title} aspect="video" />}
+              {reason.image && <ImageSlot src={reason.image} alt={reason.title} aspect="banner" />}
               <div className="p-8 text-center">
                 <GradientIconBadge
                   icon={reason.icon}

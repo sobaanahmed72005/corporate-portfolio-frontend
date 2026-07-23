@@ -7,6 +7,11 @@ const aspectClasses = {
   video: "aspect-video",
   portrait: "aspect-[3/4]",
   wide: "aspect-[21/9]",
+  // Matches the 1536x1024 (3:2) output size of the AI-generated service and
+  // "Why Choose Us" banner photos exactly — no crop, no letterbox bars,
+  // unlike aspect-video (16:9) which cuts into content sitting near their
+  // top/bottom edges (e.g. a text/icon row baked into the photo itself).
+  banner: "aspect-[3/2]",
 };
 
 export function ImageSlot({
