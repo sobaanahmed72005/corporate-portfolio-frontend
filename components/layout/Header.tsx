@@ -46,10 +46,12 @@ export function Header({
   // still surfacing contact info, and a fixed-height overflow-hidden window
   // (below) means neither slide can ever push the bar taller than it is.
   const [topBarSlide, setTopBarSlide] = useState(0);
+  const [topBarPaused, setTopBarPaused] = useState(false);
   useEffect(() => {
+    if (topBarPaused) return;
     const interval = setInterval(() => setTopBarSlide((i) => (i + 1) % 2), TOP_BAR_SLIDE_MS);
     return () => clearInterval(interval);
-  }, []);
+  }, [topBarPaused]);
 
   // Next.js's <Link> skips navigation (and the scroll-to-top that comes
   // with it) when the href matches the current URL, so clicking Home/the
@@ -95,7 +97,11 @@ export function Header({
               row sliding independently between 0 and ±100% of itself always
               lands exactly one-row-height away, however tall the row
               actually renders. */}
-          <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
+          <div
+            className="relative h-5 min-w-0 flex-1 overflow-hidden"
+            onMouseEnter={() => setTopBarPaused(true)}
+            onMouseLeave={() => setTopBarPaused(false)}
+          >
             {/* Explicit h-5 + overflow-hidden on each row (not just the
                 outer window) pins every row's box to exactly the window's
                 height, on purpose rather than incidentally — so 100% in the
