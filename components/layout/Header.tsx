@@ -96,11 +96,19 @@ export function Header({
               lands exactly one-row-height away, however tall the row
               actually renders. */}
           <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
+            {/* Explicit h-5 + overflow-hidden on each row (not just the
+                outer window) pins every row's box to exactly the window's
+                height, on purpose rather than incidentally — so 100% in the
+                transform below is guaranteed to be exactly one window's
+                worth of travel, with no sliver of the row's own content
+                (e.g. a link's focus ring or a slightly taller line box) able
+                to render past its own edge before the outer clip even
+                applies. */}
             <span
               aria-hidden={topBarSlide !== 0}
               style={{ transform: topBarSlide === 0 ? "translateY(0)" : "translateY(-100%)" }}
               className={cn(
-                "absolute inset-x-0 top-0 flex items-center truncate font-semibold text-cardText-950 transition-transform duration-500 ease-out",
+                "absolute inset-x-0 top-0 flex h-5 items-center overflow-hidden truncate font-semibold text-cardText-950 transition-transform duration-500 ease-out",
                 topBarSlide !== 0 && "pointer-events-none",
               )}
             >
@@ -110,7 +118,7 @@ export function Header({
               aria-hidden={topBarSlide !== 1}
               style={{ transform: topBarSlide === 1 ? "translateY(0)" : "translateY(100%)" }}
               className={cn(
-                "absolute inset-x-0 top-0 flex items-center gap-5 transition-transform duration-500 ease-out",
+                "absolute inset-x-0 top-0 flex h-5 items-center gap-5 overflow-hidden transition-transform duration-500 ease-out",
                 topBarSlide !== 1 && "pointer-events-none",
               )}
             >
