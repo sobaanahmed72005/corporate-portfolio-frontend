@@ -1,11 +1,12 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, PlayCircle } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { LinkButton } from "@/components/ui/Button";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { getPortfolioCategories } from "@/lib/cms";
+import { deriveGradientStops } from "@/lib/theme";
 
 export async function PortfolioPreview() {
   const portfolioCategories = await getPortfolioCategories();
@@ -34,7 +35,28 @@ export async function PortfolioPreview() {
               href={`/portfolio#${category.slug}`}
               className="flex flex-col rounded-3xl border border-cardText-950/10 bg-card-950 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
             >
-              {project.image ? (
+              {project.video ? (
+                // This card only links to /portfolio#category — the actual
+                // <video> player lives there, not embedded in this preview
+                // grid — so the thumbnail needs its own "there's a video
+                // here" cue instead of looking like a dead image slot.
+                <div
+                  className="relative mb-4 -mt-2 flex aspect-video items-center justify-center overflow-hidden rounded-xl text-white"
+                  style={{
+                    backgroundImage: project.image
+                      ? undefined
+                      : `linear-gradient(to bottom right, ${deriveGradientStops(category.iconColor).from}, ${deriveGradientStops(category.iconColor).to})`,
+                  }}
+                >
+                  {project.image && (
+                    <ImageSlot src={project.image} alt={project.title} aspect="video" className="absolute inset-0" />
+                  )}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-black/35">
+                    <PlayCircle className="h-9 w-9" aria-hidden />
+                    <span className="text-xs font-semibold uppercase tracking-wide">Click to Watch Video</span>
+                  </div>
+                </div>
+              ) : project.image ? (
                 <ImageSlot src={project.image} alt={project.title} aspect="video" className="mb-4 -mt-2 rounded-xl" />
               ) : (
                 <GradientIconBadge icon={project.icon} color={category.iconColor} />

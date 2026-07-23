@@ -17,6 +17,11 @@ const csp = [
   "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: ${strapiUrl.origin}`,
+  // Portfolio project videos are served from the Strapi host, a different
+  // origin than the frontend itself — without this, <video src> falls back
+  // to default-src 'self' and the browser silently blocks the load (no
+  // console-visible error, it just never plays).
+  `media-src 'self' ${strapiUrl.origin}`,
   "font-src 'self' data:",
   `connect-src 'self' ${apiUrl} https://cloudflareinsights.com`,
   "frame-ancestors 'none'",
