@@ -1,5 +1,8 @@
 const strapiUrl = new URL(process.env.STRAPI_URL || "http://localhost:1337");
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+// Strapi uploads (photos, videos) now live on Cloudflare R2, a different
+// host than the CMS API itself — see corporate-portfolio-cms/config/plugins.ts.
+const mediaCdnUrl = process.env.MEDIA_CDN_URL ? new URL(process.env.MEDIA_CDN_URL) : null;
 
 // Next.js's theme <style>/JSON-LD <script> (app/layout.tsx) are injected
 // inline, so a strict nonce-based CSP would need per-request middleware —
@@ -16,12 +19,12 @@ const csp = [
   // browser silently blocks it (harmless when blocked, just console noise).
   "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: ${strapiUrl.origin}`,
-  // Portfolio project videos are served from the Strapi host, a different
-  // origin than the frontend itself — without this, <video src> falls back
-  // to default-src 'self' and the browser silently blocks the load (no
-  // console-visible error, it just never plays).
-  `media-src 'self' ${strapiUrl.origin}`,
+  `img-src 'self' data: ${strapiUrl.origin}${mediaCdnUrl ? ` ${mediaCdnUrl.origin}` : ""}`,
+  // Portfolio project videos are served from the Strapi host (or R2, a
+  // different origin still), not the frontend itself — without this,
+  // <video src> falls back to default-src 'self' and the browser silently
+  // blocks the load (no console-visible error, it just never plays).
+  `media-src 'self' ${strapiUrl.origin}${mediaCdnUrl ? ` ${mediaCdnUrl.origin}` : ""}`,
   "font-src 'self' data:",
   `connect-src 'self' ${apiUrl} https://cloudflareinsights.com`,
   "frame-ancestors 'none'",
@@ -53,6 +56,15 @@ const nextConfig = {
         hostname: strapiUrl.hostname,
         port: strapiUrl.port,
       },
+      ...(mediaCdnUrl
+        ? [
+            {
+              protocol: mediaCdnUrl.protocol.replace(":", ""),
+              hostname: mediaCdnUrl.hostname,
+              port: mediaCdnUrl.port,
+            },
+          ]
+        : []),
     ],
   },
   async headers() {

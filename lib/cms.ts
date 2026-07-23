@@ -216,6 +216,12 @@ function mediaUrl(media: StrapiMedia): string | undefined {
     const parsed = new URL(media.url);
     const cmsHost = new URL(CMS_CONFIG.URL).host;
     if (parsed.host === cmsHost) return media.url;
+    // Uploads now live on Cloudflare R2 (a different host than the CMS API
+    // itself), so an R2 URL is just as trusted as one on the CMS's own host.
+    if (CMS_CONFIG.MEDIA_CDN_URL) {
+      const cdnHost = new URL(CMS_CONFIG.MEDIA_CDN_URL).host;
+      if (parsed.host === cdnHost) return media.url;
+    }
   } catch {}
   return undefined;
 }
