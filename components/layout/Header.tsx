@@ -114,7 +114,7 @@ export function Header({
               aria-hidden={topBarSlide !== 0}
               style={{ transform: topBarSlide === 0 ? "translateY(0)" : "translateY(-100%)" }}
               className={cn(
-                "absolute inset-x-0 top-0 flex h-5 items-center overflow-hidden truncate font-semibold text-cardText-950 transition-transform duration-500 ease-out",
+                "absolute inset-x-0 top-0 flex h-5 items-center overflow-hidden truncate text-sm font-bold tracking-tight text-brand-600 transition-transform duration-500 ease-out",
                 topBarSlide !== 0 && "pointer-events-none",
               )}
             >
