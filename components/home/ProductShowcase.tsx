@@ -14,6 +14,22 @@ import { deriveGradientStops } from "@/lib/theme";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
+// contain (show the whole photo, letterboxed) only looks right on a plain
+// white-background product/logo shot — the white backing blends in
+// seamlessly. On a real environmental photo (its own background, its own
+// lighting) the same letterboxing shows as ugly white bars around the
+// photo, so those should fill the frame with cover instead, cropping being
+// the smaller visual sin of the two. Slugs confirmed white-background during
+// image sourcing; anything not listed here (including future products)
+// defaults to cover, since a photo unexpectedly getting cropped is a much
+// smaller problem than one unexpectedly getting white-letterboxed.
+const WHITE_BACKGROUND_PRODUCT_SLUGS = new Set([
+  "hikvision-cctv-cameras",
+  "gan-fast-wall-charger",
+  "laptop-hard-drives",
+  "monocrystalline-panels",
+]);
+
 export function ProductShowcase({
   productCategories,
   company,
@@ -26,6 +42,8 @@ export function ProductShowcase({
   const [featured, ...rest] = active?.products ?? [];
 
   if (!active || !featured) return null;
+
+  const featuredImageFit = WHITE_BACKGROUND_PRODUCT_SLUGS.has(featured.slug) ? "contain" : "cover";
 
   return (
     <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 sm:py-20">
@@ -78,19 +96,22 @@ export function ProductShowcase({
               />
 
               <div className="relative flex items-center gap-4 p-8 sm:gap-6 sm:pr-4">
-                {/* fit="contain" shows the whole photo, letterboxed on a
-                    white backing, instead of cropping it to fill the square
-                    — cover was still cutting content off (a portrait product
-                    shot loses its top/bottom to fill a square frame either
-                    way), and this badge is too small to sacrifice any of the
-                    actual product for a tighter fill. */}
+                {/* contain (whole photo, letterboxed on white) only looks
+                    right for the white-background product/logo shots in
+                    WHITE_BACKGROUND_PRODUCT_SLUGS above — real environmental
+                    photos (their own background/lighting, e.g. Ubiquiti's
+                    lit product shot) fill the frame with cover instead, so
+                    they don't get ugly white bars around them. */}
                 {featured.image ? (
                   <ImageSlot
                     src={featured.image}
                     alt={featured.name}
                     aspect="square"
-                    fit="contain"
-                    className="w-24 shrink-0 rounded-2xl bg-white p-2 shadow-md sm:w-28"
+                    fit={featuredImageFit}
+                    className={cn(
+                      "w-24 shrink-0 rounded-2xl shadow-md sm:w-28",
+                      featuredImageFit === "contain" && "bg-white p-2",
+                    )}
                   />
                 ) : (
                   <span
