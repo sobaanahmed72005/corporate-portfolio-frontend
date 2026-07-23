@@ -17,6 +17,7 @@ export function ImageSlot({
   onDark = false,
   sizes = "(max-width: 768px) 100vw, 50vw",
   priority = false,
+  fit = "cover",
   className,
 }: {
   src?: string;
@@ -26,12 +27,24 @@ export function ImageSlot({
   onDark?: boolean;
   sizes?: string;
   priority?: boolean;
+  /** "cover" (default) fills the frame, cropping overflow — right for real
+   * photography (portfolio shots, testimonial photos) that's meant to fill
+   * its box. "contain" shows the whole image with no cropping — right for
+   * product photos/logos where cutting anything off looks broken. */
+  fit?: "cover" | "contain";
   className?: string;
 }) {
   if (src) {
     return (
       <div className={cn("relative overflow-hidden", aspectClasses[aspect], className)}>
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={fit === "contain" ? "object-contain" : "object-cover"}
+        />
       </div>
     );
   }

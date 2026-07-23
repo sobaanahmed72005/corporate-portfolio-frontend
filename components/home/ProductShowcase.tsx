@@ -78,17 +78,19 @@ export function ProductShowcase({
               />
 
               <div className="relative flex items-center gap-4 p-8 sm:gap-6 sm:pr-4">
-                {/* A full circle only reads cleanly on centered logo-style
-                    art (a badge, a wordmark on white) — cropping arbitrary
-                    product photography (a box shot, a device at an angle)
-                    into a circle mutilates whatever sits in the corners.
-                    Rounded-square is far more forgiving of real photos. */}
+                {/* fit="contain" shows the whole photo, letterboxed on a
+                    white backing, instead of cropping it to fill the square
+                    — cover was still cutting content off (a portrait product
+                    shot loses its top/bottom to fill a square frame either
+                    way), and this badge is too small to sacrifice any of the
+                    actual product for a tighter fill. */}
                 {featured.image ? (
                   <ImageSlot
                     src={featured.image}
                     alt={featured.name}
                     aspect="square"
-                    className="w-24 shrink-0 rounded-2xl shadow-md sm:w-28"
+                    fit="contain"
+                    className="w-24 shrink-0 rounded-2xl bg-white p-2 shadow-md sm:w-28"
                   />
                 ) : (
                   <span
