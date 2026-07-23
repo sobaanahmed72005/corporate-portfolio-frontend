@@ -78,16 +78,21 @@ export function ProductShowcase({
               />
 
               <div className="relative flex items-center gap-4 p-8 sm:gap-6 sm:pr-4">
+                {/* A full circle only reads cleanly on centered logo-style
+                    art (a badge, a wordmark on white) — cropping arbitrary
+                    product photography (a box shot, a device at an angle)
+                    into a circle mutilates whatever sits in the corners.
+                    Rounded-square is far more forgiving of real photos. */}
                 {featured.image ? (
                   <ImageSlot
                     src={featured.image}
                     alt={featured.name}
                     aspect="square"
-                    className="w-24 shrink-0 rounded-full shadow-md sm:w-28"
+                    className="w-24 shrink-0 rounded-2xl shadow-md sm:w-28"
                   />
                 ) : (
                   <span
-                    className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full text-white shadow-md sm:h-28 sm:w-28"
+                    className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl text-white shadow-md sm:h-28 sm:w-28"
                     style={{
                       backgroundImage: `linear-gradient(to bottom right, ${deriveGradientStops(active.iconColor).from}, ${deriveGradientStops(active.iconColor).to})`,
                     }}
