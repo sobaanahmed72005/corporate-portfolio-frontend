@@ -10,7 +10,7 @@ import { LinkButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { cn } from "@/lib/cn";
-import { deriveGradientStops, deriveTint } from "@/lib/theme";
+import { deriveGradientStops } from "@/lib/theme";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
@@ -62,44 +62,58 @@ export function ProductShowcase({
 
           {/* Featured panel + rest of category */}
           <div>
-            <div className="grid overflow-hidden rounded-3xl border border-cardText-950/10 shadow-sm sm:grid-cols-[220px_1fr]">
-              <div className="flex items-center justify-center border-b border-cardText-950/10 bg-card-950 p-8 sm:border-b-0 sm:border-r">
+            {/* Diagonal split: a hard-edged color wedge cuts in from the
+                right instead of a straight seam. The wedge only renders at
+                sm+ (a diagonal needs width to read as a diagonal rather
+                than a stripe) — below that this is just a plain white card
+                with the image badge and colored tag carrying the category
+                identity, no diagonal. */}
+            <div className="relative flex flex-col overflow-hidden rounded-3xl bg-card-950 shadow-sm sm:min-h-[230px] sm:flex-row sm:items-center">
+              <div
+                className="pointer-events-none absolute inset-0 hidden sm:block"
+                style={{
+                  backgroundImage: `linear-gradient(115deg, transparent 0%, transparent 42%, ${deriveGradientStops(active.iconColor).from} 46%, ${deriveGradientStops(active.iconColor).to} 100%)`,
+                }}
+                aria-hidden
+              />
+
+              <div className="relative flex items-center gap-4 p-8 sm:gap-6 sm:pr-4">
                 {featured.image ? (
                   <ImageSlot
                     src={featured.image}
                     alt={featured.name}
                     aspect="square"
-                    className="w-full max-w-[160px] rounded-2xl shadow-md"
+                    className="w-24 shrink-0 rounded-full shadow-md sm:w-28"
                   />
                 ) : (
                   <span
-                    className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full text-white shadow-md"
+                    className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full text-white shadow-md sm:h-28 sm:w-28"
                     style={{
                       backgroundImage: `linear-gradient(to bottom right, ${deriveGradientStops(active.iconColor).from}, ${deriveGradientStops(active.iconColor).to})`,
                     }}
                   >
-                    <Icon name={featured.icon} className="h-12 w-12" aria-hidden />
+                    <Icon name={featured.icon} className="h-10 w-10 sm:h-12 sm:w-12" aria-hidden />
                   </span>
                 )}
+                <div className="min-w-0 sm:max-w-[180px]">
+                  <span
+                    className="font-display text-xs font-bold uppercase tracking-wide"
+                    style={{ color: active.iconColor }}
+                  >
+                    Featured — {active.shortName}
+                  </span>
+                  <h3 className="mt-1 font-display text-lg font-extrabold leading-tight text-cardText-950 sm:text-xl">
+                    {featured.name}
+                  </h3>
+                </div>
               </div>
-              <div
-                className="flex flex-col items-start gap-3 p-8 sm:p-10"
-                style={{ backgroundColor: deriveTint(active.iconColor) }}
-              >
-                <span
-                  className="inline-flex w-fit items-center rounded-full px-3 py-1 font-display text-xs font-bold uppercase tracking-wide text-white"
-                  style={{ backgroundColor: active.iconColor }}
-                >
-                  Featured in {active.shortName}
-                </span>
-                <h3 className="font-display text-2xl font-extrabold text-cardText-950 sm:text-3xl">
-                  {featured.name}
-                </h3>
-                <p className="max-w-xl text-sm text-cardText-700">{featured.description}</p>
+
+              <div className="relative flex flex-col items-start gap-3 p-8 pt-0 sm:ml-auto sm:max-w-xs sm:p-10">
+                <p className="text-sm text-cardText-700 sm:text-white/90">{featured.description}</p>
                 {/* GradientPillLink's base style is width:full for its usual
                     home (ProductCard, where it should fill the card) — wrap
                     it here so that 100% resolves against this w-fit box
-                    instead of stretching across the whole text column. */}
+                    instead of stretching across the whole panel. */}
                 <div className="w-fit">
                   <GradientPillLink
                     href={safeHref(company.storeUrl)}

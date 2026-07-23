@@ -257,15 +257,3 @@ export function deriveGradientStops(rawHex: string): { from: string; to: string 
   const to = hslToHex(h, s, Math.max(l - 18, 10));
   return { from: hex, to };
 }
-
-/**
- * A very light, low-saturation tint of a category color — used as a soft
- * background wash (e.g. the homepage's featured-product panel) that still
- * reads as "this category's color" without filling the panel with a solid
- * saturated block, which doesn't suit an otherwise white/light site theme.
- */
-export function deriveTint(rawHex: string): string {
-  const hex = sanitizeHex(rawHex);
-  const { h, s } = hexToHsl(hex);
-  return hslToHex(h, Math.min(s, 45), 95);
-}
