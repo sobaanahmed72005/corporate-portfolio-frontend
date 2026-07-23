@@ -14,21 +14,22 @@ import { deriveGradientStops } from "@/lib/theme";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
-// contain (show the whole photo, letterboxed) only looks right on a plain
-// white-background product/logo shot — the white backing blends in
-// seamlessly. On a real environmental photo (its own background, its own
-// lighting) the same letterboxing shows as ugly white bars around the
-// photo, so those should fill the frame with cover instead, cropping being
-// the smaller visual sin of the two. Slugs confirmed white-background during
-// image sourcing; anything not listed here (including future products)
-// defaults to cover, since a photo unexpectedly getting cropped is a much
-// smaller problem than one unexpectedly getting white-letterboxed.
-const WHITE_BACKGROUND_PRODUCT_SLUGS = new Set([
-  "hikvision-cctv-cameras",
-  "gan-fast-wall-charger",
-  "laptop-hard-drives",
-  "monocrystalline-panels",
-]);
+// This panel's image frame is a 1:1 square. An image whose own aspect ratio
+// is far from square would lose a large chunk of itself (a logo's edge, an
+// inverter's plug, etc) if cropped to fill — so only images close enough to
+// square get object-cover; the rest are shown in full with object-contain
+// instead of being cut into. Same approach as ProductCard.tsx's
+// fitsFrameWithoutCropping, just against a square frame instead of 16:9 —
+// driven by the image's actual dimensions rather than a hand-maintained slug
+// list, so it stays correct as product photos are replaced over time.
+const FRAME_ASPECT = 1;
+const MIN_COVER_FIT = 0.8; // kept fraction below this crops too much to use cover
+
+function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
+  if (!imageAspect) return false;
+  const kept = Math.min(imageAspect, FRAME_ASPECT) / Math.max(imageAspect, FRAME_ASPECT);
+  return kept >= MIN_COVER_FIT;
+}
 
 export function ProductShowcase({
   productCategories,
@@ -43,7 +44,7 @@ export function ProductShowcase({
 
   if (!active || !featured) return null;
 
-  const featuredImageFit = WHITE_BACKGROUND_PRODUCT_SLUGS.has(featured.slug) ? "contain" : "cover";
+  const featuredImageFit = fitsFrameWithoutCropping(featured.imageAspect) ? "cover" : "contain";
 
   return (
     <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 sm:py-20">
@@ -96,12 +97,10 @@ export function ProductShowcase({
               />
 
               <div className="relative flex items-center gap-4 p-8 sm:gap-6 sm:pr-4">
-                {/* contain (whole photo, letterboxed on white) only looks
-                    right for the white-background product/logo shots in
-                    WHITE_BACKGROUND_PRODUCT_SLUGS above — real environmental
-                    photos (their own background/lighting, e.g. Ubiquiti's
-                    lit product shot) fill the frame with cover instead, so
-                    they don't get ugly white bars around them. */}
+                {/* contain (whole photo, letterboxed on white) keeps
+                    non-square photos (a wide logo, a tall inverter) from
+                    losing their edges to a square crop — see
+                    fitsFrameWithoutCropping above. */}
                 {featured.image ? (
                   <ImageSlot
                     src={featured.image}
