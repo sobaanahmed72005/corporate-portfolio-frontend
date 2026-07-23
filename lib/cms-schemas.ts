@@ -135,6 +135,7 @@ export const reasonSchema = z.object({
   tag: z.string(),
   icon: z.string(),
   iconColor: z.string(),
+  image: mediaSchema,
 });
 
 export const clientLogoSchema = z.object({

@@ -171,6 +171,7 @@ export type Reason = {
   tag: string;
   icon: IconName;
   iconColor: string;
+  image?: string;
 };
 
 export type PortfolioProject = {
@@ -398,10 +399,10 @@ export async function getStats(): Promise<Stat[]> {
 export async function getReasons(): Promise<Reason[]> {
   return withFallback("getReasons", [], async () => {
     const { data } = await cmsFetch(
-      "/reasons?sort=id:asc&pagination[pageSize]=100",
+      "/reasons?populate=image&sort=id:asc&pagination[pageSize]=100",
       strapiList(reasonSchema),
     );
-    return data.map((reason) => ({ ...reason, icon: reason.icon as IconName }));
+    return data.map((reason) => ({ ...reason, icon: reason.icon as IconName, image: mediaUrl(reason.image) }));
   });
 }
 

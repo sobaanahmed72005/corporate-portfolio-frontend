@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { ImageSlot } from "@/components/ui/ImageSlot";
 import { getReasons } from "@/lib/cms";
 
 export async function WhyChooseUs() {
@@ -22,21 +23,24 @@ export async function WhyChooseUs() {
           {reasons.map((reason) => (
             <div
               key={reason.title}
-              className="rounded-3xl border border-cardText-950/10 bg-card-950 p-8 text-center shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
+              className="overflow-hidden rounded-3xl border border-cardText-950/10 bg-card-950 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
             >
-              <GradientIconBadge
-                icon={reason.icon}
-                color={reason.iconColor}
-                size="lg"
-                className="mx-auto rounded-full"
-              />
-              <h3 className="mt-4 text-base font-semibold text-cardText-950">
-                {reason.title}
-              </h3>
-              <p className="mt-2 text-sm text-cardText-600">{reason.description}</p>
-              <span className="mt-3 inline-block rounded-full bg-cardText-950/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-cardText-800">
-                {reason.tag}
-              </span>
+              {reason.image && <ImageSlot src={reason.image} alt={reason.title} aspect="video" />}
+              <div className="p-8 text-center">
+                <GradientIconBadge
+                  icon={reason.icon}
+                  color={reason.iconColor}
+                  size="lg"
+                  className="mx-auto rounded-full"
+                />
+                <h3 className="mt-4 text-base font-semibold text-cardText-950">
+                  {reason.title}
+                </h3>
+                <p className="mt-2 text-sm text-cardText-600">{reason.description}</p>
+                <span className="mt-3 inline-block rounded-full bg-cardText-950/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-cardText-800">
+                  {reason.tag}
+                </span>
+              </div>
             </div>
           ))}
         </div>
