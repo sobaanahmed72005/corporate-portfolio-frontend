@@ -16,7 +16,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function PortfolioPage() {
-  const portfolioCategories = await getPortfolioCategories();
+  // Only real, video-backed projects are shown — a project with no video
+  // is just an unfilled placeholder, and a category left with none once
+  // that's filtered out would render as an empty heading with no cards.
+  const portfolioCategories = (await getPortfolioCategories())
+    .map((category) => ({ ...category, projects: category.projects.filter((project) => project.video) }))
+    .filter((category) => category.projects.length > 0);
 
   return (
     <div className="bg-contentCard-50">

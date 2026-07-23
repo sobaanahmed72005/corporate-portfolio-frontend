@@ -10,12 +10,14 @@ import { deriveGradientStops } from "@/lib/theme";
 
 export async function PortfolioPreview() {
   const portfolioCategories = await getPortfolioCategories();
-  const featured = portfolioCategories
-    .filter((category) => category.projects.length > 0)
-    .map((category) => ({
-      category,
-      project: category.projects[0],
-    }));
+  // Only feature categories that have at least one real, video-backed
+  // project — a project with no video is an unfilled placeholder, and
+  // picking projects[0] blindly could land on one of those even when a
+  // video-backed project exists later in the same category's list.
+  const featured = portfolioCategories.flatMap((category) => {
+    const project = category.projects.find((p) => p.video);
+    return project ? [{ category, project }] : [];
+  });
 
   return (
     <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 sm:py-20">
