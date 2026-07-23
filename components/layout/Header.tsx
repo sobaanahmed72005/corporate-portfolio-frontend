@@ -88,36 +88,43 @@ export function Header({
     <>
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
         <Container className="flex h-9 items-center gap-5 text-xs">
+          {/* Both rows sit in the exact same inset-0 box and crossfade via
+              opacity — a translateY slide needs the two rows' heights to
+              match exactly or it over/undershoots and either overlaps or
+              leaves a gap. Sharing one box makes that class of bug
+              structurally impossible: there is only ever one place either
+              row can render. */}
           <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
-            {/* h-5 here (matching the visible window, not the natural
-                two-row content height) is what makes translateY(-100%)
-                move by exactly one slide — percentage translate is based
-                on the transformed element's own box, so without this it
-                shifts by the full two-row height and the second slide
-                lands past the visible window instead of in it. */}
-            <div
-              className="absolute inset-x-0 top-0 flex h-5 flex-col transition-transform duration-500 ease-out"
-              style={{ transform: `translateY(-${topBarSlide * 100}%)` }}
+            <span
+              aria-hidden={topBarSlide !== 0}
+              className={cn(
+                "absolute inset-0 flex items-center truncate font-semibold text-cardText-950 transition-opacity duration-500",
+                topBarSlide === 0 ? "opacity-100" : "pointer-events-none opacity-0",
+              )}
             >
-              <span className="flex h-5 items-center truncate font-semibold text-cardText-950">
-                {company.name}
-              </span>
-              <div className="flex h-5 items-center gap-5">
-                <a
-                  href={telHref(company.phone)}
-                  className="flex items-center gap-1.5 hover:text-cardText-950"
-                >
-                  <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                  {company.phone}
-                </a>
-                <a
-                  href={safeHref(`mailto:${company.email}`)}
-                  className="flex items-center gap-1.5 hover:text-cardText-950"
-                >
-                  <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                  {company.email}
-                </a>
-              </div>
+              {company.name}
+            </span>
+            <div
+              aria-hidden={topBarSlide !== 1}
+              className={cn(
+                "absolute inset-0 flex items-center gap-5 transition-opacity duration-500",
+                topBarSlide === 1 ? "opacity-100" : "pointer-events-none opacity-0",
+              )}
+            >
+              <a
+                href={telHref(company.phone)}
+                className="flex items-center gap-1.5 hover:text-cardText-950"
+              >
+                <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                {company.phone}
+              </a>
+              <a
+                href={safeHref(`mailto:${company.email}`)}
+                className="flex items-center gap-1.5 hover:text-cardText-950"
+              >
+                <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                {company.email}
+              </a>
             </div>
           </div>
           <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
