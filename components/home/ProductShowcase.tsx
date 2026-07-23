@@ -5,11 +5,12 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
+import { GradientPillLink } from "@/components/ui/GradientPillLink";
 import { LinkButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { cn } from "@/lib/cn";
-import { deriveGradientStops } from "@/lib/theme";
+import { deriveGradientStops, deriveTint } from "@/lib/theme";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
@@ -61,38 +62,54 @@ export function ProductShowcase({
 
           {/* Featured panel + rest of category */}
           <div>
-            <div
-              className="flex flex-col gap-6 rounded-3xl border border-white/10 p-8 sm:flex-row sm:items-center sm:p-10"
-              style={{
-                backgroundImage: `linear-gradient(to bottom right, ${deriveGradientStops(active.iconColor).from}, ${deriveGradientStops(active.iconColor).to})`,
-              }}
-            >
-              {featured.image ? (
-                <ImageSlot
-                  src={featured.image}
-                  alt={featured.name}
-                  aspect="square"
-                  className="w-full shrink-0 rounded-2xl sm:w-32"
-                />
-              ) : (
-                <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-white backdrop-blur-sm">
-                  <Icon name={featured.icon} className="h-10 w-10" aria-hidden />
-                </span>
-              )}
-              <div>
-                <p className="font-display text-xs font-semibold uppercase tracking-wide text-white">
-                  Featured in {active.shortName}
-                </p>
-                <h3 className="mt-1 font-display text-2xl font-extrabold text-white">{featured.name}</h3>
-                <p className="mt-2 max-w-xl text-sm text-white">{featured.description}</p>
-                <a
-                  href={safeHref(company.storeUrl)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-white px-4 py-2 text-sm font-sans font-semibold text-slate-900 transition-all duration-300 ease-out hover:-translate-y-0.5"
+            <div className="grid overflow-hidden rounded-3xl border border-cardText-950/10 shadow-sm sm:grid-cols-[220px_1fr]">
+              <div className="flex items-center justify-center border-b border-cardText-950/10 bg-card-950 p-8 sm:border-b-0 sm:border-r">
+                {featured.image ? (
+                  <ImageSlot
+                    src={featured.image}
+                    alt={featured.name}
+                    aspect="square"
+                    className="w-full max-w-[160px] rounded-2xl shadow-md"
+                  />
+                ) : (
+                  <span
+                    className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full text-white shadow-md"
+                    style={{
+                      backgroundImage: `linear-gradient(to bottom right, ${deriveGradientStops(active.iconColor).from}, ${deriveGradientStops(active.iconColor).to})`,
+                    }}
+                  >
+                    <Icon name={featured.icon} className="h-12 w-12" aria-hidden />
+                  </span>
+                )}
+              </div>
+              <div
+                className="flex flex-col items-start gap-3 p-8 sm:p-10"
+                style={{ backgroundColor: deriveTint(active.iconColor) }}
+              >
+                <span
+                  className="inline-flex w-fit items-center rounded-full px-3 py-1 font-display text-xs font-bold uppercase tracking-wide text-white"
+                  style={{ backgroundColor: active.iconColor }}
                 >
-                  Shop on our Store <ArrowRight className="h-4 w-4" aria-hidden />
-                </a>
+                  Featured in {active.shortName}
+                </span>
+                <h3 className="font-display text-2xl font-extrabold text-cardText-950 sm:text-3xl">
+                  {featured.name}
+                </h3>
+                <p className="max-w-xl text-sm text-cardText-700">{featured.description}</p>
+                {/* GradientPillLink's base style is width:full for its usual
+                    home (ProductCard, where it should fill the card) — wrap
+                    it here so that 100% resolves against this w-fit box
+                    instead of stretching across the whole text column. */}
+                <div className="w-fit">
+                  <GradientPillLink
+                    href={safeHref(company.storeUrl)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    color={active.iconColor}
+                  >
+                    Shop on our Store
+                  </GradientPillLink>
+                </div>
               </div>
             </div>
 
