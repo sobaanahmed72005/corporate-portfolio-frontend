@@ -146,7 +146,7 @@ export function Header({
           </div>
           <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
             <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
-            NTN No. 0236537
+            NTN No. A853314-6
           </span>
         </Container>
       </div>
