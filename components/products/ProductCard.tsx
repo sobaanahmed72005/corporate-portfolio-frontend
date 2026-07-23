@@ -18,18 +18,29 @@ function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
 }
 
 // The aspect-ratio check above is a proxy for "is this a logo/product-on-white
-// shot" (usually square-ish, letterboxes cleanly on the card's white
-// background) vs "real environmental photography" (a lifestyle/context shot
-// with its own background, lighting, and props) — but it breaks down for a
-// SQUARE real photo, e.g. a charger plugged into a dark wooden desk. Those
-// have no white background to blend into, so letterboxing them shows ugly
-// white bars; cropping is the smaller visual sin. Confirmed real-photography
-// slugs during image sourcing — anything not listed here keeps the aspect-
-// ratio-driven default above.
-export const FORCE_COVER_SLUGS = new Set([
-  "laptop-chargers-power-adapters",
-  "laptop-ssd-storage",
-]);
+// shot" (letterboxes cleanly on the card's white background) vs "real
+// environmental photography" (a lifestyle/context shot with its own
+// background, lighting, and props) — but the proxy breaks in both
+// directions:
+//   - "cover": a SQUARE real photo (e.g. a charger on a dark wooden desk)
+//     has no white background to blend into, so letterboxing it shows ugly
+//     white bars — cropping is the smaller visual sin there.
+//   - "contain": a product photo whose aspect ratio happens to sit close to
+//     16:9 (most projector product shots, a wide keyboard+mouse flat-lay)
+//     still loses real edges of the actual product under cover — these need
+//     the whole image visible even though the aspect-ratio math alone would
+//     allow a "safe" crop.
+// Confirmed per-slug during image sourcing; anything not listed here keeps
+// the aspect-ratio-driven default above.
+export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {
+  "laptop-chargers-power-adapters": "cover",
+  "laptop-ssd-storage": "cover",
+  "acer-projectors": "contain",
+  "viewsonic-projectors": "contain",
+  "sony-projectors": "contain",
+  "nec-projectors": "contain",
+  "wireless-mice-keyboards": "contain",
+};
 
 export function ProductCard({
   product,
@@ -40,7 +51,9 @@ export function ProductCard({
   color: string;
   company: CompanyInfo;
 }) {
-  const canCover = FORCE_COVER_SLUGS.has(product.slug) || fitsFrameWithoutCropping(product.imageAspect);
+  const canCover = FIT_OVERRIDES[product.slug]
+    ? FIT_OVERRIDES[product.slug] === "cover"
+    : fitsFrameWithoutCropping(product.imageAspect);
 
   return (
     <div className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">

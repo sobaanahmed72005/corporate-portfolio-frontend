@@ -9,7 +9,7 @@ import { GradientPillLink } from "@/components/ui/GradientPillLink";
 import { LinkButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { ImageSlot } from "@/components/ui/ImageSlot";
-import { FORCE_COVER_SLUGS } from "@/components/products/ProductCard";
+import { FIT_OVERRIDES } from "@/components/products/ProductCard";
 import { cn } from "@/lib/cn";
 import { deriveGradientStops } from "@/lib/theme";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
@@ -20,8 +20,8 @@ import { safeHref } from "@/lib/safe-url";
 // inverter's plug, etc) if cropped to fill — so only images close enough to
 // square get object-cover; the rest are shown in full with object-contain
 // instead of being cut into. Same approach as ProductCard.tsx's
-// fitsFrameWithoutCropping (imported as FORCE_COVER_SLUGS above for the
-// real-photography exceptions), just against a square frame instead of 16:9.
+// fitsFrameWithoutCropping (imported as FIT_OVERRIDES above for the
+// per-slug exceptions), just against a square frame instead of 16:9.
 const FRAME_ASPECT = 1;
 const MIN_COVER_FIT = 0.8; // kept fraction below this crops too much to use cover
 
@@ -44,8 +44,11 @@ export function ProductShowcase({
 
   if (!active || !featured) return null;
 
-  const featuredImageFit =
-    FORCE_COVER_SLUGS.has(featured.slug) || fitsFrameWithoutCropping(featured.imageAspect) ? "cover" : "contain";
+  const featuredImageFit = FIT_OVERRIDES[featured.slug]
+    ? FIT_OVERRIDES[featured.slug]
+    : fitsFrameWithoutCropping(featured.imageAspect)
+      ? "cover"
+      : "contain";
 
   return (
     <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 sm:py-20">
