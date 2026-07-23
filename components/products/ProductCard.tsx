@@ -21,18 +21,14 @@ function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
 // shot" (usually square-ish, letterboxes cleanly on the card's white
 // background) vs "real environmental photography" (a lifestyle/context shot
 // with its own background, lighting, and props) — but it breaks down for a
-// SQUARE real photo, e.g. a charger plugged into a dark car interior. Those
+// SQUARE real photo, e.g. a charger plugged into a dark wooden desk. Those
 // have no white background to blend into, so letterboxing them shows ugly
 // white bars; cropping is the smaller visual sin. Confirmed real-photography
 // slugs during image sourcing — anything not listed here keeps the aspect-
 // ratio-driven default above.
 export const FORCE_COVER_SLUGS = new Set([
-  "car-chargers",
   "laptop-chargers-power-adapters",
-  "laptop-bags-sleeves",
-  "wireless-mice-keyboards",
   "laptop-ssd-storage",
-  "laptop-ram-memory",
 ]);
 
 export function ProductCard({
