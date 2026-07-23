@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -10,6 +10,8 @@ import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu"
 import type { ProductCategory, Service, PortfolioCategory, CompanyInfo } from "@/lib/cms";
 import { cn } from "@/lib/cn";
 import { safeHref, telHref } from "@/lib/safe-url";
+
+const TOP_BAR_SLIDE_MS = 3500;
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -37,6 +39,17 @@ export function Header({
 }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+
+  // Top bar alternates between the full company name and the phone/email —
+  // showing both at once was what forced the name to be cut down in the
+  // first place. Sliding between them keeps the name fully legible while
+  // still surfacing contact info, and a fixed-height overflow-hidden window
+  // (below) means neither slide can ever push the bar taller than it is.
+  const [topBarSlide, setTopBarSlide] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => setTopBarSlide((i) => (i + 1) % 2), TOP_BAR_SLIDE_MS);
+    return () => clearInterval(interval);
+  }, []);
 
   // Next.js's <Link> skips navigation (and the scroll-to-top that comes
   // with it) when the href matches the current URL, so clicking Home/the
@@ -75,21 +88,33 @@ export function Header({
     <>
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
         <Container className="flex h-9 items-center gap-5 text-xs">
-          <a
-            href={telHref(company.phone)}
-            className="flex items-center gap-1.5 hover:text-cardText-950"
-          >
-            <Phone className="h-3.5 w-3.5" aria-hidden />
-            {company.phone}
-          </a>
-          <a
-            href={safeHref(`mailto:${company.email}`)}
-            className="flex items-center gap-1.5 hover:text-cardText-950"
-          >
-            <Mail className="h-3.5 w-3.5" aria-hidden />
-            {company.email}
-          </a>
-          <span className="ml-auto flex items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
+          <div className="relative h-5 min-w-0 flex-1 overflow-hidden">
+            <div
+              className="absolute inset-x-0 top-0 flex flex-col transition-transform duration-500 ease-out"
+              style={{ transform: `translateY(-${topBarSlide * 100}%)` }}
+            >
+              <span className="flex h-5 items-center truncate font-semibold text-cardText-950">
+                {company.name}
+              </span>
+              <div className="flex h-5 items-center gap-5">
+                <a
+                  href={telHref(company.phone)}
+                  className="flex items-center gap-1.5 hover:text-cardText-950"
+                >
+                  <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                  {company.phone}
+                </a>
+                <a
+                  href={safeHref(`mailto:${company.email}`)}
+                  className="flex items-center gap-1.5 hover:text-cardText-950"
+                >
+                  <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden />
+                  {company.email}
+                </a>
+              </div>
+            </div>
+          </div>
+          <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
             <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
             NTN No. 0236537
           </span>
@@ -98,31 +123,29 @@ export function Header({
 
       <header className="sticky top-0 z-50 border-b border-headerText-950/10 bg-header-950">
         <Container className="flex h-20 items-center justify-between">
+          {/* The full name now lives in the sliding top bar above instead of
+              stacked under the logo here — that stacking is what let a long
+              name wrap and push past this row's fixed height. This row is
+              logo-only, so its height stays put no matter how the name (or
+              anything else in the top bar) changes. */}
           <Link
             href="/"
             onClick={scrollToTopIfAlreadyHome}
-            className="flex shrink-0 flex-col items-center justify-center gap-0.5 font-display font-bold text-headerText-950"
+            className="flex shrink-0 items-center gap-2 font-display font-bold text-headerText-950"
           >
             {logo ? (
               <Image
                 src={logo}
                 alt={company.name}
-                width={36}
-                height={36}
-                className="h-9 w-9 rounded-full object-contain"
+                width={48}
+                height={48}
+                className="h-12 w-12 rounded-full object-contain"
               />
             ) : (
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-sm text-white">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-600 text-base text-white">
                 IT
               </span>
             )}
-            {/* Full legal name, kept to one line — shrink-0 above means this
-                column takes whatever width the name needs rather than
-                wrapping or being squeezed, even if that pushes into the
-                nav/CTA space beside it. */}
-            <span className="hidden whitespace-nowrap text-xs leading-tight sm:inline">
-              {company.name}
-            </span>
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
