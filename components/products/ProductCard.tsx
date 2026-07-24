@@ -49,6 +49,7 @@ export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {
   // padding straight back off with cover.
   "laptop-chargers-power-adapters": "contain",
   "cisco-networking": "contain",
+  "laptop-processors": "contain",
 };
 
 export function ProductCard({
