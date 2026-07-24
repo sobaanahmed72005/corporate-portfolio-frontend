@@ -33,7 +33,6 @@ function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
 // Confirmed per-slug during image sourcing; anything not listed here keeps
 // the aspect-ratio-driven default above.
 export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {
-  "laptop-chargers-power-adapters": "cover",
   "acer-projectors": "contain",
   "viewsonic-projectors": "contain",
   "sony-projectors": "contain",
@@ -43,6 +42,13 @@ export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {
   "imou-wireless-cameras": "contain",
   "hisource-networking": "contain",
   "epson-projectors": "contain",
+  // These two had extra white padding manually added around the product
+  // (a "zoom out" request) — forced contain guarantees that padding always
+  // stays visible, since the aspect-ratio heuristic would otherwise judge
+  // their now-more-square proportions "close enough" to 16:9 and crop the
+  // padding straight back off with cover.
+  "laptop-chargers-power-adapters": "contain",
+  "cisco-networking": "contain",
 };
 
 export function ProductCard({
