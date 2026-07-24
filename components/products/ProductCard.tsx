@@ -34,12 +34,15 @@ function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
 // the aspect-ratio-driven default above.
 export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {
   "laptop-chargers-power-adapters": "cover",
-  "laptop-ssd-storage": "cover",
   "acer-projectors": "contain",
   "viewsonic-projectors": "contain",
   "sony-projectors": "contain",
   "nec-projectors": "contain",
   "wireless-mice-keyboards": "contain",
+  "hikvision-cctv-cameras": "contain",
+  "imou-wireless-cameras": "contain",
+  "hisource-networking": "contain",
+  "epson-projectors": "contain",
 };
 
 export function ProductCard({
