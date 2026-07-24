@@ -15,22 +15,6 @@ import { deriveGradientStops } from "@/lib/theme";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
-// This panel's image frame is a 1:1 square. An image whose own aspect ratio
-// is far from square would lose a large chunk of itself (a logo's edge, an
-// inverter's plug, etc) if cropped to fill — so only images close enough to
-// square get object-cover; the rest are shown in full with object-contain
-// instead of being cut into. Same approach as ProductCard.tsx's
-// fitsFrameWithoutCropping (imported as FIT_OVERRIDES above for the
-// per-slug exceptions), just against a square frame instead of 16:9.
-const FRAME_ASPECT = 1;
-const MIN_COVER_FIT = 0.8; // kept fraction below this crops too much to use cover
-
-function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
-  if (!imageAspect) return false;
-  const kept = Math.min(imageAspect, FRAME_ASPECT) / Math.max(imageAspect, FRAME_ASPECT);
-  return kept >= MIN_COVER_FIT;
-}
-
 export function ProductShowcase({
   productCategories,
   company,
@@ -44,11 +28,11 @@ export function ProductShowcase({
 
   if (!active || !featured) return null;
 
-  const featuredImageFit = FIT_OVERRIDES[featured.slug]
-    ? FIT_OVERRIDES[featured.slug]
-    : fitsFrameWithoutCropping(featured.imageAspect)
-      ? "cover"
-      : "contain";
+  // Every product photo is on a plain white background, so contain is
+  // always safe and always shows the whole product — see ProductCard.tsx's
+  // FIT_OVERRIDES comment for why the old aspect-ratio heuristic was
+  // replaced with this as the default instead of an opt-out.
+  const featuredImageFit = FIT_OVERRIDES[featured.slug] === "cover" ? "cover" : "contain";
 
   return (
     <section className="border-t-2 border-pageText-950/15 bg-page-950 py-14 sm:py-20">

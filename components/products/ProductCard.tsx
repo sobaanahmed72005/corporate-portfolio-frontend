@@ -4,53 +4,17 @@ import { GradientPillLink } from "@/components/ui/GradientPillLink";
 import type { Product, CompanyInfo } from "@/lib/cms";
 import { safeHref } from "@/lib/safe-url";
 
-// Card image frame is 16:9. An image whose own aspect ratio is far from that
-// would lose a large chunk of itself (a logo's edge, an inverter's plug, etc)
-// if cropped to fill — so only images close enough to 16:9 get object-cover;
-// the rest are shown in full with object-contain instead of being cut into.
-const CARD_ASPECT = 16 / 9;
-const MIN_COVER_FIT = 0.8; // kept fraction below this crops too much to use cover
-
-function fitsFrameWithoutCropping(imageAspect: number | undefined): boolean {
-  if (!imageAspect) return false;
-  const kept = Math.min(imageAspect, CARD_ASPECT) / Math.max(imageAspect, CARD_ASPECT);
-  return kept >= MIN_COVER_FIT;
-}
-
-// The aspect-ratio check above is a proxy for "is this a logo/product-on-white
-// shot" (letterboxes cleanly on the card's white background) vs "real
-// environmental photography" (a lifestyle/context shot with its own
-// background, lighting, and props) — but the proxy breaks in both
-// directions:
-//   - "cover": a SQUARE real photo (e.g. a charger on a dark wooden desk)
-//     has no white background to blend into, so letterboxing it shows ugly
-//     white bars — cropping is the smaller visual sin there.
-//   - "contain": a product photo whose aspect ratio happens to sit close to
-//     16:9 (most projector product shots, a wide keyboard+mouse flat-lay)
-//     still loses real edges of the actual product under cover — these need
-//     the whole image visible even though the aspect-ratio math alone would
-//     allow a "safe" crop.
-// Confirmed per-slug during image sourcing; anything not listed here keeps
-// the aspect-ratio-driven default above.
-export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {
-  "acer-projectors": "contain",
-  "viewsonic-projectors": "contain",
-  "sony-projectors": "contain",
-  "nec-projectors": "contain",
-  "wireless-mice-keyboards": "contain",
-  "hikvision-cctv-cameras": "contain",
-  "imou-wireless-cameras": "contain",
-  "hisource-networking": "contain",
-  "epson-projectors": "contain",
-  // These two had extra white padding manually added around the product
-  // (a "zoom out" request) — forced contain guarantees that padding always
-  // stays visible, since the aspect-ratio heuristic would otherwise judge
-  // their now-more-square proportions "close enough" to 16:9 and crop the
-  // padding straight back off with cover.
-  "laptop-chargers-power-adapters": "contain",
-  "cisco-networking": "contain",
-  "laptop-processors": "contain",
-};
+// Every product photo is on a plain white background now, so "contain" is
+// always safe — the white letterboxing blends invisibly into the card's own
+// white background — and it's the only fit that GUARANTEES the whole
+// product stays visible, which repeatedly broke under the previous
+// aspect-ratio-based "is this crop small enough to risk" heuristic: several
+// product photos (projectors, hikvision, cisco, the padded charger/CPU
+// shots) sat at aspect ratios the heuristic judged "safe" and cropped real
+// product edges off anyway. "cover" is now opt-in only, for the rare photo
+// that has no white background to blend into (a lifestyle/environmental
+// shot) where letterboxing would show ugly white bars instead.
+export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {};
 
 export function ProductCard({
   product,
@@ -61,9 +25,7 @@ export function ProductCard({
   color: string;
   company: CompanyInfo;
 }) {
-  const canCover = FIT_OVERRIDES[product.slug]
-    ? FIT_OVERRIDES[product.slug] === "cover"
-    : fitsFrameWithoutCropping(product.imageAspect);
+  const canCover = FIT_OVERRIDES[product.slug] === "cover";
 
   return (
     <div className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">
