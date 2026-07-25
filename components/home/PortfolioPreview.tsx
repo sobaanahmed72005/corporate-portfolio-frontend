@@ -1,13 +1,10 @@
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, PlayCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GradientIconBadge } from "@/components/ui/GradientIconBadge";
 import { LinkButton } from "@/components/ui/Button";
 import { ImageSlot } from "@/components/ui/ImageSlot";
 import { getPortfolioCategories } from "@/lib/cms";
-import { deriveGradientStops } from "@/lib/theme";
 
 export async function PortfolioPreview() {
   const portfolioCategories = await getPortfolioCategories();
@@ -33,56 +30,27 @@ export async function PortfolioPreview() {
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map(({ category, project }) => (
-            <Link
+            // Same card markup as the /portfolio page's project cards — light
+            // card on the dark homepage section, video playable inline
+            // instead of just linking out to watch it there.
+            <div
               key={project.slug}
-              href={`/portfolio#${category.slug}`}
-              className="flex flex-col rounded-3xl border border-cardText-950/10 bg-card-950 p-8 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-cardText-950/20 hover:shadow-lg"
+              className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg"
             >
               {project.video ? (
-                // This card only links to /portfolio#category — the actual
-                // <video> player lives there, not embedded in this preview
-                // grid — so the thumbnail needs its own "there's a video
-                // here" cue instead of looking like a dead image slot.
-                <div
-                  className="relative mb-4 -mt-2 flex aspect-video items-center justify-center overflow-hidden rounded-xl text-white"
-                  style={{
-                    backgroundImage: project.image
-                      ? undefined
-                      : `linear-gradient(to bottom right, ${deriveGradientStops(category.iconColor).from}, ${deriveGradientStops(category.iconColor).to})`,
-                  }}
-                >
-                  {project.image && (
-                    // Not ImageSlot here — its wrapper div always adds its own
-                    // "relative" class, which fights the "absolute inset-0"
-                    // needed to fill *this* div (the actual relative+aspect-video
-                    // box) since cn() is plain clsx with no class-conflict
-                    // resolution — the later "relative" rule in Tailwind's
-                    // stylesheet order wins, so the image never actually
-                    // covered this box and only the dark overlay showed.
-                    <Image
-                      src={project.image}
-                      alt={project.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover"
-                    />
-                  )}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-black/35">
-                    <PlayCircle className="h-9 w-9" aria-hidden />
-                    <span className="text-xs font-semibold uppercase tracking-wide">Click to Watch Video</span>
-                  </div>
-                </div>
+                <video src={project.video} controls className="aspect-video w-full bg-black" />
               ) : project.image ? (
-                <ImageSlot src={project.image} alt={project.title} aspect="video" className="mb-4 -mt-2 rounded-xl" />
-              ) : (
-                <GradientIconBadge icon={project.icon} color={category.iconColor} />
-              )}
-              <h3 className="mt-4 text-base font-semibold text-cardText-950">{project.title}</h3>
-              <p className="mt-2 flex-1 text-sm text-cardText-600">{project.summary}</p>
-              <span className="mt-4 inline-block w-fit rounded-full bg-cardText-950/10 px-3 py-1 text-[11px] font-semibold tracking-wide text-cardText-800">
-                {project.highlight}
-              </span>
-            </Link>
+                <ImageSlot src={project.image} alt={project.title} aspect="video" />
+              ) : null}
+              <div className="flex flex-1 flex-col p-6">
+                <GradientIconBadge icon={project.icon} color={category.iconColor} size="sm" />
+                <h3 className="mt-4 text-base font-bold text-contentCardText-950">{project.title}</h3>
+                <p className="mt-2 flex-1 text-sm text-contentCardText-600">{project.summary}</p>
+                <span className="mt-4 inline-block w-fit rounded-full bg-contentCard-100 px-3 py-1 text-[11px] font-semibold tracking-wide text-contentCardText-600">
+                  {project.highlight}
+                </span>
+              </div>
+            </div>
           ))}
         </div>
 
