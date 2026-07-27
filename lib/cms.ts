@@ -50,9 +50,9 @@ const DEFAULT_COMPANY: CompanyInfo = {
   tagline: "Your Trusted Partner for IT Accessories, Security & Solar Solutions",
   description:
     "IT Solutions Trade & Service Pvt. Ltd. supplies and installs IT accessories, CCTV security systems, solar power solutions, and networking equipment for homes and businesses across Pakistan.",
-  phone: "+92 300 0000000",
-  whatsapp: "+923000000000",
-  email: "info@example.com",
+  phone: "+92 300 6996443",
+  whatsapp: "+923006996443",
+  email: "itsolutions543@gmail.com",
   address: {
     line1: "Shop/Office Address Line 1",
     city: "City",

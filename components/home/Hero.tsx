@@ -37,27 +37,27 @@ export async function Hero() {
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-page-950/60 via-page-950/70 to-page-950" aria-hidden />
 
-      <Container className="relative pb-16 pt-6 sm:pb-20 sm:pt-8">
+      <Container className="relative pb-8 pt-4 sm:pb-12 sm:pt-5 lg:pb-16 lg:pt-6">
         <HeroSlider storeUrl={company.storeUrl} />
 
-        <div className="mx-auto mt-8 max-w-3xl text-center">
-          <p className="mb-4 font-display text-[13px] font-medium uppercase tracking-[0.15em] text-accent-500">
+        <div className="mx-auto mt-4 max-w-3xl text-center sm:mt-6">
+          <p className="mb-2 font-display text-xs font-semibold uppercase tracking-[0.18em] text-accent-500 sm:mb-3 sm:text-[13px]">
             IT Accessories &middot; Security &middot; Solar &middot; Networking
           </p>
-          <h1 className="font-display text-3xl font-extrabold leading-[1.1] tracking-tight text-pageText-950 sm:text-4xl lg:text-5xl">
+          <h1 className="font-display text-2xl font-extrabold leading-tight tracking-tight text-pageText-950 sm:text-3xl lg:text-4xl">
             <TypewriterText text={`${company.shortName}’s Trusted Partner for Smart, Secure Infrastructure`} />
           </h1>
-          <h2 className="mt-4 font-display text-xl font-semibold leading-snug text-pageText-700 sm:text-2xl">
+          <h2 className="mt-2 font-display text-base font-bold leading-snug text-pageText-700 sm:text-xl">
             {company.tagline}
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-[1.8] text-pageText-800">
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-pageText-800 sm:text-base">
             {company.description}
           </p>
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:items-stretch sm:justify-between">
-            <LinkButton href="/products" size="lg" variant="brand">
+          <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <LinkButton href="/products" size="md" variant="brand">
               Browse Products <ArrowRight className="h-4 w-4" aria-hidden />
             </LinkButton>
-            <LinkButton href="/contact" size="lg" variant="outline">
+            <LinkButton href="/contact" size="md" variant="outline">
               Get a Quote
             </LinkButton>
           </div>

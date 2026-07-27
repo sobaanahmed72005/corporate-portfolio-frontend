@@ -74,7 +74,7 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
   return (
     <div className="relative w-full">
       <div
-        className="group relative aspect-[21/9] max-h-[200px] w-full overflow-hidden rounded-3xl border border-cardText-950/15 sm:max-h-[260px] lg:max-h-[300px]"
+        className="group relative aspect-[21/8] max-h-[180px] w-full overflow-hidden rounded-3xl border border-cardText-950/15 sm:max-h-[220px] lg:max-h-[250px]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
@@ -129,9 +129,9 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
           <ChevronRight className="h-5 w-5" aria-hidden />
         </button>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/60 to-transparent" aria-hidden />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" aria-hidden />
 
-        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center justify-between gap-4 p-4 sm:flex-row sm:p-6">
+        <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-3 sm:p-5">
           <div className="flex items-center gap-2">
             {SLIDES.map((slide, i) => (
               <button
@@ -152,7 +152,7 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
             target="_blank"
             rel="noopener noreferrer"
             variant="brand"
-            size="lg"
+            size="md"
           >
             Shop Now <ArrowRight className="h-4 w-4" aria-hidden />
           </LinkButton>

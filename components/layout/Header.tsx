@@ -11,7 +11,6 @@ import type { ProductCategory, Service, PortfolioCategory, CompanyInfo } from "@
 import { cn } from "@/lib/cn";
 import { safeHref, telHref } from "@/lib/safe-url";
 
-const TOP_BAR_SLIDE_MS = 3500;
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -39,19 +38,6 @@ export function Header({
 }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  // Top bar alternates between the full company name and the phone/email —
-  // showing both at once was what forced the name to be cut down in the
-  // first place. Sliding between them keeps the name fully legible while
-  // still surfacing contact info, and a fixed-height overflow-hidden window
-  // (below) means neither slide can ever push the bar taller than it is.
-  const [topBarSlide, setTopBarSlide] = useState(0);
-  const [topBarPaused, setTopBarPaused] = useState(false);
-  useEffect(() => {
-    if (topBarPaused) return;
-    const interval = setInterval(() => setTopBarSlide((i) => (i + 1) % 2), TOP_BAR_SLIDE_MS);
-    return () => clearInterval(interval);
-  }, [topBarPaused]);
 
   // Next.js's <Link> skips navigation (and the scroll-to-top that comes
   // with it) when the href matches the current URL, so clicking Home/the
@@ -89,60 +75,22 @@ export function Header({
   return (
     <>
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
-        <Container className="flex h-9 items-center gap-5 text-xs">
-          {/* Each row is translated relative to its OWN box (100% = that
-              row's own height), not a shared two-row wrapper — that's what
-              made the earlier version's math unreliable (a wrapper sized to
-              both rows together means 100% is twice one row's height). Each
-              row sliding independently between 0 and ±100% of itself always
-              lands exactly one-row-height away, however tall the row
-              actually renders. */}
-          <div
-            className="relative h-5 min-w-0 flex-1 overflow-hidden"
-            onMouseEnter={() => setTopBarPaused(true)}
-            onMouseLeave={() => setTopBarPaused(false)}
-          >
-            {/* Explicit h-5 + overflow-hidden on each row (not just the
-                outer window) pins every row's box to exactly the window's
-                height, on purpose rather than incidentally — so 100% in the
-                transform below is guaranteed to be exactly one window's
-                worth of travel, with no sliver of the row's own content
-                (e.g. a link's focus ring or a slightly taller line box) able
-                to render past its own edge before the outer clip even
-                applies. */}
-            <span
-              aria-hidden={topBarSlide !== 0}
-              style={{ transform: topBarSlide === 0 ? "translateY(0)" : "translateY(-100%)" }}
-              className={cn(
-                "absolute inset-x-0 top-0 flex h-5 items-center overflow-hidden truncate text-sm font-bold tracking-tight text-brand-600 transition-transform duration-500 ease-out",
-                topBarSlide !== 0 && "pointer-events-none",
-              )}
+        <Container className="flex h-9 items-center justify-between text-xs">
+          <div className="flex items-center gap-5">
+            <a
+              href={telHref(company.phone)}
+              className="flex items-center gap-1.5 hover:text-cardText-950"
             >
-              {company.name}
-            </span>
-            <div
-              aria-hidden={topBarSlide !== 1}
-              style={{ transform: topBarSlide === 1 ? "translateY(0)" : "translateY(100%)" }}
-              className={cn(
-                "absolute inset-x-0 top-0 flex h-5 items-center gap-5 overflow-hidden transition-transform duration-500 ease-out",
-                topBarSlide !== 1 && "pointer-events-none",
-              )}
+              <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              {company.phone}
+            </a>
+            <a
+              href={safeHref(`mailto:${company.email}`)}
+              className="flex items-center gap-1.5 hover:text-cardText-950"
             >
-              <a
-                href={telHref(company.phone)}
-                className="flex items-center gap-1.5 hover:text-cardText-950"
-              >
-                <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                {company.phone}
-              </a>
-              <a
-                href={safeHref(`mailto:${company.email}`)}
-                className="flex items-center gap-1.5 hover:text-cardText-950"
-              >
-                <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                {company.email}
-              </a>
-            </div>
+              <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              {company.email}
+            </a>
           </div>
           <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
             <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
@@ -152,7 +100,7 @@ export function Header({
       </div>
 
       <header className="sticky top-0 z-50 border-b border-headerText-950/10 bg-header-950">
-        <Container className="flex h-20 items-center justify-between">
+        <Container className="flex h-16 items-center justify-between">
           {/* The full name now lives in the sliding top bar above instead of
               stacked under the logo here — that stacking is what let a long
               name wrap and push past this row's fixed height. This row is
