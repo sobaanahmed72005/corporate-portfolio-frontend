@@ -64,7 +64,7 @@ const DEFAULT_COMPANY: CompanyInfo = {
     instagram: "https://instagram.com/",
     linkedin: "https://linkedin.com/",
   },
-  foundingYear: 2016,
+  foundingYear: 2010,
 };
 
 export async function getCompanyInfo(): Promise<CompanyInfo> {

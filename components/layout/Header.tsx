@@ -100,7 +100,7 @@ export function Header({
           <div className="flex shrink-0 items-center gap-2">
             <span className="flex items-center gap-1.5 rounded-full bg-accent-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-accent-600">
               <Calendar className="h-3.5 w-3.5" aria-hidden />
-              Since {company.foundingYear || 2016}
+              Since {company.foundingYear || 2010}
             </span>
             <span className="flex items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
               <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
