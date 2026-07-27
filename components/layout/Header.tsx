@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ShoppingBag, Phone, Mail, BadgeCheck } from "lucide-react";
+import { Menu, X, ShoppingBag, Phone, Mail, BadgeCheck, Calendar } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { NavMegaMenu, type MegaMenuItem } from "@/components/layout/NavMegaMenu";
 import type { ProductCategory, Service, PortfolioCategory, CompanyInfo } from "@/lib/cms";
@@ -97,10 +97,16 @@ export function Header({
               {company.email}
             </a>
           </div>
-          <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
-            <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
-            NTN No. A853314-6
-          </span>
+          <div className="flex shrink-0 items-center gap-2">
+            <span className="flex items-center gap-1.5 rounded-full bg-accent-500/15 px-3 py-1 font-semibold text-accent-400 selection:bg-accent-500 selection:text-white">
+              <Calendar className="h-3.5 w-3.5" aria-hidden />
+              Since {company.foundingYear || 2016}
+            </span>
+            <span className="flex items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
+              <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
+              NTN No. A853314-6
+            </span>
+          </div>
         </Container>
       </div>
 
