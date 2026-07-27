@@ -98,13 +98,13 @@ export function Header({
             </a>
           </div>
           <div className="flex shrink-0 items-center gap-2">
-            <span className="flex items-center gap-1.5 rounded-full bg-slate-950 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-slate-950">
-              <Calendar className="h-3.5 w-3.5 text-accent-400" aria-hidden />
-              Since {company.foundingYear || 2010}
-            </span>
             <span className="flex items-center gap-1.5 rounded-full bg-brand-600 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-brand-600">
-              <BadgeCheck className="h-3.5 w-3.5" aria-hidden />
+              <BadgeCheck className="h-3.5 w-3.5 text-white" aria-hidden />
               NTN No. A853314-6
+            </span>
+            <span className="flex items-center gap-1.5 rounded-full bg-slate-950 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-slate-950">
+              <Calendar className="h-3.5 w-3.5 text-white" aria-hidden />
+              Since {company.foundingYear || 2010}
             </span>
           </div>
         </Container>
