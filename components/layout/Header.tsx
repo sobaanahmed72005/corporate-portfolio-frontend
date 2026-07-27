@@ -77,6 +77,10 @@ export function Header({
       <div className="hidden border-b border-cardText-950/10 bg-card-950 text-cardText-800 sm:block">
         <Container className="flex h-9 items-center justify-between text-xs">
           <div className="flex items-center gap-5">
+            <span className="font-bold tracking-tight text-brand-600">
+              {company.name}
+            </span>
+            <span className="text-cardText-800/40" aria-hidden>|</span>
             <a
               href={telHref(company.phone)}
               className="flex items-center gap-1.5 hover:text-cardText-950"
@@ -84,6 +88,7 @@ export function Header({
               <Phone className="h-3.5 w-3.5 shrink-0" aria-hidden />
               {company.phone}
             </a>
+            <span className="text-cardText-800/40" aria-hidden>|</span>
             <a
               href={safeHref(`mailto:${company.email}`)}
               className="flex items-center gap-1.5 hover:text-cardText-950"
