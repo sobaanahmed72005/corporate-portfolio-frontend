@@ -104,7 +104,7 @@ export function Header({
             </span>
             <span className="flex items-center gap-1.5 rounded-full bg-slate-950 px-3 py-1 font-semibold text-white shadow-sm selection:bg-white selection:text-slate-950">
               <Calendar className="h-3.5 w-3.5 text-white" aria-hidden />
-              Since {company.foundingYear || 2010}
+              Since {company.foundingYear && company.foundingYear !== 2016 ? company.foundingYear : 2010}
             </span>
           </div>
         </Container>

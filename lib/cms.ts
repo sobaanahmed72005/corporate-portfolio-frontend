@@ -90,7 +90,7 @@ export async function getCompanyInfo(): Promise<CompanyInfo> {
         instagram: data.instagramUrl || DEFAULT_COMPANY.social.instagram,
         linkedin: data.linkedinUrl || DEFAULT_COMPANY.social.linkedin,
       },
-      foundingYear: data.foundingYear || DEFAULT_COMPANY.foundingYear,
+      foundingYear: data.foundingYear && data.foundingYear !== 2016 ? data.foundingYear : 2010,
     };
   });
 }
