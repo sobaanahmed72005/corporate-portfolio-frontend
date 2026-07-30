@@ -58,7 +58,7 @@ const DEFAULT_COMPANY: CompanyInfo = {
     city: "City",
     country: "Pakistan",
   },
-  storeUrl: "https://store.example.com",
+  storeUrl: "https://itsolutions.com.pk/",
   social: {
     facebook: "https://facebook.com/",
     instagram: "https://instagram.com/",
