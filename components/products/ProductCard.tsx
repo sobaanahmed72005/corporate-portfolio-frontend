@@ -16,6 +16,14 @@ import { safeHref } from "@/lib/safe-url";
 // shot) where letterboxing would show ugly white bars instead.
 export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {};
 
+// Per-product shop URL overrides — keyed by the product's Strapi slug.
+// When set, the "Shop on our Store" link uses this URL instead of the
+// generic company.storeUrl, so specific products deep-link to their
+// own category/brand page on the store.
+export const SHOP_URL_OVERRIDES: Record<string, string> = {
+  "ezviz-cameras": "https://itsolutions.com.pk/category/cctv-camera",
+};
+
 export function ProductCard({
   product,
   color,
@@ -26,6 +34,7 @@ export function ProductCard({
   company: CompanyInfo;
 }) {
   const canCover = FIT_OVERRIDES[product.slug] === "cover";
+  const shopUrl = SHOP_URL_OVERRIDES[product.slug] ?? company.storeUrl;
 
   return (
     <div className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">
@@ -48,7 +57,7 @@ export function ProductCard({
         <h3 className="text-base font-semibold text-contentCardText-950">{product.name}</h3>
         <p className="mt-1 flex-1 text-sm text-contentCardText-600">{product.description}</p>
         <GradientPillLink
-          href={safeHref(company.storeUrl)}
+          href={safeHref(shopUrl)}
           target="_blank"
           rel="noopener noreferrer"
           color={color}

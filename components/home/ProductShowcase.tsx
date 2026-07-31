@@ -9,7 +9,7 @@ import { GradientPillLink } from "@/components/ui/GradientPillLink";
 import { LinkButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { ImageSlot } from "@/components/ui/ImageSlot";
-import { FIT_OVERRIDES } from "@/components/products/ProductCard";
+import { FIT_OVERRIDES, SHOP_URL_OVERRIDES } from "@/components/products/ProductCard";
 import { cn } from "@/lib/cn";
 import { deriveGradientStops } from "@/lib/theme";
 import type { ProductCategory, CompanyInfo } from "@/lib/cms";
@@ -131,7 +131,7 @@ export function ProductShowcase({
                     instead of stretching across the whole panel. */}
                 <div className="w-fit">
                   <GradientPillLink
-                    href={safeHref(company.storeUrl)}
+                    href={safeHref(SHOP_URL_OVERRIDES[featured.slug] ?? company.storeUrl)}
                     target="_blank"
                     rel="noopener noreferrer"
                     color={active.iconColor}
@@ -146,7 +146,7 @@ export function ProductShowcase({
               {rest.map((product) => (
                 <a
                   key={product.slug}
-                  href={safeHref(company.storeUrl)}
+                  href={safeHref(SHOP_URL_OVERRIDES[product.slug] ?? company.storeUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 rounded-xl border border-cardText-950/10 bg-card-950 p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:border-cardText-950/25 hover:shadow-md"
