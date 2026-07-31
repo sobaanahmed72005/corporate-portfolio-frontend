@@ -16,10 +16,20 @@ import { safeHref } from "@/lib/safe-url";
 // shot) where letterboxing would show ugly white bars instead.
 export const FIT_OVERRIDES: Record<string, "cover" | "contain"> = {};
 
+// Per-category shop URL overrides — keyed by the category's Strapi slug.
+// All products inside a matched category inherit this URL unless they have
+// their own entry in SHOP_URL_OVERRIDES below.
+// Covers the most likely slug variations from Strapi for the CCTV category.
+export const CATEGORY_SHOP_URL_OVERRIDES: Record<string, string> = {
+  "cctv-security": "https://itsolutions.com.pk/category/cctv-camera",
+  "cctv-systems": "https://itsolutions.com.pk/category/cctv-camera",
+  "cctv-cameras": "https://itsolutions.com.pk/category/cctv-camera",
+  "security-cameras": "https://itsolutions.com.pk/category/cctv-camera",
+  "cameras": "https://itsolutions.com.pk/category/cctv-camera",
+};
+
 // Per-product shop URL overrides — keyed by the product's Strapi slug.
-// When set, the "Shop on our Store" link uses this URL instead of the
-// generic company.storeUrl, so specific products deep-link to their
-// own category/brand page on the store.
+// When set, takes priority over the category-level override above.
 export const SHOP_URL_OVERRIDES: Record<string, string> = {
   "ezviz-cameras": "https://itsolutions.com.pk/category/cctv-camera",
 };
@@ -28,13 +38,18 @@ export function ProductCard({
   product,
   color,
   company,
+  categorySlug,
 }: {
   product: Product;
   color: string;
   company: CompanyInfo;
+  categorySlug?: string;
 }) {
   const canCover = FIT_OVERRIDES[product.slug] === "cover";
-  const shopUrl = SHOP_URL_OVERRIDES[product.slug] ?? company.storeUrl;
+  const shopUrl =
+    SHOP_URL_OVERRIDES[product.slug] ??
+    (categorySlug ? CATEGORY_SHOP_URL_OVERRIDES[categorySlug] : undefined) ??
+    company.storeUrl;
 
   return (
     <div className="flex flex-col overflow-hidden rounded-3xl border border-contentCard-200 bg-contentCard-50 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-lg">
