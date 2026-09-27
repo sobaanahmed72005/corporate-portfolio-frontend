@@ -37,7 +37,8 @@ export async function POST(request: Request) {
   // Strip line breaks before these reach an email subject line — defense-in-depth
   // against header injection.
   const safeName = name.replace(/[\r\n]+/g, " ").trim();
-  const safeSubject = subject.replace(/[\r\n]+/g, " ").trim();
+  const safeSubject = (subject ?? "").replace(/[\r\n]+/g, " ").trim();
+  const safePhone = (phone ?? "").replace(/[\r\n]+/g, " ").trim();
   const toEmail = SERVER_ENV.EMAIL_CONFIG.CONTACT_TO_EMAIL;
 
   if (!resend || !toEmail) {
@@ -76,7 +77,7 @@ export async function POST(request: Request) {
       subject: safeSubject
         ? `New contact form submission: ${safeSubject}`
         : `New contact form submission from ${safeName}`,
-      text: `Name: ${safeName}\nEmail: ${email}\nPhone: ${phone}\nSubject: ${safeSubject}\n\nMessage:\n${message}`,
+      text: `Name: ${safeName}\nEmail: ${email}\nPhone: ${safePhone || "Not provided"}\nSubject: ${safeSubject || "No subject"}\n\nMessage:\n${message}`,
     });
     return NextResponse.json({ ok: true }, { headers: corsHeaders() });
   } catch (error) {

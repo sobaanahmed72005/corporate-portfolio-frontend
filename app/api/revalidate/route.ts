@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (tag) {
-    revalidateTag(tag, "page");
+    revalidateTag(tag);
   }
 
   if (path) {
