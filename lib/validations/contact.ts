@@ -14,9 +14,8 @@ export const contactFormSchema = z.object({
     .min(7, "Please enter a valid phone number.")
     .max(20)
     .optional()
-    .or(z.literal(""))
-    .default(""),
-  subject: z.string().trim().max(100).optional().or(z.literal("")).default(""),
+    .or(z.literal("")),
+  subject: z.string().trim().max(100).optional().or(z.literal("")),
   message: z
     .string()
     .trim()
