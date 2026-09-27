@@ -247,7 +247,6 @@ async function cmsFetch<T>(path: string, schema: ZodType<T>): Promise<T> {
     headers: { Authorization: `Bearer ${CMS_CONFIG.API_TOKEN}` },
     next: {
       revalidate: SERVER_ENV.CMS_REVALIDATE_SECONDS,
-      tags: ["cms-data"],
     },
   });
 

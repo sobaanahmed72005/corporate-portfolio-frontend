@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { SERVER_ENV } from "@/lib/server-env";
 import { rateLimitGuard } from "@/lib/api-handler";
 
@@ -9,9 +9,9 @@ import { rateLimitGuard } from "@/lib/api-handler";
  * background ISR window to expire.
  *
  * Usage:
- * POST /api/revalidate?secret=YOUR_SECRET&path=/
+ * POST /api/revalidate?secret=YOUR_SECRET
  * or
- * POST /api/revalidate?secret=YOUR_SECRET&tag=cms-data
+ * POST /api/revalidate?secret=YOUR_SECRET&path=/products
  */
 export async function POST(request: NextRequest) {
   const rateLimited = rateLimitGuard(request, "revalidate");
@@ -24,22 +24,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: false, message: "Invalid revalidation secret" }, { status: 401 });
   }
 
-  const path = request.nextUrl.searchParams.get("path");
-  const tag = request.nextUrl.searchParams.get("tag");
+  const path = request.nextUrl.searchParams.get("path") || "/";
+  revalidatePath(path, "layout");
 
-  if (!path && !tag) {
-    // Revalidate the entire home and layout by default
-    revalidatePath("/", "layout");
-    return NextResponse.json({ ok: true, revalidated: true, scope: "layout" });
-  }
-
-  if (tag) {
-    revalidateTag(tag);
-  }
-
-  if (path) {
-    revalidatePath(path);
-  }
-
-  return NextResponse.json({ ok: true, revalidated: true, path, tag });
+  return NextResponse.json({ ok: true, revalidated: true, path });
 }
