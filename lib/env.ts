@@ -25,5 +25,7 @@ export const SITE_CONFIG = {
 } as const;
 
 export const API_CONFIG = {
-  URL: requireEnv("NEXT_PUBLIC_API_URL", process.env.NEXT_PUBLIC_API_URL, "http://localhost:4000"),
+  // Defaults to empty string (same-origin relative paths like "/api/contact")
+  // when NEXT_PUBLIC_API_URL is unset, eliminating CORS preflight round-trips.
+  URL: process.env.NEXT_PUBLIC_API_URL || "",
 } as const;

@@ -8,6 +8,7 @@
 
 import type { ZodType } from "zod";
 import { CMS_CONFIG } from "@/lib/cms-env";
+import { SERVER_ENV } from "@/lib/server-env";
 import type { IconName } from "@/components/ui/Icon";
 import type { FontPairingName, RadiusStyleName, ShadowStyleName } from "@/lib/theme";
 import {
@@ -244,7 +245,10 @@ function mediaAspect(media: StrapiMedia): number | undefined {
 async function cmsFetch<T>(path: string, schema: ZodType<T>): Promise<T> {
   const res = await fetch(`${CMS_CONFIG.URL}/api${path}`, {
     headers: { Authorization: `Bearer ${CMS_CONFIG.API_TOKEN}` },
-    next: { revalidate: 60 },
+    next: {
+      revalidate: SERVER_ENV.CMS_REVALIDATE_SECONDS,
+      tags: ["cms-data"],
+    },
   });
 
   if (!res.ok) {

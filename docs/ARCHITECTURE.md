@@ -200,49 +200,41 @@ separate-repo-per-service pattern as the contact-form backend (§8).
   here. The token is a **read-only** Strapi API token (Settings → API Tokens
   in the Strapi admin) — never use an admin or full-access token here.
 
-## 8. How the contact form works
+## 8. How the contact and newsletter forms work
 
-The contact form's server-side logic is **not in this repo** — it's a
-separate deployment, [corporate-portfolio-api](../corporate-portfolio-api),
-so the frontend and backend can be built, deployed, and scaled independently.
+The server-side handlers for contact submissions and newsletter signups are
+built directly into this repo as App Router route handlers
+(`app/api/contact/route.ts` and `app/api/newsletter/route.ts`). This provides
+same-origin execution (zero CORS preflight latency, zero external network hops)
+and eliminates the cost and memory footprint of running a separate backend server.
 
 `components/contact/ContactForm.tsx` is a client component using
-`react-hook-form` with `contactFormSchema` (from `lib/validations/contact.ts`,
-a duplicate of the backend's copy — see below) for instant client-side
-feedback. On submit, it calls `apiClient.post(ENDPOINTS.CONTACT, values)` —
-`lib/api-client.ts` is the one place that owns the base URL, headers, and
-error handling for every backend call, so components never call `fetch`
-directly. This POSTs to the backend, which:
+`react-hook-form` with `contactFormSchema` (`lib/validations/contact.ts`)
+for instant client-side feedback. On submit, it calls `apiClient.post(ENDPOINTS.CONTACT, values)` —
+`lib/api-client.ts` owns the base URL, headers, and error handling for all API calls.
+When `NEXT_PUBLIC_API_URL` is omitted, requests are same-origin relative paths (`/api/contact`).
 
-1. Re-validates the payload server-side with its own copy of the Zod schema
-   (never trust client-side validation alone).
-2. If `RESEND_API_KEY` is set, emails the submission via Resend, with the
-   visitor's address set as `replyTo` so you can reply directly.
-3. If the key isn't set, logs the submission to the server console instead of
-   failing — lets the form work end-to-end before an email provider is wired
-   up.
+The backend route handler (`app/api/contact/route.ts`):
+1. Applies in-memory rate limiting and request body size checks (`lib/read-body.ts`).
+2. Checks the honeypot field (`website`) to catch bots silently.
+3. Re-validates the payload server-side using Zod (`lib/validations/contact.ts`).
+4. If `RESEND_API_KEY` is set, emails the submission via Resend with the visitor's
+   address as `replyTo`.
+5. In dev mode without keys, logs the submission to console for easy local testing.
 
-**Keeping the schema in sync:** `lib/validations/contact.ts` is intentionally
-duplicated in both repos rather than shared via a package, since the two
-repos deploy independently and a shared-package setup would be overkill for
-one small schema. If you add a field to the form, update it in both places.
+**Newsletter route (`app/api/newsletter/route.ts`):**
+Re-validates the email address, stores the subscriber in Strapi (if `STRAPI_NEWSLETTER_TOKEN`
+is configured), and notifies the site owner via Resend in parallel.
 
-**CORS:** since the frontend and backend are different origins, the backend
-sets CORS headers on every response (see its `lib/cors.ts`) and its
-`ALLOWED_ORIGIN` env var must match this frontend's deployed origin.
+**Cache revalidation route (`app/api/revalidate/route.ts`):**
+Enables on-demand cache clearing via webhook (`POST /api/revalidate?secret=...&tag=cms-data`)
+whenever content is published in the Strapi admin panel.
 
-**Adding a new backend route:** add its path to the `ENDPOINTS` object in
-`lib/endpoints.ts`, and call it via `apiClient` (`lib/api-client.ts`) —
-don't hardcode API paths or call `fetch` directly in components.
-
-**Credentials in this repo:** the frontend holds one secret, `STRAPI_API_TOKEN`
-(read-only, §7). The one external write-side connection — Resend, for sending
-contact-form emails — lives entirely in corporate-portfolio-api's
-`lib/resend.ts`, which already builds a single shared client instance instead
-of constructing one per file. If this frontend ever needs its own external
-service client (analytics SDK, etc.), follow the same pattern: one module
-that constructs the client once and exports the instance, imported wherever
-it's needed.
+**Credentials in this repo:**
+Client-safe environment variables live in `lib/env.ts`. Secret credentials
+(`STRAPI_API_TOKEN`, `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `STRAPI_NEWSLETTER_TOKEN`,
+`REVALIDATION_SECRET`) live strictly in `lib/cms-env.ts` and `lib/server-env.ts`,
+both guarded by `import "server-only";` to guarantee zero client bundle leakage.
 
 ## 9. Future extension points
 
