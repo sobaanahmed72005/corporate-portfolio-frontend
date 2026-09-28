@@ -1,14 +1,11 @@
 /**
- * Single shared client for reading content from the corporate-portfolio-cms
- * Strapi instance. Components should call these typed helpers instead of
- * `fetch(...)` directly, so the base URL, auth header, and response
- * unwrapping live in one place — same pattern as lib/api-client.ts for the
- * contact-form backend.
+ * Corporate Portfolio CMS Domain Query Layer.
+ *
+ * Provides typed, fault-tolerant queries for Strapi CMS content.
+ * Re-exports all domain types, fallback fixtures, and client utilities
+ * so call sites throughout the project maintain a single, clean import surface.
  */
 
-import type { ZodType } from "zod";
-import { CMS_CONFIG } from "@/lib/cms-env";
-import { SERVER_ENV } from "@/lib/server-env";
 import type { IconName } from "@/components/ui/Icon";
 import type { FontPairingName, RadiusStyleName, ShadowStyleName } from "@/lib/theme";
 import {
@@ -27,47 +24,38 @@ import {
   themeSettingsSchema,
   heroSlideSchema,
 } from "@/lib/cms-schemas";
+import {
+  cmsFetch,
+  withFallback,
+  mediaUrl,
+  mediaAspect,
+  safeHeroSlideUrl,
+  formatDate,
+} from "@/lib/cms-client";
+import {
+  DEFAULT_COMPANY,
+  DEFAULT_THEME,
+  DEFAULT_HERO_SLIDES,
+} from "@/lib/cms-fallbacks";
+import type {
+  CompanyInfo,
+  ProductCategory,
+  Service,
+  BlogPost,
+  Testimonial,
+  Office,
+  PortfolioCategory,
+  Stat,
+  Reason,
+  ClientLogo,
+  ThemeSettings,
+  HeroSlide,
+} from "@/lib/cms-types";
 
-// Nested address/social objects so call sites can use
-// `company.address.line1` / `company.social.facebook`.
-export type CompanyInfo = {
-  name: string;
-  shortName: string;
-  tagline: string;
-  description: string;
-  phone: string;
-  whatsapp: string;
-  email: string;
-  address: { line1: string; city: string; country: string };
-  storeUrl: string;
-  social: { facebook: string; instagram: string; linkedin: string };
-  foundingYear: number;
-};
-
-// Matches the site's actual current placeholder values — used if Strapi
-// has no company-info entry yet, or is unreachable.
-const DEFAULT_COMPANY: CompanyInfo = {
-  name: "IT Solutions Trade & Service Pvt. Ltd.",
-  shortName: "IT Solutions",
-  tagline: "Your Trusted Partner for IT Accessories, Security & Solar Solutions",
-  description:
-    "IT Solutions Trade & Service Pvt. Ltd. supplies and installs IT accessories, CCTV security systems, solar power solutions, and networking equipment for homes and businesses across Pakistan.",
-  phone: "+92 300 6996443",
-  whatsapp: "+923006996443",
-  email: "itsolutions543@gmail.com",
-  address: {
-    line1: "Shop/Office Address Line 1",
-    city: "City",
-    country: "Pakistan",
-  },
-  storeUrl: "https://itsolutions.com.pk/",
-  social: {
-    facebook: "https://facebook.com/",
-    instagram: "https://instagram.com/",
-    linkedin: "https://linkedin.com/",
-  },
-  foundingYear: 2010,
-};
+// Re-export all domain types, fallback fixtures, and client utilities
+export * from "@/lib/cms-types";
+export * from "@/lib/cms-fallbacks";
+export * from "@/lib/cms-client";
 
 export async function getCompanyInfo(): Promise<CompanyInfo> {
   return withFallback("getCompanyInfo", DEFAULT_COMPANY, async () => {
@@ -95,186 +83,6 @@ export async function getCompanyInfo(): Promise<CompanyInfo> {
       foundingYear: data.foundingYear && data.foundingYear !== 2016 ? data.foundingYear : 2010,
     };
   });
-}
-
-// wa.me click-to-chat links break if the number contains spaces, dashes, or
-// a leading "+", so every call site should build the link through here
-// rather than interpolating company.whatsapp directly.
-export function getWhatsAppLink(company: CompanyInfo): string {
-  return `https://wa.me/${company.whatsapp.replace(/\D/g, "")}`;
-}
-
-export type Product = {
-  slug: string;
-  name: string;
-  description: string;
-  icon: IconName;
-  image?: string;
-  /** width/height of `image`, when known — see mediaAspect in cms.ts. */
-  imageAspect?: number;
-};
-
-export type ProductCategory = {
-  slug: string;
-  name: string;
-  shortName: string;
-  description: string;
-  icon: IconName;
-  iconColor: string;
-  image?: string;
-  products: Product[];
-};
-
-export type Service = {
-  slug: string;
-  name: string;
-  description: string;
-  features: string[];
-  icon: IconName;
-  iconColor: string;
-  image?: string;
-};
-
-export type BlogPost = {
-  slug: string;
-  title: string;
-  category: string;
-  date: string;
-  author: string;
-  excerpt: string;
-  /** Markdown, rendered via the richtext field — was string[] paragraphs
-   * pre-CMS; paragraphs are now separated by blank lines in one string. */
-  body: string;
-};
-
-export type Testimonial = {
-  name: string;
-  role: string;
-  quote: string;
-  rating: 1 | 2 | 3 | 4 | 5;
-  iconColor: string;
-  photo?: string;
-};
-
-export type Office = {
-  slug: string;
-  name: string;
-  phone: string;
-  email: string;
-  address: string;
-  icon: IconName;
-  iconColor: string;
-  photo?: string;
-};
-
-export type Reason = {
-  title: string;
-  description: string;
-  tag: string;
-  icon: IconName;
-  iconColor: string;
-  image?: string;
-};
-
-export type PortfolioProject = {
-  slug: string;
-  title: string;
-  summary: string;
-  highlight: string;
-  icon: IconName;
-  image?: string;
-  video?: string;
-};
-
-export type PortfolioCategory = {
-  slug: string;
-  name: string;
-  description: string;
-  icon: IconName;
-  iconColor: string;
-  image?: string;
-  projects: PortfolioProject[];
-};
-
-export type Stat = {
-  label: string;
-  value: number | null;
-  suffix: string | null;
-  /** When set, the displayed number is (current year - this year) instead
-   * of `value`, recomputed on every render so it advances on its own. */
-  foundingYearForAutoCount: number | null;
-};
-
-export type ClientLogo = {
-  alt: string;
-  src?: string;
-};
-
-type StrapiMedia = { url: string; width?: number | null; height?: number | null } | null;
-
-function mediaUrl(media: StrapiMedia): string | undefined {
-  if (!media?.url) return undefined;
-  if (media.url.startsWith("/")) return `${CMS_CONFIG.URL}${media.url}`;
-  try {
-    const parsed = new URL(media.url);
-    const cmsHost = new URL(CMS_CONFIG.URL).host;
-    if (parsed.host === cmsHost) return media.url;
-    // Uploads now live on Cloudflare R2 (a different host than the CMS API
-    // itself), so an R2 URL is just as trusted as one on the CMS's own host.
-    if (CMS_CONFIG.MEDIA_CDN_URL) {
-      const cdnHost = new URL(CMS_CONFIG.MEDIA_CDN_URL).host;
-      if (parsed.host === cdnHost) return media.url;
-    }
-  } catch {}
-  return undefined;
-}
-
-// width/height ratio, used to decide whether a product image can fill its
-// card's frame (object-cover) without cropping into the subject, or needs to
-// be shown in full (object-contain) because its proportions are too far off
-// the card's aspect ratio — e.g. a tall inverter photo or a wide logo.
-function mediaAspect(media: StrapiMedia): number | undefined {
-  if (!media?.width || !media?.height) return undefined;
-  return media.width / media.height;
-}
-
-// Validates the response against `schema` rather than trusting a TypeScript
-// cast — a schema drift, null field, or misconfigured/compromised CMS
-// response is caught here instead of propagating malformed data into
-// rendering. Treated the same as a network failure: withFallback (below)
-// catches the thrown error, logs it, and returns the caller's safe default.
-async function cmsFetch<T>(path: string, schema: ZodType<T>): Promise<T> {
-  const res = await fetch(`${CMS_CONFIG.URL}/api${path}`, {
-    headers: { Authorization: `Bearer ${CMS_CONFIG.API_TOKEN}` },
-    next: {
-      revalidate: SERVER_ENV.CMS_REVALIDATE_SECONDS,
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error(`CMS request to ${path} failed with status ${res.status}`);
-  }
-
-  const json = await res.json();
-  const parsed = schema.safeParse(json);
-  if (!parsed.success) {
-    throw new Error(`CMS response for ${path} did not match the expected shape: ${parsed.error.message}`);
-  }
-  return parsed.data;
-}
-
-// If the CMS is briefly unreachable, a key gets narrowed, or any single
-// section's request fails, this logs the failure server-side (so it's
-// visible instead of silent) and returns a safe fallback instead of
-// throwing — one broken section shouldn't take down every page that
-// happens to render it (most of these are awaited in the root layout).
-export async function withFallback<T>(label: string, fallback: T, fn: () => Promise<T>): Promise<T> {
-  try {
-    return await fn();
-  } catch (err) {
-    console.error(`[cms] ${label} failed, using fallback:`, err);
-    return fallback;
-  }
 }
 
 export async function getProductCategories(): Promise<ProductCategory[]> {
@@ -311,12 +119,6 @@ export async function getServices(): Promise<Service[]> {
     );
     return data.map((service) => ({ ...service, icon: service.icon as IconName, image: mediaUrl(service.image) }));
   });
-}
-
-function formatDate(isoDate: string): string {
-  const d = new Date(isoDate + "T00:00:00");
-  if (isNaN(d.getTime())) return isoDate;
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
 export async function getBlogPosts(): Promise<BlogPost[]> {
@@ -423,59 +225,6 @@ export async function getClientLogos(): Promise<ClientLogo[]> {
   });
 }
 
-export type ThemeSettings = {
-  brandColor: string;
-  accentColor: string;
-  headerColor: string;
-  footerColor: string;
-  pageBackgroundColor: string;
-  cardColor: string;
-  buttonColor: string;
-  navHighlightColor: string;
-  headerTextColor: string;
-  footerTextColor: string;
-  pageTextColor: string;
-  cardTextColor: string;
-  sectionColor: string;
-  sectionTextColor: string;
-  contentCardColor: string;
-  contentCardTextColor: string;
-  fontPairing: FontPairingName;
-  radiusStyle: RadiusStyleName;
-  shadowStyle: ShadowStyleName;
-  logo?: string;
-  favicon?: string;
-  showTrustedByLogos: boolean;
-  showEventsSection: boolean;
-};
-
-// Matches the site's actual current look — used if Strapi has no
-// theme-setting entry yet, or is unreachable, so the site never renders
-// unstyled or with a broken font/shape choice.
-const DEFAULT_THEME: ThemeSettings = {
-  brandColor: "#1E40AF",
-  accentColor: "#6366F1",
-  headerColor: "#FFFFFF",
-  footerColor: "#F8FAFC",
-  pageBackgroundColor: "#FFFFFF",
-  cardColor: "#EFF6FF",
-  buttonColor: "#2563EB",
-  navHighlightColor: "#0EA5E9",
-  headerTextColor: "#0F172A",
-  footerTextColor: "#0F172A",
-  pageTextColor: "#0F172A",
-  cardTextColor: "#0F172A",
-  sectionColor: "#EFF6FF",
-  sectionTextColor: "#0F172A",
-  contentCardColor: "#FFFFFF",
-  contentCardTextColor: "#0F172A",
-  fontPairing: "Single Family — Poppins",
-  radiusStyle: "Soft (current default)",
-  shadowStyle: "Subtle (current default)",
-  showTrustedByLogos: true,
-  showEventsSection: false,
-};
-
 export async function getThemeSettings(): Promise<ThemeSettings> {
   return withFallback("getThemeSettings", DEFAULT_THEME, async () => {
     const { data } = await cmsFetch(
@@ -511,79 +260,6 @@ export async function getThemeSettings(): Promise<ThemeSettings> {
   });
 }
 
-export type HeroSlide = {
-  src: string;
-  alt: string;
-  headline: string;
-  subtext: string;
-  order: number;
-};
-
-export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
-  {
-    src: "/hero-slides/cctv-security.jpg",
-    alt: "Full range of CCTV security camera products",
-    headline: "Complete CCTV Protection",
-    subtext: "A full range of security camera systems for homes and businesses.",
-    order: 1,
-  },
-  {
-    src: "/hero-slides/networking.jpg",
-    alt: "Wireless router connecting devices around a smart home",
-    headline: "Seamless Connectivity",
-    subtext: "Enterprise-grade networking gear for homes, offices, and businesses.",
-    order: 2,
-  },
-  {
-    src: "/hero-slides/laptop-hardware.jpg",
-    alt: "Laptop hardware and accessories flat lay",
-    headline: "Upgrade Your Setup",
-    subtext: "Genuine laptop hardware and accessories to keep you running strong.",
-    order: 3,
-  },
-  {
-    src: "/hero-slides/multimedia-projectors.jpg",
-    alt: "Multimedia projector in a corporate meeting room",
-    headline: "Smart Presentation Solutions",
-    subtext: "High-quality projectors for meetings, classrooms, and events.",
-    order: 4,
-  },
-  {
-    src: "/hero-slides/mobile-accessories.jpg",
-    alt: "Smart mobile accessories built for your lifestyle",
-    headline: "Smart Accessories",
-    subtext: "High quality gadgets and accessories you can depend on, every day.",
-    order: 5,
-  },
-  {
-    src: "/hero-slides/solar-panels.jpg",
-    alt: "Solar panel field with a city skyline",
-    headline: "Power Your Future",
-    subtext: "Reliable solar panels and inverters for homes and businesses across Pakistan.",
-    order: 6,
-  },
-];
-
-function safeHeroSlideUrl(image: StrapiMedia, imageUrl?: string | null): string | undefined {
-  const fromMedia = mediaUrl(image);
-  if (fromMedia) return fromMedia;
-  if (!imageUrl) return undefined;
-  // If local static asset path like "/hero-slides/..."
-  if (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) return imageUrl;
-  // If absolute URL, ensure it points to trusted CMS or CDN host
-  try {
-    const parsed = new URL(imageUrl);
-    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return undefined;
-    const cmsHost = new URL(CMS_CONFIG.URL).host;
-    if (parsed.host === cmsHost) return imageUrl;
-    if (CMS_CONFIG.MEDIA_CDN_URL) {
-      const cdnHost = new URL(CMS_CONFIG.MEDIA_CDN_URL).host;
-      if (parsed.host === cdnHost) return imageUrl;
-    }
-  } catch {}
-  return undefined;
-}
-
 export async function getHeroSlides(): Promise<HeroSlide[]> {
   return withFallback("getHeroSlides", DEFAULT_HERO_SLIDES, async () => {
     const { data } = await cmsFetch("/hero-slides?populate=*&sort=order:asc", strapiList(heroSlideSchema));
@@ -606,4 +282,3 @@ export async function getHeroSlides(): Promise<HeroSlide[]> {
     return slides.length > 0 ? slides : DEFAULT_HERO_SLIDES;
   });
 }
-
