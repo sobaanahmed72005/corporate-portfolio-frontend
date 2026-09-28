@@ -178,7 +178,10 @@ export default async function RootLayout({
     <html lang="en" className={fontVariables}>
       <head>
         {CMS_CONFIG.MEDIA_CDN_URL ? (
-          <link rel="preconnect" href={CMS_CONFIG.MEDIA_CDN_URL} crossOrigin="anonymous" />
+          <>
+            <link rel="preconnect" href={CMS_CONFIG.MEDIA_CDN_URL} crossOrigin="anonymous" />
+            <link rel="dns-prefetch" href={CMS_CONFIG.MEDIA_CDN_URL} />
+          </>
         ) : null}
         {/* Theme from Strapi (theme-setting): colors, font pairing, and
             radius/shadow style all resolve to CSS custom properties that
