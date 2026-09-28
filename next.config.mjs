@@ -25,11 +25,14 @@ const csp = [
   // <video src> falls back to default-src 'self' and the browser silently
   // blocks the load (no console-visible error, it just never plays).
   `media-src 'self' ${strapiUrl.origin}${mediaCdnUrl ? ` ${mediaCdnUrl.origin}` : ""}`,
-  "font-src 'self' data:",
-  `connect-src 'self'${apiUrl ? ` ${apiUrl}` : ""} https://cloudflareinsights.com`,
+  // connect-src: Only allow self and Cloudflare Insights telemetry. If an external API URL
+  // is explicitly configured (and not a local dev fallback), allow it.
+  `connect-src 'self' https://cloudflareinsights.com${apiUrl && !apiUrl.includes("localhost") ? ` ${apiUrl}` : ""}`,
   "frame-ancestors 'none'",
+  "form-action 'self'",
   "base-uri 'self'",
   "object-src 'none'",
+  ...(process.env.NODE_ENV === "production" ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
 const securityHeaders = [
