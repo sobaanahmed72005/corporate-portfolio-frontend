@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { LinkButton } from "@/components/ui/Button";
 import { safeHref } from "@/lib/safe-url";
-import { DEFAULT_HERO_SLIDES, type HeroSlide } from "@/lib/cms";
+import { DEFAULT_HERO_SLIDES } from "@/lib/cms-fallbacks";
+import type { HeroSlide } from "@/lib/cms-types";
 
 const SLIDE_INTERVAL_MS = 4000;
 
