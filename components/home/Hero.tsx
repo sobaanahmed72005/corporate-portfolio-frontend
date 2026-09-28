@@ -3,7 +3,7 @@ import { HeroSlider } from "@/components/home/HeroSlider";
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { TypewriterText } from "@/components/ui/TypewriterText";
-import { getCompanyInfo } from "@/lib/cms";
+import { getCompanyInfo, getHeroSlides } from "@/lib/cms";
 
 /**
  * videoSrc is unset by default — this site doesn't have a hero video yet,
@@ -12,7 +12,10 @@ import { getCompanyInfo } from "@/lib/cms";
 const videoSrc: string | undefined = undefined;
 
 export async function Hero() {
-  const company = await getCompanyInfo();
+  const [company, heroSlides] = await Promise.all([
+    getCompanyInfo(),
+    getHeroSlides(),
+  ]);
 
   return (
     <section className="relative overflow-hidden bg-page-950">
@@ -38,7 +41,7 @@ export async function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-page-950/60 via-page-950/70 to-page-950" aria-hidden />
 
       <Container className="relative pb-8 pt-4 sm:pb-12 sm:pt-5 lg:pb-16 lg:pt-6">
-        <HeroSlider storeUrl={company.storeUrl} />
+        <HeroSlider slides={heroSlides} storeUrl={company.storeUrl} />
 
         <div className="mx-auto mt-4 max-w-3xl text-center sm:mt-6">
           <p className="mb-2 font-display text-xs font-semibold uppercase tracking-[0.18em] text-accent-500 sm:mb-3 sm:text-[13px]">

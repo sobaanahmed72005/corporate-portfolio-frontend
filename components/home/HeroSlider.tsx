@@ -5,71 +5,35 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { LinkButton } from "@/components/ui/Button";
 import { safeHref } from "@/lib/safe-url";
+import { DEFAULT_HERO_SLIDES, type HeroSlide } from "@/lib/cms";
 
 const SLIDE_INTERVAL_MS = 4000;
 
-// Order matches the product category order on the homepage (CCTV & Security,
-// Networking, Laptop Hardware, Multimedia Projectors, Mobile Accessories, Solar).
-// Every slide's source photo is plain product/scene photography with no text
-// baked in — the headline/subtext overlay below is what actually renders the
-// copy, so all six slides share one consistent size, weight, and color.
-const SLIDES = [
-  {
-    src: "/hero-slides/cctv-security.jpg",
-    alt: "Full range of CCTV security camera products",
-    headline: "Complete CCTV Protection",
-    subtext: "A full range of security camera systems for homes and businesses.",
-  },
-  {
-    src: "/hero-slides/networking.jpg",
-    alt: "Wireless router connecting devices around a smart home",
-    headline: "Seamless Connectivity",
-    subtext: "Enterprise-grade networking gear for homes, offices, and businesses.",
-  },
-  {
-    src: "/hero-slides/laptop-hardware.jpg",
-    alt: "Laptop hardware and accessories flat lay",
-    headline: "Upgrade Your Setup",
-    subtext: "Genuine laptop hardware and accessories to keep you running strong.",
-  },
-  {
-    src: "/hero-slides/multimedia-projectors.jpg",
-    alt: "Multimedia projector in a corporate meeting room",
-    headline: "Smart Presentation Solutions",
-    subtext: "High-quality projectors for meetings, classrooms, and events.",
-  },
-  {
-    src: "/hero-slides/mobile-accessories.jpg",
-    alt: "Smart mobile accessories built for your lifestyle",
-    headline: "Smart Accessories",
-    subtext: "High quality gadgets and accessories you can depend on, every day.",
-  },
-  {
-    src: "/hero-slides/solar-panels.jpg",
-    alt: "Solar panel field with a city skyline",
-    headline: "Power Your Future",
-    subtext: "Reliable solar panels and inverters for homes and businesses across Pakistan.",
-  },
-];
-
 /**
  * Auto-advancing image slider for the homepage hero, with a "visit our
- * store" button underneath. Pauses while hovered so it doesn't fight
- * someone reading it or clicking a dot.
+ * store" button underneath. Supports dynamic slides configured via Strapi CMS,
+ * falling back gracefully to default slides if unpopulated.
  */
-export function HeroSlider({ storeUrl }: { storeUrl: string }) {
+export function HeroSlider({
+  slides = DEFAULT_HERO_SLIDES,
+  storeUrl,
+}: {
+  slides?: HeroSlide[];
+  storeUrl: string;
+}) {
+  const activeSlides = slides && slides.length > 0 ? slides : DEFAULT_HERO_SLIDES;
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     if (paused) return;
     const interval = setInterval(() => {
-      setIndex((i) => (i + 1) % SLIDES.length);
+      setIndex((i) => (i + 1) % activeSlides.length);
     }, SLIDE_INTERVAL_MS);
     return () => clearInterval(interval);
-  }, [paused]);
+  }, [paused, activeSlides.length]);
 
-  const goTo = (i: number) => setIndex((i + SLIDES.length) % SLIDES.length);
+  const goTo = (i: number) => setIndex((i + activeSlides.length) % activeSlides.length);
 
   return (
     <div className="relative w-full">
@@ -82,8 +46,8 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
           className="flex h-full w-full transition-transform duration-700 ease-out"
           style={{ transform: `translateX(-${index * 100}%)` }}
         >
-          {SLIDES.map((slide, i) => (
-            <div key={slide.src} className="relative h-full w-full shrink-0">
+          {activeSlides.map((slide, i) => (
+            <div key={`${slide.src}-${i}`} className="relative h-full w-full shrink-0">
               <Image
                 src={slide.src}
                 alt={slide.alt}
@@ -133,12 +97,12 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
 
         <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-3 sm:p-5">
           <div className="flex items-center gap-2">
-            {SLIDES.map((slide, i) => (
+            {activeSlides.map((slide, i) => (
               <button
-                key={slide.src}
+                key={`${slide.src}-${i}`}
                 type="button"
                 onClick={() => setIndex(i)}
-                aria-label={`Show slide ${i + 1} of ${SLIDES.length}`}
+                aria-label={`Show slide ${i + 1} of ${activeSlides.length}`}
                 aria-current={i === index}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   i === index ? "w-6 bg-accent-500" : "w-2 bg-white/40"

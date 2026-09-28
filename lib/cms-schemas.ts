@@ -168,3 +168,13 @@ export const themeSettingsSchema = z.object({
   showTrustedByLogos: z.boolean().nullable(),
   showEventsSection: z.boolean().nullable(),
 });
+
+export const heroSlideSchema = z.object({
+  id: z.union([z.string(), z.number()]).optional(),
+  headline: z.string(),
+  subtext: z.string(),
+  alt: z.string(),
+  order: z.number().optional().default(1),
+  image: mediaSchema.optional().nullable(),
+  imageUrl: z.string().optional().nullable(),
+});

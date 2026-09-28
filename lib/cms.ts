@@ -25,6 +25,7 @@ import {
   reasonSchema,
   clientLogoSchema,
   themeSettingsSchema,
+  heroSlideSchema,
 } from "@/lib/cms-schemas";
 
 // Nested address/social objects so call sites can use
@@ -509,3 +510,100 @@ export async function getThemeSettings(): Promise<ThemeSettings> {
     };
   });
 }
+
+export type HeroSlide = {
+  src: string;
+  alt: string;
+  headline: string;
+  subtext: string;
+  order: number;
+};
+
+export const DEFAULT_HERO_SLIDES: HeroSlide[] = [
+  {
+    src: "/hero-slides/cctv-security.jpg",
+    alt: "Full range of CCTV security camera products",
+    headline: "Complete CCTV Protection",
+    subtext: "A full range of security camera systems for homes and businesses.",
+    order: 1,
+  },
+  {
+    src: "/hero-slides/networking.jpg",
+    alt: "Wireless router connecting devices around a smart home",
+    headline: "Seamless Connectivity",
+    subtext: "Enterprise-grade networking gear for homes, offices, and businesses.",
+    order: 2,
+  },
+  {
+    src: "/hero-slides/laptop-hardware.jpg",
+    alt: "Laptop hardware and accessories flat lay",
+    headline: "Upgrade Your Setup",
+    subtext: "Genuine laptop hardware and accessories to keep you running strong.",
+    order: 3,
+  },
+  {
+    src: "/hero-slides/multimedia-projectors.jpg",
+    alt: "Multimedia projector in a corporate meeting room",
+    headline: "Smart Presentation Solutions",
+    subtext: "High-quality projectors for meetings, classrooms, and events.",
+    order: 4,
+  },
+  {
+    src: "/hero-slides/mobile-accessories.jpg",
+    alt: "Smart mobile accessories built for your lifestyle",
+    headline: "Smart Accessories",
+    subtext: "High quality gadgets and accessories you can depend on, every day.",
+    order: 5,
+  },
+  {
+    src: "/hero-slides/solar-panels.jpg",
+    alt: "Solar panel field with a city skyline",
+    headline: "Power Your Future",
+    subtext: "Reliable solar panels and inverters for homes and businesses across Pakistan.",
+    order: 6,
+  },
+];
+
+function safeHeroSlideUrl(image: StrapiMedia, imageUrl?: string | null): string | undefined {
+  const fromMedia = mediaUrl(image);
+  if (fromMedia) return fromMedia;
+  if (!imageUrl) return undefined;
+  // If local static asset path like "/hero-slides/..."
+  if (imageUrl.startsWith("/") && !imageUrl.startsWith("//")) return imageUrl;
+  // If absolute URL, ensure it points to trusted CMS or CDN host
+  try {
+    const parsed = new URL(imageUrl);
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return undefined;
+    const cmsHost = new URL(CMS_CONFIG.URL).host;
+    if (parsed.host === cmsHost) return imageUrl;
+    if (CMS_CONFIG.MEDIA_CDN_URL) {
+      const cdnHost = new URL(CMS_CONFIG.MEDIA_CDN_URL).host;
+      if (parsed.host === cdnHost) return imageUrl;
+    }
+  } catch {}
+  return undefined;
+}
+
+export async function getHeroSlides(): Promise<HeroSlide[]> {
+  return withFallback("getHeroSlides", DEFAULT_HERO_SLIDES, async () => {
+    const { data } = await cmsFetch("/hero-slides?populate=*&sort=order:asc", strapiList(heroSlideSchema));
+    if (!data || data.length === 0) return DEFAULT_HERO_SLIDES;
+
+    const slides = data
+      .map((entry) => {
+        const src = safeHeroSlideUrl(entry.image, entry.imageUrl);
+        if (!src) return null;
+        return {
+          src,
+          alt: entry.alt || "",
+          headline: entry.headline || "",
+          subtext: entry.subtext || "",
+          order: entry.order ?? 1,
+        };
+      })
+      .filter((s): s is HeroSlide => s !== null);
+
+    return slides.length > 0 ? slides : DEFAULT_HERO_SLIDES;
+  });
+}
+
