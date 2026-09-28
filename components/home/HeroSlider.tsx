@@ -88,7 +88,7 @@ export function HeroSlider({ storeUrl }: { storeUrl: string }) {
                 src={slide.src}
                 alt={slide.alt}
                 fill
-                sizes="100vw"
+                sizes="(max-width: 1280px) 100vw, 1280px"
                 // Every slide loads eagerly, not just the first — otherwise
                 // the first time the carousel reaches an unseen slide, the
                 // browser fetches and decodes it right as it's meant to

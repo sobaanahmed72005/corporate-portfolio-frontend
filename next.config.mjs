@@ -1,5 +1,5 @@
 const strapiUrl = new URL(process.env.STRAPI_URL || "http://localhost:1337");
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 // Strapi uploads (photos, videos) now live on Cloudflare R2, a different
 // host than the CMS API itself — see corporate-portfolio-cms/config/plugins.ts.
 const mediaCdnUrl = process.env.MEDIA_CDN_URL ? new URL(process.env.MEDIA_CDN_URL) : null;
@@ -26,7 +26,7 @@ const csp = [
   // blocks the load (no console-visible error, it just never plays).
   `media-src 'self' ${strapiUrl.origin}${mediaCdnUrl ? ` ${mediaCdnUrl.origin}` : ""}`,
   "font-src 'self' data:",
-  `connect-src 'self' ${apiUrl} https://cloudflareinsights.com`,
+  `connect-src 'self'${apiUrl ? ` ${apiUrl}` : ""} https://cloudflareinsights.com`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "object-src 'none'",
@@ -52,7 +52,7 @@ const nextConfig = {
   images: {
     // Cache optimized images for 24 hours instead of default 60 seconds
     minimumCacheTTL: 86400,
-    formats: ["image/webp", "image/avif"],
+    formats: ["image/avif", "image/webp"],
     // Every CMS media field (logo, product/testimonial/office photos, etc.)
     // resolves to a URL on the Strapi host — next/image refuses external
     // hosts unless explicitly allowed here.
@@ -78,6 +78,24 @@ const nextConfig = {
       {
         source: "/:path*",
         headers: securityHeaders,
+      },
+      {
+        source: "/(hero-slides|brand-logos)/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
+        ],
+      },
+      {
+        source: "/logo.png",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=604800",
+          },
+        ],
       },
     ];
   },

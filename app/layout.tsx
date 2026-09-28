@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SocialSidebar } from "@/components/layout/SocialSidebar";
 import { SITE_CONFIG } from "@/lib/env";
+import { CMS_CONFIG } from "@/lib/cms-env";
 import {
   getProductCategories,
   getServices,
@@ -28,28 +29,47 @@ const LOGO_SRC = "/logo.png";
 // arbitrary family. Unselected pairings cost extra self-hosted files in the
 // build output, not client bandwidth — browsers only fetch a font when its
 // family is actually referenced by computed style.
-const outfit = Outfit({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-outfit" });
-const rubik = Rubik({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-rubik" });
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-outfit",
+  display: "swap",
+});
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-rubik",
+  display: "swap",
+});
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["600", "700", "800"],
   variable: "--font-playfair",
+  display: "swap",
 });
 const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-source-sans",
+  display: "swap",
 });
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["600", "700"],
   variable: "--font-space-grotesk",
+  display: "swap",
 });
-const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-inter" });
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-inter",
+  display: "swap",
+});
 const merriweather = Merriweather({
   subsets: ["latin"],
   weight: ["700", "900"],
   variable: "--font-merriweather",
+  display: "swap",
 });
 // Matches NETSOL's body font exactly (Poppins) — used for both heading and
 // body under the "Single Family — Poppins" pairing since NETSOL's actual
@@ -58,6 +78,7 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-poppins",
+  display: "swap",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -156,6 +177,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className={fontVariables}>
       <head>
+        {CMS_CONFIG.MEDIA_CDN_URL ? (
+          <link rel="preconnect" href={CMS_CONFIG.MEDIA_CDN_URL} crossOrigin="anonymous" />
+        ) : null}
         {/* Theme from Strapi (theme-setting): colors, font pairing, and
             radius/shadow style all resolve to CSS custom properties that
             tailwind.config.ts's var() references read, so editing any of
