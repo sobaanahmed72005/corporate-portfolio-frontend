@@ -9,7 +9,7 @@ import type { CompanyInfo } from "@/lib/cms-types";
  * and safe media host sanitization to guard against SSRF and image optimization crashes.
  */
 
-export type StrapiMedia = { url: string; width?: number | null; height?: number | null } | null;
+export type StrapiMedia = { url: string; width?: number | null; height?: number | null } | null | undefined;
 
 /**
  * Validates that an image URL originated from a trusted source (Strapi or Cloudflare R2).
